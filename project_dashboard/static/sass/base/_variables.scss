@@ -1,0 +1,68 @@
+/* ==========================================================================
+   Variables
+   ========================================================================== */
+//////////////////
+//    Fonts     //
+//////////////////
+$fontLato   :  'Lato', sans-serif;
+$fontRaleway: 'Raleway', sans-serif;
+
+$defaultFont: $fontLato;
+$headerFont : $fontRaleway;
+$codeFont   : courier new, Courier, monospace;
+
+//////////////////
+// Color Scheme //
+//////////////////
+
+// Slate Blue
+$primary-color-04: #ebf5fb;
+$primary-color-03: #fbfdfe;
+$primary-color-02: #7d9cb6;
+$primary-color-01: #4F7696;
+$primary-color-0 : #315b7d;     /* Main Primary Color */
+$primary-color-1 : #1D4769;
+$primary-color-2 : #223F57;
+
+// Teal
+$secondary-color-02: #85bbb9;
+$secondary-color-01: #519592;
+$secondary-color-0 : #317d79;     /* Main Secondary Color */
+$secondary-color-1 : #1c6966;
+$secondary-color-2 : #09514e;
+
+// Border Colors
+$border-light: #dcd9d9;
+$border-dark : #3a3a3a;
+
+// Text Colors
+$heading: #374054;
+$text   : #74808a;
+$altText: #fff;
+
+// Buttons
+$defBtn       : $secondary-color-01;
+$defBtn-hover : $secondary-color-02;
+$defBtn-active: $secondary-color-0;
+
+$lightBtn       : #e0e1e2;
+$lightBtn-hover : #cacbcd;
+$lightBtn-active: #babbbc;
+
+// Alert colors
+$white: #fff;
+$mint-green: #d6e9c6;
+$black: #000;
+$pink: #f2dede;
+$dark-pink: #eed3d7;
+$red: #b94a48;
+
+// Django alert colors
+$alert-success-bg    : #d4edda;
+$alert-success-border: #c3e6cb;
+$alert-warning-bg    : #fff9e7;
+$alert-warning-border: #ffe79a;
+$alert-error-bg      : #f8d7da;
+$alert-error-border  : #f5c6cb;
+$alert-info-bg       : #d1ecf1;
+$alert-info-border   : #bee5eb;

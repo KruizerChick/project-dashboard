@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}Server Error{% endblock title %}
+
+{% block content %}
+<h1></h1>
+
+<h3>{% trans 'Looks like something went wrong!' %}</h3>
+
+<p>{% trans 'We track these errors automatically, but if the problem persists feel free to contact us. In the meantime, try refreshing.' %}</p>
+{% endblock content %}
+
+

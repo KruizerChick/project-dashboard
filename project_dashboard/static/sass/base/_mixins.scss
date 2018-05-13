@@ -1,0 +1,72 @@
+/* ==========================================================================
+   Base Mixins and Media Queries
+   ========================================================================== */
+
+/* ==========================================================================
+   EXAMPLE Media Queries for Responsive Design.
+   These examples override the primary ('mobile first') styles.
+   Modify as content requires.
+   ========================================================================== */
+
+@media only screen and (min-width: 35em) {
+  /* Style adjustments for viewports that meet the condition */
+}
+
+@media print,
+  (min-resolution: 1.25dppx),
+  (min-resolution: 120dpi) {
+  /* Style adjustments for high resolution devices */
+}
+
+////////////////////////////////
+// Common device sizes
+////////////////////////////////
+
+// Media Queries
+//
+// Allows you to use inline media queries. Includes options for `$fix-mqs`.
+//
+
+
+// Breakpoints map
+/// @prop {String} keys - Keys are identifiers mapped to a given length
+/// @prop {Map} values - Values are actual breakpoints expressed in pixels
+$breakpoints: (
+  'atVerySmall': 530px,
+  'atSmall': 768px,
+  'atMedium': 1024px,
+  'atLarge': 1280px,
+) !default;
+
+/// Responsive breakpoint manager
+/// @access public
+/// @param {String} $breakpoint - Breakpoint
+/// @requires $breakpoints
+@mixin respond-to($breakpoint) {
+  $raw-query: map-get($breakpoints, $breakpoint);
+
+  @if $raw-query {
+    $query: if(
+      type-of($raw-query) == 'string',
+      unquote($raw-query),
+      inspect($raw-query)
+    );
+
+    @media #{$query} {
+      @content;
+    }
+  } @else {
+    @error 'No value found for `#{$breakpoint}`. '
+         + 'Please make sure it is defined in `$breakpoints` map.';
+  }
+}
+
+// Example use:
+// ------------
+// .foo {
+//   color: red;
+
+//   @include respond-to('atMedium') {
+//     color: blue;
+//   }
+// }
