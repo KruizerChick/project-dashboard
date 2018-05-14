@@ -6,11 +6,10 @@
 // Plugins
 var gulp = require('gulp'),
       pjson = require('./package.json'),
-      gutil = require('gulp-util'),
+      // gutil = require('gulp-util'),
       sass = require('gulp-sass'),
       autoprefixer = require('gulp-autoprefixer'),
       cssnano = require('gulp-cssnano'),
-      
       rename = require('gulp-rename'),
       del = require('del'),
       plumber = require('gulp-plumber'),
@@ -29,7 +28,7 @@ var pathsConfig = function (appName) {
   var vendorsRoot = 'node_modules/';
 
   return {
-    
+
     app: this.app,
     templates: this.app + '/templates',
     css: this.app + '/static/css',
@@ -51,7 +50,7 @@ gulp.task('styles', function() {
   return gulp.src(paths.sass + '/project.scss')
     .pipe(sass({
       includePaths: [
-        
+
         paths.sass
       ]
     }).on('error', sass.logError))
