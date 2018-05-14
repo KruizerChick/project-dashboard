@@ -1,4 +1,5 @@
 {% extends "budget/base.html" %}
+{% load i18n %}
 
 {% block content %}
 
@@ -7,27 +8,30 @@
 
     <div class="col s12 m12 14">
       <div class="card-panel">
-        <h6 class="bold">Total Budget</h6>
+        <h6 class="bold">{% trans "Total Budget" %}</h6>
         <h1 class="bold center">${{ project.budget }}</h1>
       </div>
     </div>
 
-    <div class="col s12 m6 14">
+    <div class="col s12 m6 l4">
       <div class="card-panel">
-        <h6 class="bold">Budget Remaining</h6>
+        <h6 class="bold">{% trans "Budget Remaining" %}</h6>
         {% if project.budget_left > 0 %}
-          <h1 class="bold center green-text">${{ project.budget_left|floatformat:"0" }}</h1>
+          <h1 class="bold center blue-text">
+            ${{ project.budget_left|floatformat:"0" }}</h1>
         {% elif project.budget_left == 0 %}
-          <h1 class="bold center orange-text">${{ project.budget_left|floatformat:"0" }}</h1>
+          <h1 class="bold center orange-text">
+            ${{ project.budget_left|floatformat:"0" }}</h1>
         {% else %}
-          <h1 class="bold center red-text">${{ project.budget_left|floatformat:"0" }}</h1>
+          <h1 class="bold center red-text">
+            ${{ project.budget_left|floatformat:"0" }}</h1>
         {% endif %}
       </div>
     </div>
 
     <div class="col s12 m6 l4">
       <div class="card-panel">
-        <h6 class="bold">Total Transactions</h6>
+        <h6 class="bold">{% trans "Total Transactions" %}</h6>
         <h1 class="bold center">{{ project.total_transactions }}</h1>
       </div>
     </div>
@@ -37,13 +41,32 @@
 
 <section class="section section-expenses">
   <div class="row">
-    <button class="btn waves-effect right modal-trigger" href="#expenseModal">
-      <i class="material-icons white-text left">add_circle</i>
-      Add Expense
+    <button class="button button-pill button-action valign-wrapper modal-trigger" href="#expenseModal">
+      <i class="material-icons white-text">add_circle</i>&nbsp;
+      {% trans "Add Expense" %}
     </button>
   </div>
 
   <ul class="z-depth-1">
+      <li>
+          <div class="card-panel z-depth-0 expense">
+            <div class="row bold">
+
+              <div class="col 16">
+                <span class="title">{% trans "Expense Title" %}</span>
+              </div>
+
+              <div class="col 13">
+                <span class="title">{% trans "Amount" %}</span>
+              </div>
+
+              <div class="col 1">
+                <span class="title">{% trans "Category" %}</span>
+              </div>
+
+            </div>
+          </div>
+        </li>
 
     {% for expense in expense_list  %}
     <li>
@@ -76,24 +99,25 @@
 
 <div id="expenseModal" class="modal">
   <div class="modal-content">
-    <h4>Add Expense</h4>
+    <h4>{% trans "Add Expense" %}</h4>
 
     <form method="POST">
       {% csrf_token %}
-      <label for="title">Title</label>
+      <label for="title">{% trans "Title" %}</label>
       <input type="text" id="title" name="title">
 
-      <label for="amount">Amount</label>
+      <label for="amount">{% trans "Amount" %}</label>
       <input type="text" id="amount" name="amount">
 
-      <label for="category">Category</label>
+      <label for="category">{% trans "Category" %}</label>
       <select name="category">
         {% for category in category_list  %}
           <option>{{ category.name }}</option>
         {% endfor %}
       </select>
 
-      <button type="submit" class="btn">Add</button>
+      <button type="submit" class="button button-action button-pill">
+        {% trans "Add" %}</button>
     </form>
   </div>
 </div>

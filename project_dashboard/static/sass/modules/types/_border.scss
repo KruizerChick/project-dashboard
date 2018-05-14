@@ -1,0 +1,109 @@
+/*
+* Border Buttons
+*
+* These buttons have no fill they only have a
+* border to define their hit target.
+*/
+
+#{$btn-namespace}-border {
+  background: none;
+  border-width: 2px;
+  border-style: solid;
+  line-height: $btn-height - 4;
+
+  &:hover {
+    background-color: rgba(lighten($btn-bgcolor, 10%), .9)
+  }
+
+  &:active,
+  &.active,
+  &.is-active {
+    box-shadow: none;
+    text-shadow: none;
+
+    @if $btn-use-compass {
+      @include transition-property(all);
+      @include transition-duration(.3s);
+    }
+    @else {
+      transition-property: all;
+      transition-duration:.3s;
+    }
+  }
+}
+
+
+/*
+* Border Optional Sizes
+*
+* A slight variation in border thickness
+*/
+#{$btn-namespace}-border-thin {
+  @extend #{$btn-namespace}-border;
+  border-width: 1px;
+}
+#{$btn-namespace}-border-thick {
+  @extend #{$btn-namespace}-border;
+  border-width: 3px;
+}
+
+
+
+/*
+* Border Button Colors
+*
+* Create colors for buttons
+* (.button-primary, .button-secondary, etc.)
+*/
+
+#{$btn-namespace}-border,
+#{$btn-namespace}-border-thin,
+#{$btn-namespace}-border-thick {
+
+  @each $btn-color in $btn-colors {
+    $btn-name: nth($btn-color, 1);
+    $btn-background: nth($btn-color, 2);
+    $btn-color: nth($btn-color, 3);
+    $btn-color-namespace: $btn-namespace + '-' + $btn-name;
+
+    &#{$btn-color-namespace} {
+      color: $btn-background;
+
+      &:hover,
+      &:focus {
+        background-color: rgba(lighten($btn-background, 10%), .9);
+        color: rgba($btn-color, .9);
+      }
+
+      &:active,
+      &.active,
+      &.is-active {
+        background-color: rgba(desaturate($btn-background, 10%), .7);
+        color: rgba($btn-color, .5);
+
+        @if $btn-use-compass {
+          @include opacity(.3);
+        }
+        @else {
+          opacity: .3;
+        }
+      }
+    }
+  }
+
+  /*
+  * Border Button Size Adjustment
+  *
+  * The line-height must be adjusted to compinsate for
+  * the width of the border.
+  */
+  @each $btn-sizes-hash in $btn-sizes {
+    $btn-size: nth($btn-sizes-hash, 1);
+    $btn-multiplier : nth($btn-sizes-hash, 2);
+    $btn-size-namespace: #{$btn-namespace}-#{$btn-size};
+
+    &#{$btn-size-namespace} {
+      line-height: $btn-height * $btn-multiplier - 4;
+    }
+  }
+}

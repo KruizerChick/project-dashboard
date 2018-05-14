@@ -12,7 +12,9 @@
       <div class="col s12 l3">
         <div class="card-panel center">
           <h5>{{ project.name }}</h5>
-          <a href="{% url 'budget:detail' project.slug %}" class="btn">{% trans "Visit" %}</a>
+          <a href="{% url 'budget:detail' project.slug %}"
+             class="button button-action button-pill">
+            {% trans "Visit" %}</a>
         </div>
       </div>
     {% empty %}
@@ -22,10 +24,10 @@
     {% endfor %}
   </div>
   <div class="row">
-    <div class="container center">
-      <a href="{% url 'budget:add' %}" class="btn-large blue-grey">
-        <i class="material-icons white-text left">add_circle</i>
-        <span class="bold">{% trans "Add Project" %}</span>
+    <div class="container center center-align">
+      <a href="{% url 'budget:add' %}" class="button button-large button-pill button-primary">
+        <i class="material-icons white-text">add_circle</i>&nbsp;
+        <span>{% trans "Add Project" %}</span>
       </a>
     </div>
   </div>

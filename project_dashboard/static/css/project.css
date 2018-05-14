@@ -1,13 +1,2411 @@
-/* These styles are generated from project.scss. */
+/* ===========================
+    Project Styling (Sass)
+   =========================== */
+/* ==========================================================================
+   Variables
+   ========================================================================== */
+/* Main Primary Color */
+/* Main Secondary Color */
+/* Colors */
+/*! HTML5 Boilerplate v6.0.1 | MIT License | https://html5boilerplate.com/ */
+/*
+ * What follows is the result of much research on cross-browser styling.
+ * Credit left inline and big thanks to Nicolas Gallagher, Jonathan Neal,
+ * Kroc Camen, and the H5BP dev community and team.
+ */
+/* ==========================================================================
+   Base styles: opinionated defaults
+   ========================================================================== */
+@import url("https://fonts.googleapis.com/css?family=Montserrat");
+html, body {
+  height: 100%; }
 
-.alert-debug {
-  color: black;
+html {
+  color: #222;
+  font-size: 1em;
+  line-height: 1.4; }
+
+body {
+  background-color: #fbfdfe;
+  margin: 0;
+  padding: 0;
+  font-family: "Lato", sans-serif;
+  color: #74808a; }
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Raleway", sans-serif;
+  font-weight: 600; }
+
+code, pre {
+  font-family: courier new, Courier, monospace; }
+
+.no-margin {
+  margin: 0; }
+
+* {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box; }
+
+/*
+   * Remove text-shadow in selection highlight:
+   * https://twitter.com/miketaylr/status/12228805301
+   *
+   * Vendor-prefixed and regular ::selection selectors cannot be combined:
+   * https://stackoverflow.com/a/16982510/7133471
+   *
+   * Customize the background color to match your design.
+   */
+::-moz-selection {
+  background: #b3d4fc;
+  text-shadow: none; }
+::selection {
+  background: #b3d4fc;
+  text-shadow: none; }
+
+/* A better looking default horizontal rule */
+hr {
+  display: block;
+  height: 1px;
+  border: 0;
+  border-top: 1px solid #ccc;
+  margin: 1em 0;
+  padding: 0; }
+
+/*
+   * Remove the gap between audio, canvas, iframes,
+   * images, videos and the bottom of their containers:
+   * https://github.com/h5bp/html5-boilerplate/issues/440
+   */
+audio,
+canvas,
+iframe,
+img,
+svg,
+video {
+  vertical-align: middle; }
+
+/* Remove default fieldset styles. */
+fieldset {
+  border: 0;
+  margin: 0;
+  padding: 0; }
+
+/* Allow only vertical resizing of textareas. */
+textarea {
+  resize: vertical; }
+
+/* ==========================================================================
+     Browser Upgrade Prompt
+     ========================================================================== */
+.browserupgrade {
+  margin: 0.2em 0;
+  background: #ccc;
+  color: #000;
+  padding: 0.2em 0; }
+
+/* ==========================================================================
+   Base Mixins and Media Queries
+   ========================================================================== */
+/* ==========================================================================
+   EXAMPLE Media Queries for Responsive Design.
+   These examples override the primary ('mobile first') styles.
+   Modify as content requires.
+   ========================================================================== */
+@media only screen and (min-width: 35em) {
+  /* Style adjustments for viewports that meet the condition */ }
+
+@media print, (-webkit-min-device-pixel-ratio: 1.25), (min-resolution: 1.25dppx), (min-resolution: 120dpi) {
+  /* Style adjustments for high resolution devices */ }
+
+/* ==========================================================================
+   Django Alert styles
+   ========================================================================== */
+.alert {
+  padding: 0 16px;
+  padding: 0 1rem;
+  border-radius: 10px; }
+  .alert:empty {
+    visibility: none; }
+  .alert-success {
+    background-color: #d4edda;
+    border-color: #c3e6cb; }
+  .alert-warning {
+    background-color: #fff9e7;
+    border-color: #ffe79a; }
+  .alert-error, .alert-danger {
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+    color: #db2828; }
+  .alert-info {
+    background-color: #d1ecf1;
+    border-color: #bee5eb; }
+  .alert-debug {
+    background-color: #fff;
+    border-color: #d6e9c6;
+    color: #000000; }
+
+/* =========================
+       ANIMATED UI ITEMS
+   ========================= */
+/* ===== REVEAL ITEM delay ===== */
+.reveal-item {
+  opacity: 0;
+  -webkit-transition: all 1.5s ease-out;
+  transition: all 1.5s ease-out;
+  -webkit-transform: scale(1.15);
+          transform: scale(1.15); }
+  .reveal-item--is-visible {
+    opacity: 1;
+    -webkit-transform: scale(1);
+            transform: scale(1); }
+
+/* ===== TOGGLE SWITCH Input ===== */
+/* sample html code:
+    <section>
+      <label for="toggle" class="toggle-switch">
+        <input type="checkbox" id="toggle" class="toggle-switch__input" />
+        <span class="toggle-switch__button"></span>
+      </label>
+    </section>
+*/
+/* Set base settings to override body settings */
+.toggle-switch {
+  font-family: Arial, Helvetica, sans-serif;
+  display: inline-block;
+  vertical-align: top;
+  margin: 0 15px 0 0; }
+
+.toggle-switch__input {
+  display: none; }
+
+.toggle-switch__button {
+  position: relative;
+  display: inline-block;
+  font-size: 16px;
+  font-size: 1rem;
+  line-height: 20px;
+  border-radius: 20px;
+  text-transform: uppercase;
+  background-color: #b96666;
+  border: solid 1px #6f0000;
+  color: white;
+  width: 80px;
+  height: 30px;
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+  cursor: pointer; }
+
+/* Default position of toggle switch */
+.toggle-switch__button:before {
+  position: absolute;
+  top: 5px;
+  left: 40px;
+  right: auto;
+  content: "off";
+  display: inline-block;
+  height: 20px;
+  border-radius: 20px;
+  padding: 0 3px;
+  background: #6f0000;
+  color: white;
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease; }
+
+/* Change background of button when input is checked/true */
+.toggle-switch__input:checked + .toggle-switch__button {
+  background: #7fb17f;
+  border: solid 1px #004c00; }
+
+/* Change position and content of :before when true*/
+.toggle-switch__input:checked + .toggle-switch__button:before {
+  left: 5px;
+  content: "on";
+  padding: 0 3px;
+  background: #004c00;
+  color: white; }
+
+/* ===== SLIDING PANELS ===== */
+/* sample html code:
+    <section>
+      <h4>Slide from Bottom</h4>
+      <div class="slide slide-bottom">
+        <div class="slide-content">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</div>
+        <img src="https://placeimg.com/300/200/architecture">
+      </div>
+    </section>
+*/
+.slide {
+  position: relative;
+  display: inline-block;
+  overflow: hidden; }
+
+.slide img {
+  display: inline-block;
+  vertical-align: middle; }
+
+.slide-content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -ms-flex-line-pack: distribute;
+      align-content: space-around;
+  text-align: center;
+  padding: 0 16px;
+  padding: 0 1rem;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  background: rgba(49, 91, 125, 0.9);
+  color: #fff;
+  -webkit-transition: -webkit-transform 0.3s ease;
+  transition: -webkit-transform 0.3s ease;
+  transition: transform 0.3s ease;
+  transition: transform 0.3s ease, -webkit-transform 0.3s ease; }
+
+.slide-content h2 {
+  -webkit-box-ordinal-group: 2;
+      -ms-flex-order: 1;
+          order: 1;
+  -ms-flex-item-align: start;
+      align-self: flex-start;
+  margin: 0;
+  text-align: start;
+  font-weight: normal;
+  font-size: 27.2px;
+  font-size: 1.7rem; }
+
+.slide-content p {
+  -webkit-box-ordinal-group: 3;
+      -ms-flex-order: 2;
+          order: 2;
+  -ms-flex-item-align: end;
+      align-self: flex-end;
+  color: #fff !important;
+  font-size: 1em;
+  margin-top: .5em; }
+
+.slide-content a {
+  -webkit-box-ordinal-group: 4;
+      -ms-flex-order: 3;
+          order: 3;
+  -ms-flex-item-align: center;
+      align-self: center;
+  color: #85bbb9; }
+
+.slide:hover .slide-content {
+  -webkit-transform: translate(0, 0);
+          transform: translate(0, 0); }
+
+/* ANIMATION DIRECTIONS */
+.slide-top .slide-content {
+  -webkit-transform: translate(0, -100%);
+          transform: translate(0, -100%); }
+
+.slide-right .slide-content {
+  -webkit-transform: translate(100%, 0);
+          transform: translate(100%, 0); }
+
+.slide-bottom .slide-content {
+  -webkit-transform: translate(0, 100%);
+          transform: translate(0, 100%); }
+
+.slide-left .slide-content {
+  -webkit-transform: translate(-100%, 0);
+          transform: translate(-100%, 0); }
+
+.slide-left-top .slide-content {
+  -webkit-transform: translate(-100%, -100%);
+          transform: translate(-100%, -100%); }
+
+.slide-left-bottom .slide-content {
+  -webkit-transform: translate(-100%, 100%);
+          transform: translate(-100%, 100%); }
+
+/* ===== TOOLTIPS ===== */
+/* sample html code:
+  <section>
+    <h4>Tooltip on Right</h4>
+    <div class="tooltip right" title="Tooltip on right!">
+      Hover over me
+    </div>
+  </section>
+*/
+/* Style the element */
+.tooltip {
+  position: relative;
+  height: 60px;
+  width: 250px;
+  /* background: var(--primary-color-0); */
+  /* color: white; */
+  text-align: center;
+  line-height: 60px;
+  font-size: 18px;
+  margin: 0 auto; }
+
+/* Global animation settings */
+.tooltip::before {
+  position: absolute;
+  z-index: 2;
+  display: none;
+  width: 200px;
+  padding: 10px;
+  font-size: 0.8em;
+  line-height: 1.4em;
+  border-radius: 5px;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  content: attr(title); }
+
+.tooltip::after {
+  position: absolute;
+  z-index: 1;
+  display: none;
+  width: 0;
+  height: 0;
+  border: 5px solid transparent;
+  content: ""; }
+
+.tooltip:hover::before,
+.tooltip:hover::after {
+  display: inline-block; }
+
+/* Tooltip above */
+.tooltip.top::before {
+  bottom: calc( 100% + 5px);
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+          transform: translateX(-50%); }
+
+.tooltip.top::after {
+  bottom: 100%;
+  left: 50%;
+  border-top-color: rgba(0, 0, 0, 0.8);
+  border-bottom-width: 0;
+  -webkit-transform: translateX(-50%);
+          transform: translateX(-50%); }
+
+/* Tooltip to the right */
+.tooltip.right::before {
+  top: 50%;
+  left: calc( 100% + 5px);
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%); }
+
+.tooltip.right::after {
+  top: 50%;
+  left: 100%;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+  border-left-width: 0;
+  border-right-color: rgba(0, 0, 0, 0.8); }
+
+/* Tooltip below */
+.tooltip.bottom:before {
+  top: calc(100% + 5px);
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+          transform: translateX(-50%); }
+
+.tooltip.bottom:after {
+  top: 100%;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
+  border-top-width: 0;
+  border-bottom-color: rgba(0, 0, 0, 0.8); }
+
+/* Tooltip to the left */
+.tooltip.left:before {
+  top: 50%;
+  right: calc(100% + 5px);
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%); }
+
+.tooltip.left:after {
+  top: 50%;
+  right: 100%;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+  border-right-width: 0;
+  border-left-color: rgba(0, 0, 0, 0.8); }
+
+/* ===== SPINNER - Circle ===== */
+/* sample html code (no content):
+    <section>
+      <div class="spinner-circle"></div>
+    </section>
+*/
+.spinner-circle {
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  width: 64px;
+  height: 64px;
+  border-radius: 64px; }
+
+.spinner-circle:before {
+  position: absolute;
+  width: 64px;
+  height: 64px;
+  border-radius: 64px;
+  content: " ";
+  clip: rect(0, 64px, 32px, 0);
+  -webkit-box-shadow: inset -5px 0 0 5px currentColor;
+          box-shadow: inset -5px 0 0 5px currentColor;
+  color: #323b40;
+  /* Rotation occurs smoothly (linear) */
+  -webkit-animation: rotator 1s infinite linear;
+          animation: rotator 1s infinite linear; }
+
+/* ===== SPINNER - Dots ===== */
+.spinner-dots {
+  position: relative;
+  margin: 32px;
+  display: inline-block;
+  vertical-align: middle;
+  width: 16px;
+  height: 16px;
+  border-radius: 16px;
+  background-color: #323b40; }
+
+.spinner-dots::before, .spinner-dots::after {
+  position: absolute;
+  display: inline-block;
+  vertical-align: middle;
+  width: 16px;
+  height: 16px;
+  border-radius: 16px;
+  background-color: inherit;
+  content: ""; }
+
+.spinner-dots::before {
+  -webkit-transform: translateX(-120%);
+          transform: translateX(-120%);
+  -webkit-transform-origin: 32px 50%;
+          transform-origin: 32px 50%;
+  -webkit-animation: orbit-1 1s infinite linear;
+          animation: orbit-1 1s infinite linear; }
+
+.spinner-dots::after {
+  -webkit-transform: translateX(120%);
+          transform: translateX(120%);
+  -webkit-transform-origin: -16px 50%;
+          transform-origin: -16px 50%;
+  -webkit-animation: orbit-2 1s infinite linear;
+          animation: orbit-2 1s infinite linear; }
+
+/* ===== Keyframes for Spinners ===== */
+@-webkit-keyframes rotator {
+  0% {
+    -webkit-transform: rotate(-180deg);
+            transform: rotate(-180deg);
+    -webkit-box-shadow: inset -5px 0 0 5px currentColor;
+            box-shadow: inset -5px 0 0 5px currentColor; }
+  50% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+    -webkit-box-shadow: inset -1px 0 0 1px currentColor;
+            box-shadow: inset -1px 0 0 1px currentColor; }
+  100% {
+    -webkit-transform: rotate(180deg);
+            transform: rotate(180deg);
+    -webkit-box-shadow: inset -5px 0 0 5px currentColor;
+            box-shadow: inset -5px 0 0 5px currentColor; } }
+@keyframes rotator {
+  0% {
+    -webkit-transform: rotate(-180deg);
+            transform: rotate(-180deg);
+    -webkit-box-shadow: inset -5px 0 0 5px currentColor;
+            box-shadow: inset -5px 0 0 5px currentColor; }
+  50% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+    -webkit-box-shadow: inset -1px 0 0 1px currentColor;
+            box-shadow: inset -1px 0 0 1px currentColor; }
+  100% {
+    -webkit-transform: rotate(180deg);
+            transform: rotate(180deg);
+    -webkit-box-shadow: inset -5px 0 0 5px currentColor;
+            box-shadow: inset -5px 0 0 5px currentColor; } }
+
+@-webkit-keyframes orbit-1 {
+  0% {
+    -webkit-transform: translateX(-120%) rotate(180deg);
+            transform: translateX(-120%) rotate(180deg); }
+  30% {
+    -webkit-transform: translateX(-120%) rotate(0deg);
+            transform: translateX(-120%) rotate(0deg); }
+  70% {
+    -webkit-transform: translateX(-120%) rotate(0deg);
+            transform: translateX(-120%) rotate(0deg); }
+  100% {
+    -webkit-transform: translateX(-120%) rotate(-180deg);
+            transform: translateX(-120%) rotate(-180deg); } }
+
+@keyframes orbit-1 {
+  0% {
+    -webkit-transform: translateX(-120%) rotate(180deg);
+            transform: translateX(-120%) rotate(180deg); }
+  30% {
+    -webkit-transform: translateX(-120%) rotate(0deg);
+            transform: translateX(-120%) rotate(0deg); }
+  70% {
+    -webkit-transform: translateX(-120%) rotate(0deg);
+            transform: translateX(-120%) rotate(0deg); }
+  100% {
+    -webkit-transform: translateX(-120%) rotate(-180deg);
+            transform: translateX(-120%) rotate(-180deg); } }
+
+@-webkit-keyframes orbit-2 {
+  0% {
+    -webkit-transform: translateX(120%) rotate(180deg);
+            transform: translateX(120%) rotate(180deg); }
+  30% {
+    -webkit-transform: translateX(120%) rotate(0deg);
+            transform: translateX(120%) rotate(0deg); }
+  70% {
+    -webkit-transform: translateX(120%) rotate(0deg);
+            transform: translateX(120%) rotate(0deg); }
+  100% {
+    -webkit-transform: translateX(120%) rotate(-180deg);
+            transform: translateX(120%) rotate(-180deg); } }
+
+@keyframes orbit-2 {
+  0% {
+    -webkit-transform: translateX(120%) rotate(180deg);
+            transform: translateX(120%) rotate(180deg); }
+  30% {
+    -webkit-transform: translateX(120%) rotate(0deg);
+            transform: translateX(120%) rotate(0deg); }
+  70% {
+    -webkit-transform: translateX(120%) rotate(0deg);
+            transform: translateX(120%) rotate(0deg); }
+  100% {
+    -webkit-transform: translateX(120%) rotate(-180deg);
+            transform: translateX(120%) rotate(-180deg); } }
+
+/* =========================
+    Dropdown Menu Styling
+   ========================= */
+.dropdown-group .dropdown-list {
+  margin: 0;
+  padding: 0 auto;
+  overflow: hidden;
+  min-width: 112px;
+  min-width: 7rem; }
+  .dropdown-group .dropdown-list li {
+    float: left; }
+  .dropdown-group .dropdown-list li a, .dropdown-group .dropdown-list .dropbtn {
+    display: inline-block;
+    text-align: center;
+    text-decoration: none; }
+  .dropdown-group .dropdown-list li.dropdown {
+    display: inline-block; }
+  .dropdown-group .dropdown-list .dropdown-content {
+    display: none;
+    position: absolute;
+    min-width: 144px;
+    min-width: 9rem;
+    -webkit-box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1; }
+  .dropdown-group .dropdown-list .dropdown-content a {
+    text-decoration: none;
+    display: block;
+    margin: 0 16px;
+    margin: 0 1rem;
+    text-align: left; }
+  .dropdown-group .dropdown-list .dropdown:hover .dropdown-content {
+    display: block; }
+
+/* .dropdown-list li a:hover, .dropdown:hover .dropbtn {
+  background-color: rgba($mainBlue-dark, .9);
+} */
+/* =========================
+    Popup Box style (modal)
+   ========================= */
+.overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.7);
+  -webkit-transition: opacity 500ms;
+  transition: opacity 500ms;
+  visibility: hidden;
+  opacity: 0; }
+  .overlay:target {
+    visibility: visible;
+    opacity: 1; }
+
+.popup {
+  margin: 112px auto;
+  margin: 7rem auto;
+  padding: 32px;
+  padding: 2rem;
+  background: #fff;
+  border-radius: 10px;
+  width: 40%;
+  position: relative;
+  -webkit-transition: all 2s ease-in-out;
+  transition: all 2s ease-in-out; }
+  .popup h2 {
+    margin-top: 0;
+    color: #333;
+    font-family: Tahoma, Arial, sans-serif; }
+  .popup-close {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    -webkit-transition: all 200ms;
+    transition: all 200ms;
+    font-size: 30px;
+    font-weight: bold;
+    text-decoration: none;
+    color: #333; }
+    .popup-close:hover {
+      color: #0269b4;
+      font-size: 40px;
+      font-size: 2.5rem; }
+  .popup-content {
+    max-height: 30%;
+    overflow: auto; }
+
+/* =========================
+    Buttons
+   ========================= */
+/*
+* Styles from Unicorn Buttons CSS button library
+* Source: https://github.com/alexwolfe/Buttons
+* Website: http://unicorn-ui.com/buttons/
+ */
+/* Unicorn Buttons recommends the use of autoprefixer instead of Compass
+* when using buttons. However, buttons does support Compass.
+* simply change $btn-use-compass to true and uncomment the
+* @import 'compass' code below to use Compass.
+*/
+/*
+* $btn-colors is used to generate the different button colors.
+* Edit or add colors to the list below and recompile.
+* Each block contains the (name, background, color)
+* The class is generated using the name: (ex .button-primary)
+*/
+.button-block,
+.button-stacked {
+  display: block;
+  width: 100%; }
+
+.button {
+  color: #666;
+  background-color: #EEE;
+  border-color: #EEE;
+  font-weight: 300;
+  font-size: 16px;
+  font-family: "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  text-decoration: none;
+  text-align: center;
+  line-height: 40px;
+  height: 40px;
+  padding: 0 40px;
+  margin: 0;
+  display: inline-block;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  cursor: pointer;
+  border: none;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  -webkit-transition-property: all;
+  transition-property: all;
+  -webkit-transition-duration: .3s;
+          transition-duration: .3s;
+  /*
+  * The disabled state uses the class .disabled, is-disabled,
+  * and the form attribute disabled="disabled".
+  * The use of !important is only added because this is a state
+  * that must be applied to all buttons when in a disabled state.
+  */ }
+  .button:visited {
+    color: #666; }
+  .button:hover, .button:focus {
+    background-color: #f6f6f6;
+    text-decoration: none;
+    outline: none; }
+  .button:active, .button.active, .button.is-active {
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.3);
+    text-decoration: none;
+    background-color: #eeeeee;
+    border-color: #cfcfcf;
+    color: #d5d5d5;
+    -webkit-transition-duration: 0s;
+            transition-duration: 0s;
+    -webkit-box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2); }
+  .button.disabled, .button.is-disabled, .button:disabled {
+    top: 0 !important;
+    background: #EEE !important;
+    border: 1px solid #DDD !important;
+    text-shadow: 0 1px 1px white !important;
+    color: #CCC !important;
+    cursor: default !important;
+    -webkit-appearance: none !important;
+       -moz-appearance: none !important;
+            appearance: none !important;
+    -webkit-box-shadow: none !important;
+            box-shadow: none !important;
+    opacity: .8 !important; }
+
+.button-uppercase {
+  text-transform: uppercase; }
+
+.button-lowercase {
+  text-transform: lowercase; }
+
+.button-capitalize {
+  text-transform: capitalize; }
+
+.button-small-caps {
+  font-variant: small-caps; }
+
+.button-icon-txt-large {
+  font-size: 36px !important; }
+
+.button-width-small {
+  padding: 0 10px !important; }
+
+/* Create colors for buttons (.button-primary, .button-secondary, etc.) */
+.button-primary,
+.button-primary-flat {
+  background-color: #2185d0;
+  border-color: #2185d0;
+  color: #FFF; }
+  .button-primary:visited,
+  .button-primary-flat:visited {
+    color: #FFF; }
+  .button-primary:hover, .button-primary:focus,
+  .button-primary-flat:hover,
+  .button-primary-flat:focus {
+    background-color: #439de1;
+    border-color: #439de1;
+    color: #FFF; }
+  .button-primary:active, .button-primary.active, .button-primary.is-active,
+  .button-primary-flat:active,
+  .button-primary-flat.active,
+  .button-primary-flat.is-active {
+    background-color: #2d83c4;
+    border-color: #2d83c4;
+    color: #1a69a4; }
+
+.button-plain,
+.button-plain-flat {
+  background-color: #e0e1e2;
+  border-color: #e0e1e2;
+  color: #374054; }
+  .button-plain:visited,
+  .button-plain-flat:visited {
+    color: #374054; }
+  .button-plain:hover, .button-plain:focus,
+  .button-plain-flat:hover,
+  .button-plain-flat:focus {
+    background-color: #fafbfb;
+    border-color: #fafbfb;
+    color: #374054; }
+  .button-plain:active, .button-plain.active, .button-plain.is-active,
+  .button-plain-flat:active,
+  .button-plain-flat.active,
+  .button-plain-flat.is-active {
+    background-color: #e1e1e1;
+    border-color: #e1e1e1;
+    color: #c6c8c9; }
+
+.button-inverse,
+.button-inverse-flat {
+  background-color: #222;
+  border-color: #222;
+  color: #EEE; }
+  .button-inverse:visited,
+  .button-inverse-flat:visited {
+    color: #EEE; }
+  .button-inverse:hover, .button-inverse:focus,
+  .button-inverse-flat:hover,
+  .button-inverse-flat:focus {
+    background-color: #3c3c3c;
+    border-color: #3c3c3c;
+    color: #EEE; }
+  .button-inverse:active, .button-inverse.active, .button-inverse.is-active,
+  .button-inverse-flat:active,
+  .button-inverse-flat.active,
+  .button-inverse-flat.is-active {
+    background-color: #222222;
+    border-color: #222222;
+    color: #090909; }
+
+.button-action,
+.button-action-flat {
+  background-color: #519592;
+  border-color: #519592;
+  color: #FFF; }
+  .button-action:visited,
+  .button-action-flat:visited {
+    color: #FFF; }
+  .button-action:hover, .button-action:focus,
+  .button-action-flat:hover,
+  .button-action-flat:focus {
+    background-color: #6baeab;
+    border-color: #6baeab;
+    color: #FFF; }
+  .button-action:active, .button-action.active, .button-action.is-active,
+  .button-action-flat:active,
+  .button-action-flat.active,
+  .button-action-flat.is-active {
+    background-color: #5d8a88;
+    border-color: #5d8a88;
+    color: #3f7472; }
+
+.button-highlight,
+.button-highlight-flat {
+  background-color: #FEAE1B;
+  border-color: #FEAE1B;
+  color: #FFF; }
+  .button-highlight:visited,
+  .button-highlight-flat:visited {
+    color: #FFF; }
+  .button-highlight:hover, .button-highlight:focus,
+  .button-highlight-flat:hover,
+  .button-highlight-flat:focus {
+    background-color: #fec04e;
+    border-color: #fec04e;
+    color: #FFF; }
+  .button-highlight:active, .button-highlight.active, .button-highlight.is-active,
+  .button-highlight-flat:active,
+  .button-highlight-flat.active,
+  .button-highlight-flat.is-active {
+    background-color: #f3ab26;
+    border-color: #f3ab26;
+    color: #e59501; }
+
+.button-caution,
+.button-caution-flat {
+  background-color: #db2828;
+  border-color: #db2828;
+  color: #FFF; }
+  .button-caution:visited,
+  .button-caution-flat:visited {
+    color: #FFF; }
+  .button-caution:hover, .button-caution:focus,
+  .button-caution-flat:hover,
+  .button-caution-flat:focus {
+    background-color: #e25454;
+    border-color: #e25454;
+    color: #FFF; }
+  .button-caution:active, .button-caution.active, .button-caution.is-active,
+  .button-caution-flat:active,
+  .button-caution-flat.active,
+  .button-caution-flat.is-active {
+    background-color: #ce3535;
+    border-color: #ce3535;
+    color: #b21e1e; }
+
+.button-royal,
+.button-royal-flat {
+  background-color: #7B72E9;
+  border-color: #7B72E9;
+  color: #FFF; }
+  .button-royal:visited,
+  .button-royal-flat:visited {
+    color: #FFF; }
+  .button-royal:hover, .button-royal:focus,
+  .button-royal-flat:hover,
+  .button-royal-flat:focus {
+    background-color: #a49ef0;
+    border-color: #a49ef0;
+    color: #FFF; }
+  .button-royal:active, .button-royal.active, .button-royal.is-active,
+  .button-royal-flat:active,
+  .button-royal-flat.active,
+  .button-royal-flat.is-active {
+    background-color: #827ae1;
+    border-color: #827ae1;
+    color: #5246e2; }
+
+.button-black,
+.button-black-flat {
+  background-color: #000000;
+  border-color: #000000;
+  color: #fff; }
+  .button-black:visited,
+  .button-black-flat:visited {
+    color: #fff; }
+  .button-black:hover, .button-black:focus,
+  .button-black-flat:hover,
+  .button-black-flat:focus {
+    background-color: #1a1a1a;
+    border-color: #1a1a1a;
+    color: #fff; }
+  .button-black:active, .button-black.active, .button-black.is-active,
+  .button-black-flat:active,
+  .button-black-flat.active,
+  .button-black-flat.is-active {
+    background-color: black;
+    border-color: black;
+    color: black; }
+
+/*
+* All of the files below represent the various button
+* types (including shapes & sizes). None of these files
+* are required. Simple remove the uneeded type below and
+* the button type will be excluded from the final build
+*/
+/*
+* Button Shapes
+*
+* This file creates the various button shapes
+* (ex. Circle, Rounded, Pill)
+*/
+.button-square {
+  border-radius: 0; }
+
+.button-box {
+  border-radius: 10px; }
+
+.button-rounded {
+  border-radius: 4px; }
+
+.button-pill {
+  border-radius: 200px; }
+
+.button-circle {
+  border-radius: 100%; }
+
+/*
+* Size Adjustment for equal height & widht buttons
+*
+* Remove padding and set a fixed width.
+*/
+.button-circle,
+.button-box,
+.button-square {
+  padding: 0 !important;
+  width: 40px; }
+  .button-circle.button-giant,
+  .button-box.button-giant,
+  .button-square.button-giant {
+    width: 70px; }
+  .button-circle.button-jumbo,
+  .button-box.button-jumbo,
+  .button-square.button-jumbo {
+    width: 60px; }
+  .button-circle.button-large,
+  .button-box.button-large,
+  .button-square.button-large {
+    width: 50px; }
+  .button-circle.button-normal,
+  .button-box.button-normal,
+  .button-square.button-normal {
+    width: 40px; }
+  .button-circle.button-small,
+  .button-box.button-small,
+  .button-square.button-small {
+    width: 30px; }
+  .button-circle.button-tiny,
+  .button-box.button-tiny,
+  .button-square.button-tiny {
+    width: 24px; }
+
+/*
+* Border Buttons
+*
+* These buttons have no fill they only have a
+* border to define their hit target.
+*/
+.button-border, .button-border-thin, .button-border-thick {
+  background: none;
+  border-width: 2px;
+  border-style: solid;
+  line-height: 36px; }
+  .button-border:hover, .button-border-thin:hover, .button-border-thick:hover {
+    background-color: rgba(255, 255, 255, 0.9); }
+  .button-border:active, .button-border-thin:active, .button-border-thick:active, .button-border.active, .active.button-border-thin, .active.button-border-thick, .button-border.is-active, .is-active.button-border-thin, .is-active.button-border-thick {
+    -webkit-box-shadow: none;
+            box-shadow: none;
+    text-shadow: none;
+    -webkit-transition-property: all;
+    transition-property: all;
+    -webkit-transition-duration: .3s;
+            transition-duration: .3s; }
+
+/*
+* Border Optional Sizes
+*
+* A slight variation in border thickness
+*/
+.button-border-thin {
+  border-width: 1px; }
+
+.button-border-thick {
+  border-width: 3px; }
+
+/*
+* Border Button Colors
+*
+* Create colors for buttons
+* (.button-primary, .button-secondary, etc.)
+*/
+.button-border, .button-border-thin, .button-border-thick,
+.button-border-thin,
+.button-border-thick {
+  /*
+  * Border Button Size Adjustment
+  *
+  * The line-height must be adjusted to compinsate for
+  * the width of the border.
+  */ }
+  .button-border.button-primary, .button-primary.button-border-thin, .button-primary.button-border-thick,
+  .button-border-thin.button-primary,
+  .button-border-thick.button-primary {
+    color: #2185d0; }
+    .button-border.button-primary:hover, .button-primary.button-border-thin:hover, .button-primary.button-border-thick:hover, .button-border.button-primary:focus, .button-primary.button-border-thin:focus, .button-primary.button-border-thick:focus,
+    .button-border-thin.button-primary:hover,
+    .button-border-thin.button-primary:focus,
+    .button-border-thick.button-primary:hover,
+    .button-border-thick.button-primary:focus {
+      background-color: rgba(67, 157, 225, 0.9);
+      color: rgba(255, 255, 255, 0.9); }
+    .button-border.button-primary:active, .button-primary.button-border-thin:active, .button-primary.button-border-thick:active, .button-border.button-primary.active, .button-primary.active.button-border-thin, .button-primary.active.button-border-thick, .button-border.button-primary.is-active, .button-primary.is-active.button-border-thin, .button-primary.is-active.button-border-thick,
+    .button-border-thin.button-primary:active,
+    .button-border-thin.button-primary.active,
+    .button-border-thin.button-primary.is-active,
+    .button-border-thick.button-primary:active,
+    .button-border-thick.button-primary.active,
+    .button-border-thick.button-primary.is-active {
+      background-color: rgba(45, 131, 196, 0.7);
+      color: rgba(255, 255, 255, 0.5);
+      opacity: .3; }
+  .button-border.button-plain, .button-plain.button-border-thin, .button-plain.button-border-thick,
+  .button-border-thin.button-plain,
+  .button-border-thick.button-plain {
+    color: #e0e1e2; }
+    .button-border.button-plain:hover, .button-plain.button-border-thin:hover, .button-plain.button-border-thick:hover, .button-border.button-plain:focus, .button-plain.button-border-thin:focus, .button-plain.button-border-thick:focus,
+    .button-border-thin.button-plain:hover,
+    .button-border-thin.button-plain:focus,
+    .button-border-thick.button-plain:hover,
+    .button-border-thick.button-plain:focus {
+      background-color: rgba(250, 251, 251, 0.9);
+      color: rgba(55, 64, 84, 0.9); }
+    .button-border.button-plain:active, .button-plain.button-border-thin:active, .button-plain.button-border-thick:active, .button-border.button-plain.active, .button-plain.active.button-border-thin, .button-plain.active.button-border-thick, .button-border.button-plain.is-active, .button-plain.is-active.button-border-thin, .button-plain.is-active.button-border-thick,
+    .button-border-thin.button-plain:active,
+    .button-border-thin.button-plain.active,
+    .button-border-thin.button-plain.is-active,
+    .button-border-thick.button-plain:active,
+    .button-border-thick.button-plain.active,
+    .button-border-thick.button-plain.is-active {
+      background-color: rgba(225, 225, 225, 0.7);
+      color: rgba(55, 64, 84, 0.5);
+      opacity: .3; }
+  .button-border.button-inverse, .button-inverse.button-border-thin, .button-inverse.button-border-thick,
+  .button-border-thin.button-inverse,
+  .button-border-thick.button-inverse {
+    color: #222; }
+    .button-border.button-inverse:hover, .button-inverse.button-border-thin:hover, .button-inverse.button-border-thick:hover, .button-border.button-inverse:focus, .button-inverse.button-border-thin:focus, .button-inverse.button-border-thick:focus,
+    .button-border-thin.button-inverse:hover,
+    .button-border-thin.button-inverse:focus,
+    .button-border-thick.button-inverse:hover,
+    .button-border-thick.button-inverse:focus {
+      background-color: rgba(60, 60, 60, 0.9);
+      color: rgba(238, 238, 238, 0.9); }
+    .button-border.button-inverse:active, .button-inverse.button-border-thin:active, .button-inverse.button-border-thick:active, .button-border.button-inverse.active, .button-inverse.active.button-border-thin, .button-inverse.active.button-border-thick, .button-border.button-inverse.is-active, .button-inverse.is-active.button-border-thin, .button-inverse.is-active.button-border-thick,
+    .button-border-thin.button-inverse:active,
+    .button-border-thin.button-inverse.active,
+    .button-border-thin.button-inverse.is-active,
+    .button-border-thick.button-inverse:active,
+    .button-border-thick.button-inverse.active,
+    .button-border-thick.button-inverse.is-active {
+      background-color: rgba(34, 34, 34, 0.7);
+      color: rgba(238, 238, 238, 0.5);
+      opacity: .3; }
+  .button-border.button-action, .button-action.button-border-thin, .button-action.button-border-thick,
+  .button-border-thin.button-action,
+  .button-border-thick.button-action {
+    color: #519592; }
+    .button-border.button-action:hover, .button-action.button-border-thin:hover, .button-action.button-border-thick:hover, .button-border.button-action:focus, .button-action.button-border-thin:focus, .button-action.button-border-thick:focus,
+    .button-border-thin.button-action:hover,
+    .button-border-thin.button-action:focus,
+    .button-border-thick.button-action:hover,
+    .button-border-thick.button-action:focus {
+      background-color: rgba(107, 174, 171, 0.9);
+      color: rgba(255, 255, 255, 0.9); }
+    .button-border.button-action:active, .button-action.button-border-thin:active, .button-action.button-border-thick:active, .button-border.button-action.active, .button-action.active.button-border-thin, .button-action.active.button-border-thick, .button-border.button-action.is-active, .button-action.is-active.button-border-thin, .button-action.is-active.button-border-thick,
+    .button-border-thin.button-action:active,
+    .button-border-thin.button-action.active,
+    .button-border-thin.button-action.is-active,
+    .button-border-thick.button-action:active,
+    .button-border-thick.button-action.active,
+    .button-border-thick.button-action.is-active {
+      background-color: rgba(93, 138, 136, 0.7);
+      color: rgba(255, 255, 255, 0.5);
+      opacity: .3; }
+  .button-border.button-highlight, .button-highlight.button-border-thin, .button-highlight.button-border-thick,
+  .button-border-thin.button-highlight,
+  .button-border-thick.button-highlight {
+    color: #FEAE1B; }
+    .button-border.button-highlight:hover, .button-highlight.button-border-thin:hover, .button-highlight.button-border-thick:hover, .button-border.button-highlight:focus, .button-highlight.button-border-thin:focus, .button-highlight.button-border-thick:focus,
+    .button-border-thin.button-highlight:hover,
+    .button-border-thin.button-highlight:focus,
+    .button-border-thick.button-highlight:hover,
+    .button-border-thick.button-highlight:focus {
+      background-color: rgba(254, 192, 78, 0.9);
+      color: rgba(255, 255, 255, 0.9); }
+    .button-border.button-highlight:active, .button-highlight.button-border-thin:active, .button-highlight.button-border-thick:active, .button-border.button-highlight.active, .button-highlight.active.button-border-thin, .button-highlight.active.button-border-thick, .button-border.button-highlight.is-active, .button-highlight.is-active.button-border-thin, .button-highlight.is-active.button-border-thick,
+    .button-border-thin.button-highlight:active,
+    .button-border-thin.button-highlight.active,
+    .button-border-thin.button-highlight.is-active,
+    .button-border-thick.button-highlight:active,
+    .button-border-thick.button-highlight.active,
+    .button-border-thick.button-highlight.is-active {
+      background-color: rgba(243, 171, 38, 0.7);
+      color: rgba(255, 255, 255, 0.5);
+      opacity: .3; }
+  .button-border.button-caution, .button-caution.button-border-thin, .button-caution.button-border-thick,
+  .button-border-thin.button-caution,
+  .button-border-thick.button-caution {
+    color: #db2828; }
+    .button-border.button-caution:hover, .button-caution.button-border-thin:hover, .button-caution.button-border-thick:hover, .button-border.button-caution:focus, .button-caution.button-border-thin:focus, .button-caution.button-border-thick:focus,
+    .button-border-thin.button-caution:hover,
+    .button-border-thin.button-caution:focus,
+    .button-border-thick.button-caution:hover,
+    .button-border-thick.button-caution:focus {
+      background-color: rgba(226, 84, 84, 0.9);
+      color: rgba(255, 255, 255, 0.9); }
+    .button-border.button-caution:active, .button-caution.button-border-thin:active, .button-caution.button-border-thick:active, .button-border.button-caution.active, .button-caution.active.button-border-thin, .button-caution.active.button-border-thick, .button-border.button-caution.is-active, .button-caution.is-active.button-border-thin, .button-caution.is-active.button-border-thick,
+    .button-border-thin.button-caution:active,
+    .button-border-thin.button-caution.active,
+    .button-border-thin.button-caution.is-active,
+    .button-border-thick.button-caution:active,
+    .button-border-thick.button-caution.active,
+    .button-border-thick.button-caution.is-active {
+      background-color: rgba(206, 53, 53, 0.7);
+      color: rgba(255, 255, 255, 0.5);
+      opacity: .3; }
+  .button-border.button-royal, .button-royal.button-border-thin, .button-royal.button-border-thick,
+  .button-border-thin.button-royal,
+  .button-border-thick.button-royal {
+    color: #7B72E9; }
+    .button-border.button-royal:hover, .button-royal.button-border-thin:hover, .button-royal.button-border-thick:hover, .button-border.button-royal:focus, .button-royal.button-border-thin:focus, .button-royal.button-border-thick:focus,
+    .button-border-thin.button-royal:hover,
+    .button-border-thin.button-royal:focus,
+    .button-border-thick.button-royal:hover,
+    .button-border-thick.button-royal:focus {
+      background-color: rgba(164, 158, 240, 0.9);
+      color: rgba(255, 255, 255, 0.9); }
+    .button-border.button-royal:active, .button-royal.button-border-thin:active, .button-royal.button-border-thick:active, .button-border.button-royal.active, .button-royal.active.button-border-thin, .button-royal.active.button-border-thick, .button-border.button-royal.is-active, .button-royal.is-active.button-border-thin, .button-royal.is-active.button-border-thick,
+    .button-border-thin.button-royal:active,
+    .button-border-thin.button-royal.active,
+    .button-border-thin.button-royal.is-active,
+    .button-border-thick.button-royal:active,
+    .button-border-thick.button-royal.active,
+    .button-border-thick.button-royal.is-active {
+      background-color: rgba(130, 122, 225, 0.7);
+      color: rgba(255, 255, 255, 0.5);
+      opacity: .3; }
+  .button-border.button-black, .button-black.button-border-thin, .button-black.button-border-thick,
+  .button-border-thin.button-black,
+  .button-border-thick.button-black {
+    color: #000000; }
+    .button-border.button-black:hover, .button-black.button-border-thin:hover, .button-black.button-border-thick:hover, .button-border.button-black:focus, .button-black.button-border-thin:focus, .button-black.button-border-thick:focus,
+    .button-border-thin.button-black:hover,
+    .button-border-thin.button-black:focus,
+    .button-border-thick.button-black:hover,
+    .button-border-thick.button-black:focus {
+      background-color: rgba(26, 26, 26, 0.9);
+      color: rgba(255, 255, 255, 0.9); }
+    .button-border.button-black:active, .button-black.button-border-thin:active, .button-black.button-border-thick:active, .button-border.button-black.active, .button-black.active.button-border-thin, .button-black.active.button-border-thick, .button-border.button-black.is-active, .button-black.is-active.button-border-thin, .button-black.is-active.button-border-thick,
+    .button-border-thin.button-black:active,
+    .button-border-thin.button-black.active,
+    .button-border-thin.button-black.is-active,
+    .button-border-thick.button-black:active,
+    .button-border-thick.button-black.active,
+    .button-border-thick.button-black.is-active {
+      background-color: rgba(0, 0, 0, 0.7);
+      color: rgba(255, 255, 255, 0.5);
+      opacity: .3; }
+  .button-border.button-giant, .button-giant.button-border-thin, .button-giant.button-border-thick,
+  .button-border-thin.button-giant,
+  .button-border-thick.button-giant {
+    line-height: 66px; }
+  .button-border.button-jumbo, .button-jumbo.button-border-thin, .button-jumbo.button-border-thick,
+  .button-border-thin.button-jumbo,
+  .button-border-thick.button-jumbo {
+    line-height: 56px; }
+  .button-border.button-large, .button-large.button-border-thin, .button-large.button-border-thick,
+  .button-border-thin.button-large,
+  .button-border-thick.button-large {
+    line-height: 46px; }
+  .button-border.button-normal, .button-normal.button-border-thin, .button-normal.button-border-thick,
+  .button-border-thin.button-normal,
+  .button-border-thick.button-normal {
+    line-height: 36px; }
+  .button-border.button-small, .button-small.button-border-thin, .button-small.button-border-thick,
+  .button-border-thin.button-small,
+  .button-border-thick.button-small {
+    line-height: 26px; }
+  .button-border.button-tiny, .button-tiny.button-border-thin, .button-tiny.button-border-thick,
+  .button-border-thin.button-tiny,
+  .button-border-thick.button-tiny {
+    line-height: 20px; }
+
+/*
+* Border Buttons
+*
+* These buttons have no fill they only have a
+* border to define their hit target.
+*/
+.button-borderless {
+  background: none;
+  border: none;
+  padding: 0 8px !important;
+  color: #EEE;
+  font-size: 20.8px;
+  font-weight: 200;
+  /*
+  * Borderless Button Colors
+  *
+  * Create colors for buttons
+  * (.button-primary, .button-secondary, etc.)
+  */
+  /*
+  * Borderles Size Adjustment
+  *
+  * The font-size must be large to compinsate for
+  * the lack of a hit target.
+  */ }
+  .button-borderless:hover, .button-borderless:focus {
+    background: none; }
+  .button-borderless:active, .button-borderless.active, .button-borderless.is-active {
+    -webkit-box-shadow: none;
+            box-shadow: none;
+    text-shadow: none;
+    -webkit-transition-property: all;
+    transition-property: all;
+    -webkit-transition-duration: .3s;
+            transition-duration: .3s;
+    opacity: .3; }
+  .button-borderless.button-primary {
+    color: #2185d0; }
+  .button-borderless.button-plain {
+    color: #e0e1e2; }
+  .button-borderless.button-inverse {
+    color: #222; }
+  .button-borderless.button-action {
+    color: #519592; }
+  .button-borderless.button-highlight {
+    color: #FEAE1B; }
+  .button-borderless.button-caution {
+    color: #db2828; }
+  .button-borderless.button-royal {
+    color: #7B72E9; }
+  .button-borderless.button-black {
+    color: #000000; }
+  .button-borderless.button-giant {
+    font-size: 36.4px;
+    height: 52.4px;
+    line-height: 52.4px; }
+  .button-borderless.button-jumbo {
+    font-size: 31.2px;
+    height: 47.2px;
+    line-height: 47.2px; }
+  .button-borderless.button-large {
+    font-size: 26px;
+    height: 42px;
+    line-height: 42px; }
+  .button-borderless.button-normal {
+    font-size: 20.8px;
+    height: 36.8px;
+    line-height: 36.8px; }
+  .button-borderless.button-small {
+    font-size: 15.6px;
+    height: 31.6px;
+    line-height: 31.6px; }
+  .button-borderless.button-tiny {
+    font-size: 12.48px;
+    height: 28.48px;
+    line-height: 28.48px; }
+
+/*
+* Raised Buttons
+*
+* A classic looking button that offers
+* great depth and affordance.
+*/
+.button-raised {
+  border-color: #e1e1e1;
+  border-style: solid;
+  border-width: 1px;
+  line-height: 38px;
+  background: -webkit-gradient(linear, left top, left bottom, from(#f6f6f6), to(#e1e1e1));
+  background: linear-gradient(#f6f6f6, #e1e1e1);
+  -webkit-box-shadow: inset 0px 1px 0px rgba(255, 255, 255, 0.3), 0 1px 2px rgba(0, 0, 0, 0.15);
+          box-shadow: inset 0px 1px 0px rgba(255, 255, 255, 0.3), 0 1px 2px rgba(0, 0, 0, 0.15); }
+  .button-raised:hover, .button-raised:focus {
+    background: -webkit-gradient(linear, left top, left bottom, from(white), to(gainsboro));
+    background: linear-gradient(to bottom, white, gainsboro); }
+  .button-raised:active, .button-raised.active, .button-raised.is-active {
+    background: #eeeeee;
+    -webkit-box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.2), 0px 1px 0px white;
+            box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.2), 0px 1px 0px white; }
+
+/*
+* Raised Button Colors
+*
+* Create colors for raised buttons
+*/
+.button-raised.button-primary {
+  border-color: #1e77ba;
+  background: -webkit-gradient(linear, left top, left bottom, from(#2d92de), to(#1e77ba));
+  background: linear-gradient(#2d92de, #1e77ba); }
+  .button-raised.button-primary:hover, .button-raised.button-primary:focus {
+    background: -webkit-gradient(linear, left top, left bottom, from(#3a99e0), to(#1c71b1));
+    background: linear-gradient(to bottom, #3a99e0, #1c71b1); }
+  .button-raised.button-primary:active, .button-raised.button-primary.active, .button-raised.button-primary.is-active {
+    border-color: #1a69a4;
+    background: #2d83c4; }
+
+.button-raised.button-plain {
+  border-color: #d3d4d6;
+  background: -webkit-gradient(linear, left top, left bottom, from(#edeeee), to(#d3d4d6));
+  background: linear-gradient(#edeeee, #d3d4d6); }
+  .button-raised.button-plain:hover, .button-raised.button-plain:focus {
+    background: -webkit-gradient(linear, left top, left bottom, from(#f5f5f6), to(#cecfd1));
+    background: linear-gradient(to bottom, #f5f5f6, #cecfd1); }
+  .button-raised.button-plain:active, .button-raised.button-plain.active, .button-raised.button-plain.is-active {
+    border-color: #c6c8c9;
+    background: #e1e1e1; }
+
+.button-raised.button-inverse {
+  border-color: #151515;
+  background: -webkit-gradient(linear, left top, left bottom, from(#2f2f2f), to(#151515));
+  background: linear-gradient(#2f2f2f, #151515); }
+  .button-raised.button-inverse:hover, .button-raised.button-inverse:focus {
+    background: -webkit-gradient(linear, left top, left bottom, from(#363636), to(#101010));
+    background: linear-gradient(to bottom, #363636, #101010); }
+  .button-raised.button-inverse:active, .button-raised.button-inverse.active, .button-raised.button-inverse.is-active {
+    border-color: #090909;
+    background: #222222; }
+
+.button-raised.button-action {
+  border-color: #488482;
+  background: -webkit-gradient(linear, left top, left bottom, from(#5aa5a2), to(#488482));
+  background: linear-gradient(#5aa5a2, #488482); }
+  .button-raised.button-action:hover, .button-raised.button-action:focus {
+    background: -webkit-gradient(linear, left top, left bottom, from(#64aba8), to(#447e7b));
+    background: linear-gradient(to bottom, #64aba8, #447e7b); }
+  .button-raised.button-action:active, .button-raised.button-action.active, .button-raised.button-action.is-active {
+    border-color: #3f7472;
+    background: #5d8a88; }
+
+.button-raised.button-highlight {
+  border-color: #fea502;
+  background: -webkit-gradient(linear, left top, left bottom, from(#feb734), to(#fea502));
+  background: linear-gradient(#feb734, #fea502); }
+  .button-raised.button-highlight:hover, .button-raised.button-highlight:focus {
+    background: -webkit-gradient(linear, left top, left bottom, from(#febc44), to(#f49f01));
+    background: linear-gradient(to bottom, #febc44, #f49f01); }
+  .button-raised.button-highlight:active, .button-raised.button-highlight.active, .button-raised.button-highlight.is-active {
+    border-color: #e59501;
+    background: #f3ab26; }
+
+.button-raised.button-caution {
+  border-color: #c82121;
+  background: -webkit-gradient(linear, left top, left bottom, from(#df3e3e), to(#c82121));
+  background: linear-gradient(#df3e3e, #c82121); }
+  .button-raised.button-caution:hover, .button-raised.button-caution:focus {
+    background: -webkit-gradient(linear, left top, left bottom, from(#e14b4b), to(#bf2020));
+    background: linear-gradient(to bottom, #e14b4b, #bf2020); }
+  .button-raised.button-caution:active, .button-raised.button-caution.active, .button-raised.button-caution.is-active {
+    border-color: #b21e1e;
+    background: #ce3535; }
+
+.button-raised.button-royal {
+  border-color: #665ce6;
+  background: -webkit-gradient(linear, left top, left bottom, from(#9088ec), to(#665ce6));
+  background: linear-gradient(#9088ec, #665ce6); }
+  .button-raised.button-royal:hover, .button-raised.button-royal:focus {
+    background: -webkit-gradient(linear, left top, left bottom, from(#9c95ef), to(#5e53e4));
+    background: linear-gradient(to bottom, #9c95ef, #5e53e4); }
+  .button-raised.button-royal:active, .button-raised.button-royal.active, .button-raised.button-royal.is-active {
+    border-color: #5246e2;
+    background: #827ae1; }
+
+.button-raised.button-black {
+  border-color: black;
+  background: -webkit-gradient(linear, left top, left bottom, from(#0d0d0d), to(black));
+  background: linear-gradient(#0d0d0d, black); }
+  .button-raised.button-black:hover, .button-raised.button-black:focus {
+    background: -webkit-gradient(linear, left top, left bottom, from(#141414), to(black));
+    background: linear-gradient(to bottom, #141414, black); }
+  .button-raised.button-black:active, .button-raised.button-black.active, .button-raised.button-black.is-active {
+    border-color: black;
+    background: black; }
+
+/*
+* 3D Buttons
+*
+* These buttons have a heavy three dimensional
+* style that mimics the visual appearance of a
+* real life button.
+*/
+.button-3d {
+  position: relative;
+  top: 0;
+  -webkit-box-shadow: 0 7px 0 #bbbbbb, 0 8px 3px rgba(0, 0, 0, 0.2);
+          box-shadow: 0 7px 0 #bbbbbb, 0 8px 3px rgba(0, 0, 0, 0.2); }
+  .button-3d:hover, .button-3d:focus {
+    -webkit-box-shadow: 0 7px 0 #bbbbbb, 0 8px 3px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 7px 0 #bbbbbb, 0 8px 3px rgba(0, 0, 0, 0.2); }
+  .button-3d:active, .button-3d.active, .button-3d.is-active {
+    top: 5px;
+    -webkit-transition-property: all;
+    transition-property: all;
+    -webkit-transition-duration: .15s;
+            transition-duration: .15s;
+    -webkit-box-shadow: 0 2px 0 #bbbbbb, 0 3px 3px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 2px 0 #bbbbbb, 0 3px 3px rgba(0, 0, 0, 0.2); }
+
+/*
+* 3D Button Colors
+*
+* Create colors for buttons
+* (.button-primary, .button-secondary, etc.)
+*/
+.button-3d.button-primary {
+  -webkit-box-shadow: 0 7px 0 #1a69a4, 0 8px 3px rgba(0, 0, 0, 0.3);
+          box-shadow: 0 7px 0 #1a69a4, 0 8px 3px rgba(0, 0, 0, 0.3); }
+  .button-3d.button-primary:hover, .button-3d.button-primary:focus {
+    -webkit-box-shadow: 0 7px 0 #19639b, 0 8px 3px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 7px 0 #19639b, 0 8px 3px rgba(0, 0, 0, 0.3); }
+  .button-3d.button-primary:active, .button-3d.button-primary.active, .button-3d.button-primary.is-active {
+    -webkit-box-shadow: 0 2px 0 #134d78, 0 3px 3px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 2px 0 #134d78, 0 3px 3px rgba(0, 0, 0, 0.2); }
+
+.button-3d.button-plain {
+  -webkit-box-shadow: 0 7px 0 #c6c8c9, 0 8px 3px rgba(0, 0, 0, 0.3);
+          box-shadow: 0 7px 0 #c6c8c9, 0 8px 3px rgba(0, 0, 0, 0.3); }
+  .button-3d.button-plain:hover, .button-3d.button-plain:focus {
+    -webkit-box-shadow: 0 7px 0 #c0c2c4, 0 8px 3px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 7px 0 #c0c2c4, 0 8px 3px rgba(0, 0, 0, 0.3); }
+  .button-3d.button-plain:active, .button-3d.button-plain.active, .button-3d.button-plain.is-active {
+    -webkit-box-shadow: 0 2px 0 #abaeb1, 0 3px 3px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 2px 0 #abaeb1, 0 3px 3px rgba(0, 0, 0, 0.2); }
+
+.button-3d.button-inverse {
+  -webkit-box-shadow: 0 7px 0 #090909, 0 8px 3px rgba(0, 0, 0, 0.3);
+          box-shadow: 0 7px 0 #090909, 0 8px 3px rgba(0, 0, 0, 0.3); }
+  .button-3d.button-inverse:hover, .button-3d.button-inverse:focus {
+    -webkit-box-shadow: 0 7px 0 #030303, 0 8px 3px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 7px 0 #030303, 0 8px 3px rgba(0, 0, 0, 0.3); }
+  .button-3d.button-inverse:active, .button-3d.button-inverse.active, .button-3d.button-inverse.is-active {
+    -webkit-box-shadow: 0 2px 0 black, 0 3px 3px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 2px 0 black, 0 3px 3px rgba(0, 0, 0, 0.2); }
+
+.button-3d.button-action {
+  -webkit-box-shadow: 0 7px 0 #3f7472, 0 8px 3px rgba(0, 0, 0, 0.3);
+          box-shadow: 0 7px 0 #3f7472, 0 8px 3px rgba(0, 0, 0, 0.3); }
+  .button-3d.button-action:hover, .button-3d.button-action:focus {
+    -webkit-box-shadow: 0 7px 0 #3b6d6b, 0 8px 3px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 7px 0 #3b6d6b, 0 8px 3px rgba(0, 0, 0, 0.3); }
+  .button-3d.button-action:active, .button-3d.button-action.active, .button-3d.button-action.is-active {
+    -webkit-box-shadow: 0 2px 0 #2d5351, 0 3px 3px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 2px 0 #2d5351, 0 3px 3px rgba(0, 0, 0, 0.2); }
+
+.button-3d.button-highlight {
+  -webkit-box-shadow: 0 7px 0 #e59501, 0 8px 3px rgba(0, 0, 0, 0.3);
+          box-shadow: 0 7px 0 #e59501, 0 8px 3px rgba(0, 0, 0, 0.3); }
+  .button-3d.button-highlight:hover, .button-3d.button-highlight:focus {
+    -webkit-box-shadow: 0 7px 0 #db8e01, 0 8px 3px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 7px 0 #db8e01, 0 8px 3px rgba(0, 0, 0, 0.3); }
+  .button-3d.button-highlight:active, .button-3d.button-highlight.active, .button-3d.button-highlight.is-active {
+    -webkit-box-shadow: 0 2px 0 #b27401, 0 3px 3px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 2px 0 #b27401, 0 3px 3px rgba(0, 0, 0, 0.2); }
+
+.button-3d.button-caution {
+  -webkit-box-shadow: 0 7px 0 #b21e1e, 0 8px 3px rgba(0, 0, 0, 0.3);
+          box-shadow: 0 7px 0 #b21e1e, 0 8px 3px rgba(0, 0, 0, 0.3); }
+  .button-3d.button-caution:hover, .button-3d.button-caution:focus {
+    -webkit-box-shadow: 0 7px 0 #a91c1c, 0 8px 3px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 7px 0 #a91c1c, 0 8px 3px rgba(0, 0, 0, 0.3); }
+  .button-3d.button-caution:active, .button-3d.button-caution.active, .button-3d.button-caution.is-active {
+    -webkit-box-shadow: 0 2px 0 #861717, 0 3px 3px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 2px 0 #861717, 0 3px 3px rgba(0, 0, 0, 0.2); }
+
+.button-3d.button-royal {
+  -webkit-box-shadow: 0 7px 0 #5246e2, 0 8px 3px rgba(0, 0, 0, 0.3);
+          box-shadow: 0 7px 0 #5246e2, 0 8px 3px rgba(0, 0, 0, 0.3); }
+  .button-3d.button-royal:hover, .button-3d.button-royal:focus {
+    -webkit-box-shadow: 0 7px 0 #493de1, 0 8px 3px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 7px 0 #493de1, 0 8px 3px rgba(0, 0, 0, 0.3); }
+  .button-3d.button-royal:active, .button-3d.button-royal.active, .button-3d.button-royal.is-active {
+    -webkit-box-shadow: 0 2px 0 #2f21d4, 0 3px 3px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 2px 0 #2f21d4, 0 3px 3px rgba(0, 0, 0, 0.2); }
+
+.button-3d.button-black {
+  -webkit-box-shadow: 0 7px 0 black, 0 8px 3px rgba(0, 0, 0, 0.3);
+          box-shadow: 0 7px 0 black, 0 8px 3px rgba(0, 0, 0, 0.3); }
+  .button-3d.button-black:hover, .button-3d.button-black:focus {
+    -webkit-box-shadow: 0 7px 0 black, 0 8px 3px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 7px 0 black, 0 8px 3px rgba(0, 0, 0, 0.3); }
+  .button-3d.button-black:active, .button-3d.button-black.active, .button-3d.button-black.is-active {
+    -webkit-box-shadow: 0 2px 0 black, 0 3px 3px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 2px 0 black, 0 3px 3px rgba(0, 0, 0, 0.2); }
+
+/*
+* Glowing Buttons
+*
+* A pulse like glow that appears
+* rythmically around the edges of
+* a button.
+*/
+/*
+* Glow animation mixin for Compass users
+*
+*/
+/*
+* Glowing Keyframes
+*
+*/
+@-webkit-keyframes glowing {
+  from {
+    -webkit-box-shadow: 0 0 0 rgba(44, 154, 219, 0.3);
+            box-shadow: 0 0 0 rgba(44, 154, 219, 0.3); }
+  50% {
+    -webkit-box-shadow: 0 0 20px rgba(44, 154, 219, 0.8);
+            box-shadow: 0 0 20px rgba(44, 154, 219, 0.8); }
+  to {
+    -webkit-box-shadow: 0 0 0 rgba(44, 154, 219, 0.3);
+            box-shadow: 0 0 0 rgba(44, 154, 219, 0.3); } }
+@keyframes glowing {
+  from {
+    -webkit-box-shadow: 0 0 0 rgba(44, 154, 219, 0.3);
+            box-shadow: 0 0 0 rgba(44, 154, 219, 0.3); }
+  50% {
+    -webkit-box-shadow: 0 0 20px rgba(44, 154, 219, 0.8);
+            box-shadow: 0 0 20px rgba(44, 154, 219, 0.8); }
+  to {
+    -webkit-box-shadow: 0 0 0 rgba(44, 154, 219, 0.3);
+            box-shadow: 0 0 0 rgba(44, 154, 219, 0.3); } }
+
+/*
+* Glowing Keyframes for various colors
+*
+*/
+@-webkit-keyframes glowing-primary {
+  from {
+    -webkit-box-shadow: 0 0 0 rgba(33, 133, 208, 0.3);
+            box-shadow: 0 0 0 rgba(33, 133, 208, 0.3); }
+  50% {
+    -webkit-box-shadow: 0 0 20px rgba(33, 133, 208, 0.8);
+            box-shadow: 0 0 20px rgba(33, 133, 208, 0.8); }
+  to {
+    -webkit-box-shadow: 0 0 0 rgba(33, 133, 208, 0.3);
+            box-shadow: 0 0 0 rgba(33, 133, 208, 0.3); } }
+@keyframes glowing-primary {
+  from {
+    -webkit-box-shadow: 0 0 0 rgba(33, 133, 208, 0.3);
+            box-shadow: 0 0 0 rgba(33, 133, 208, 0.3); }
+  50% {
+    -webkit-box-shadow: 0 0 20px rgba(33, 133, 208, 0.8);
+            box-shadow: 0 0 20px rgba(33, 133, 208, 0.8); }
+  to {
+    -webkit-box-shadow: 0 0 0 rgba(33, 133, 208, 0.3);
+            box-shadow: 0 0 0 rgba(33, 133, 208, 0.3); } }
+
+@-webkit-keyframes glowing-plain {
+  from {
+    -webkit-box-shadow: 0 0 0 rgba(224, 225, 226, 0.3);
+            box-shadow: 0 0 0 rgba(224, 225, 226, 0.3); }
+  50% {
+    -webkit-box-shadow: 0 0 20px rgba(224, 225, 226, 0.8);
+            box-shadow: 0 0 20px rgba(224, 225, 226, 0.8); }
+  to {
+    -webkit-box-shadow: 0 0 0 rgba(224, 225, 226, 0.3);
+            box-shadow: 0 0 0 rgba(224, 225, 226, 0.3); } }
+
+@keyframes glowing-plain {
+  from {
+    -webkit-box-shadow: 0 0 0 rgba(224, 225, 226, 0.3);
+            box-shadow: 0 0 0 rgba(224, 225, 226, 0.3); }
+  50% {
+    -webkit-box-shadow: 0 0 20px rgba(224, 225, 226, 0.8);
+            box-shadow: 0 0 20px rgba(224, 225, 226, 0.8); }
+  to {
+    -webkit-box-shadow: 0 0 0 rgba(224, 225, 226, 0.3);
+            box-shadow: 0 0 0 rgba(224, 225, 226, 0.3); } }
+
+@-webkit-keyframes glowing-inverse {
+  from {
+    -webkit-box-shadow: 0 0 0 rgba(34, 34, 34, 0.3);
+            box-shadow: 0 0 0 rgba(34, 34, 34, 0.3); }
+  50% {
+    -webkit-box-shadow: 0 0 20px rgba(34, 34, 34, 0.8);
+            box-shadow: 0 0 20px rgba(34, 34, 34, 0.8); }
+  to {
+    -webkit-box-shadow: 0 0 0 rgba(34, 34, 34, 0.3);
+            box-shadow: 0 0 0 rgba(34, 34, 34, 0.3); } }
+
+@keyframes glowing-inverse {
+  from {
+    -webkit-box-shadow: 0 0 0 rgba(34, 34, 34, 0.3);
+            box-shadow: 0 0 0 rgba(34, 34, 34, 0.3); }
+  50% {
+    -webkit-box-shadow: 0 0 20px rgba(34, 34, 34, 0.8);
+            box-shadow: 0 0 20px rgba(34, 34, 34, 0.8); }
+  to {
+    -webkit-box-shadow: 0 0 0 rgba(34, 34, 34, 0.3);
+            box-shadow: 0 0 0 rgba(34, 34, 34, 0.3); } }
+
+@-webkit-keyframes glowing-action {
+  from {
+    -webkit-box-shadow: 0 0 0 rgba(81, 149, 146, 0.3);
+            box-shadow: 0 0 0 rgba(81, 149, 146, 0.3); }
+  50% {
+    -webkit-box-shadow: 0 0 20px rgba(81, 149, 146, 0.8);
+            box-shadow: 0 0 20px rgba(81, 149, 146, 0.8); }
+  to {
+    -webkit-box-shadow: 0 0 0 rgba(81, 149, 146, 0.3);
+            box-shadow: 0 0 0 rgba(81, 149, 146, 0.3); } }
+
+@keyframes glowing-action {
+  from {
+    -webkit-box-shadow: 0 0 0 rgba(81, 149, 146, 0.3);
+            box-shadow: 0 0 0 rgba(81, 149, 146, 0.3); }
+  50% {
+    -webkit-box-shadow: 0 0 20px rgba(81, 149, 146, 0.8);
+            box-shadow: 0 0 20px rgba(81, 149, 146, 0.8); }
+  to {
+    -webkit-box-shadow: 0 0 0 rgba(81, 149, 146, 0.3);
+            box-shadow: 0 0 0 rgba(81, 149, 146, 0.3); } }
+
+@-webkit-keyframes glowing-highlight {
+  from {
+    -webkit-box-shadow: 0 0 0 rgba(254, 174, 27, 0.3);
+            box-shadow: 0 0 0 rgba(254, 174, 27, 0.3); }
+  50% {
+    -webkit-box-shadow: 0 0 20px rgba(254, 174, 27, 0.8);
+            box-shadow: 0 0 20px rgba(254, 174, 27, 0.8); }
+  to {
+    -webkit-box-shadow: 0 0 0 rgba(254, 174, 27, 0.3);
+            box-shadow: 0 0 0 rgba(254, 174, 27, 0.3); } }
+
+@keyframes glowing-highlight {
+  from {
+    -webkit-box-shadow: 0 0 0 rgba(254, 174, 27, 0.3);
+            box-shadow: 0 0 0 rgba(254, 174, 27, 0.3); }
+  50% {
+    -webkit-box-shadow: 0 0 20px rgba(254, 174, 27, 0.8);
+            box-shadow: 0 0 20px rgba(254, 174, 27, 0.8); }
+  to {
+    -webkit-box-shadow: 0 0 0 rgba(254, 174, 27, 0.3);
+            box-shadow: 0 0 0 rgba(254, 174, 27, 0.3); } }
+
+@-webkit-keyframes glowing-caution {
+  from {
+    -webkit-box-shadow: 0 0 0 rgba(219, 40, 40, 0.3);
+            box-shadow: 0 0 0 rgba(219, 40, 40, 0.3); }
+  50% {
+    -webkit-box-shadow: 0 0 20px rgba(219, 40, 40, 0.8);
+            box-shadow: 0 0 20px rgba(219, 40, 40, 0.8); }
+  to {
+    -webkit-box-shadow: 0 0 0 rgba(219, 40, 40, 0.3);
+            box-shadow: 0 0 0 rgba(219, 40, 40, 0.3); } }
+
+@keyframes glowing-caution {
+  from {
+    -webkit-box-shadow: 0 0 0 rgba(219, 40, 40, 0.3);
+            box-shadow: 0 0 0 rgba(219, 40, 40, 0.3); }
+  50% {
+    -webkit-box-shadow: 0 0 20px rgba(219, 40, 40, 0.8);
+            box-shadow: 0 0 20px rgba(219, 40, 40, 0.8); }
+  to {
+    -webkit-box-shadow: 0 0 0 rgba(219, 40, 40, 0.3);
+            box-shadow: 0 0 0 rgba(219, 40, 40, 0.3); } }
+
+@-webkit-keyframes glowing-royal {
+  from {
+    -webkit-box-shadow: 0 0 0 rgba(123, 114, 233, 0.3);
+            box-shadow: 0 0 0 rgba(123, 114, 233, 0.3); }
+  50% {
+    -webkit-box-shadow: 0 0 20px rgba(123, 114, 233, 0.8);
+            box-shadow: 0 0 20px rgba(123, 114, 233, 0.8); }
+  to {
+    -webkit-box-shadow: 0 0 0 rgba(123, 114, 233, 0.3);
+            box-shadow: 0 0 0 rgba(123, 114, 233, 0.3); } }
+
+@keyframes glowing-royal {
+  from {
+    -webkit-box-shadow: 0 0 0 rgba(123, 114, 233, 0.3);
+            box-shadow: 0 0 0 rgba(123, 114, 233, 0.3); }
+  50% {
+    -webkit-box-shadow: 0 0 20px rgba(123, 114, 233, 0.8);
+            box-shadow: 0 0 20px rgba(123, 114, 233, 0.8); }
+  to {
+    -webkit-box-shadow: 0 0 0 rgba(123, 114, 233, 0.3);
+            box-shadow: 0 0 0 rgba(123, 114, 233, 0.3); } }
+
+@-webkit-keyframes glowing-black {
+  from {
+    -webkit-box-shadow: 0 0 0 rgba(0, 0, 0, 0.3);
+            box-shadow: 0 0 0 rgba(0, 0, 0, 0.3); }
+  50% {
+    -webkit-box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.8); }
+  to {
+    -webkit-box-shadow: 0 0 0 rgba(0, 0, 0, 0.3);
+            box-shadow: 0 0 0 rgba(0, 0, 0, 0.3); } }
+
+@keyframes glowing-black {
+  from {
+    -webkit-box-shadow: 0 0 0 rgba(0, 0, 0, 0.3);
+            box-shadow: 0 0 0 rgba(0, 0, 0, 0.3); }
+  50% {
+    -webkit-box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.8); }
+  to {
+    -webkit-box-shadow: 0 0 0 rgba(0, 0, 0, 0.3);
+            box-shadow: 0 0 0 rgba(0, 0, 0, 0.3); } }
+
+/*
+* Glowing Buttons Base Styes
+*
+* A pulse like glow that appears
+* rythmically around the edges of
+* a button.
+*/
+.button-glow {
+  -webkit-animation-duration: 3s;
+          animation-duration: 3s;
+  -webkit-animation-iteration-count: infinite;
+          animation-iteration-count: infinite;
+  -webkit-animation-name: glowing;
+          animation-name: glowing; }
+  .button-glow:active, .button-glow.active, .button-glow.is-active {
+    -webkit-animation-name: none;
+            animation-name: none; }
+
+/*
+* Glowing Button Colors
+*
+* Create colors for glowing buttons
+*/
+.button-glow.button-primary {
+  -webkit-animation-name: glowing-primary;
+          animation-name: glowing-primary; }
+
+.button-glow.button-plain {
+  -webkit-animation-name: glowing-plain;
+          animation-name: glowing-plain; }
+
+.button-glow.button-inverse {
+  -webkit-animation-name: glowing-inverse;
+          animation-name: glowing-inverse; }
+
+.button-glow.button-action {
+  -webkit-animation-name: glowing-action;
+          animation-name: glowing-action; }
+
+.button-glow.button-highlight {
+  -webkit-animation-name: glowing-highlight;
+          animation-name: glowing-highlight; }
+
+.button-glow.button-caution {
+  -webkit-animation-name: glowing-caution;
+          animation-name: glowing-caution; }
+
+.button-glow.button-royal {
+  -webkit-animation-name: glowing-royal;
+          animation-name: glowing-royal; }
+
+.button-glow.button-black {
+  -webkit-animation-name: glowing-black;
+          animation-name: glowing-black; }
+
+/*
+* Dropdown menu buttons
+*
+* A dropdown menu appears
+* when a button is pressed
+*/
+/*
+* Dropdown Container
+*
+*/
+.button-dropdown {
+  position: relative;
+  overflow: visible;
+  display: inline-block; }
+
+/*
+* Dropdown List Style
+*
+*/
+.button-dropdown-list {
+  display: none;
+  position: absolute;
+  padding: 0;
+  margin: 0;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  min-width: 100%;
+  list-style-type: none;
+  background: rgba(255, 255, 255, 0.95);
+  border-style: solid;
+  border-width: 1px;
+  border-color: #d5d5d5;
+  font-family: "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  -webkit-box-shadow: 0 2px 7px rgba(0, 0, 0, 0.2);
+          box-shadow: 0 2px 7px rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  /*
+  * Dropdown Below
+  *
+  */
+  /*
+  * Dropdown Above
+  *
+  */ }
+  .button-dropdown-list.is-below {
+    top: 100%;
+    border-top: none;
+    border-radius: 0 0 3px 3px; }
+  .button-dropdown-list.is-above {
+    bottom: 100%;
+    top: auto;
+    border-bottom: none;
+    border-radius: 3px 3px 0 0;
+    -webkit-box-shadow: 0 -2px 7px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 -2px 7px rgba(0, 0, 0, 0.2); }
+
+/*
+* Dropdown Buttons
+*
+*/
+.button-dropdown-list > li {
+  padding: 0;
+  margin: 0;
+  display: block; }
+  .button-dropdown-list > li > a {
+    display: block;
+    line-height: 40px;
+    font-size: 12.8px;
+    padding: 5px 10px;
+    float: none;
+    color: #666;
+    text-decoration: none; }
+    .button-dropdown-list > li > a:hover {
+      color: #5e5e5e;
+      background: #f6f6f6;
+      text-decoration: none; }
+
+.button-dropdown-divider {
+  border-top: 1px solid #e6e6e6; }
+
+/*
+* Dropdown Colors
+*
+* Create colors for buttons
+* (.button-primary, .button-secondary, etc.)
+*/
+.button-dropdown.button-dropdown-primary .button-dropdown-list {
+  background: rgba(33, 133, 208, 0.95);
+  border-color: #1a69a4; }
+  .button-dropdown.button-dropdown-primary .button-dropdown-list .button-dropdown-divider {
+    border-color: #1c71b1; }
+  .button-dropdown.button-dropdown-primary .button-dropdown-list > li > a {
+    color: #FFF; }
+    .button-dropdown.button-dropdown-primary .button-dropdown-list > li > a:hover {
+      color: #f2f2f2;
+      background: #1e77ba; }
+
+.button-dropdown.button-dropdown-plain .button-dropdown-list {
+  background: rgba(224, 225, 226, 0.95);
+  border-color: #c6c8c9; }
+  .button-dropdown.button-dropdown-plain .button-dropdown-list .button-dropdown-divider {
+    border-color: #cecfd1; }
+  .button-dropdown.button-dropdown-plain .button-dropdown-list > li > a {
+    color: #374054; }
+    .button-dropdown.button-dropdown-plain .button-dropdown-list > li > a:hover {
+      color: #2d3445;
+      background: #d3d4d6; }
+
+.button-dropdown.button-dropdown-inverse .button-dropdown-list {
+  background: rgba(34, 34, 34, 0.95);
+  border-color: #090909; }
+  .button-dropdown.button-dropdown-inverse .button-dropdown-list .button-dropdown-divider {
+    border-color: #101010; }
+  .button-dropdown.button-dropdown-inverse .button-dropdown-list > li > a {
+    color: #EEE; }
+    .button-dropdown.button-dropdown-inverse .button-dropdown-list > li > a:hover {
+      color: #e1e1e1;
+      background: #151515; }
+
+.button-dropdown.button-dropdown-action .button-dropdown-list {
+  background: rgba(81, 149, 146, 0.95);
+  border-color: #3f7472; }
+  .button-dropdown.button-dropdown-action .button-dropdown-list .button-dropdown-divider {
+    border-color: #447e7b; }
+  .button-dropdown.button-dropdown-action .button-dropdown-list > li > a {
+    color: #FFF; }
+    .button-dropdown.button-dropdown-action .button-dropdown-list > li > a:hover {
+      color: #f2f2f2;
+      background: #488482; }
+
+.button-dropdown.button-dropdown-highlight .button-dropdown-list {
+  background: rgba(254, 174, 27, 0.95);
+  border-color: #e59501; }
+  .button-dropdown.button-dropdown-highlight .button-dropdown-list .button-dropdown-divider {
+    border-color: #f49f01; }
+  .button-dropdown.button-dropdown-highlight .button-dropdown-list > li > a {
+    color: #FFF; }
+    .button-dropdown.button-dropdown-highlight .button-dropdown-list > li > a:hover {
+      color: #f2f2f2;
+      background: #fea502; }
+
+.button-dropdown.button-dropdown-caution .button-dropdown-list {
+  background: rgba(219, 40, 40, 0.95);
+  border-color: #b21e1e; }
+  .button-dropdown.button-dropdown-caution .button-dropdown-list .button-dropdown-divider {
+    border-color: #bf2020; }
+  .button-dropdown.button-dropdown-caution .button-dropdown-list > li > a {
+    color: #FFF; }
+    .button-dropdown.button-dropdown-caution .button-dropdown-list > li > a:hover {
+      color: #f2f2f2;
+      background: #c82121; }
+
+.button-dropdown.button-dropdown-royal .button-dropdown-list {
+  background: rgba(123, 114, 233, 0.95);
+  border-color: #5246e2; }
+  .button-dropdown.button-dropdown-royal .button-dropdown-list .button-dropdown-divider {
+    border-color: #5e53e4; }
+  .button-dropdown.button-dropdown-royal .button-dropdown-list > li > a {
+    color: #FFF; }
+    .button-dropdown.button-dropdown-royal .button-dropdown-list > li > a:hover {
+      color: #f2f2f2;
+      background: #665ce6; }
+
+.button-dropdown.button-dropdown-black .button-dropdown-list {
+  background: rgba(0, 0, 0, 0.95);
+  border-color: black; }
+  .button-dropdown.button-dropdown-black .button-dropdown-list .button-dropdown-divider {
+    border-color: black; }
+  .button-dropdown.button-dropdown-black .button-dropdown-list > li > a {
+    color: #fff; }
+    .button-dropdown.button-dropdown-black .button-dropdown-list > li > a:hover {
+      color: #f2f2f2;
+      background: black; }
+
+/*
+* Buton Groups
+*
+* A group of related buttons
+* displayed edge to edge
+*/
+.button-group {
+  position: relative;
+  display: inline-block; }
+  .button-group:after {
+    content: " ";
+    display: block;
+    clear: both; }
+  .button-group .button,
+  .button-group .button-dropdown {
+    float: left; }
+    .button-group .button:not(:first-child):not(:last-child),
+    .button-group .button-dropdown:not(:first-child):not(:last-child) {
+      border-radius: 0;
+      border-right: none; }
+    .button-group .button:first-child,
+    .button-group .button-dropdown:first-child {
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+      border-right: none; }
+    .button-group .button:last-child,
+    .button-group .button-dropdown:last-child {
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0; }
+
+/*
+* Button Wrapper
+*
+* A wrap around effect to highlight
+* the shape of the button and offer
+* a subtle visual effect.
+*/
+.button-wrap {
+  border: 1px solid #e3e3e3;
+  display: inline-block;
+  padding: 9px;
+  background: -webkit-gradient(linear, left top, left bottom, from(#f2f2f2), to(#FFF));
+  background: linear-gradient(#f2f2f2, #FFF);
+  border-radius: 200px;
+  -webkit-box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.04);
+          box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.04); }
+
+/*
+* Long Shadow Buttons
+*
+* A visual effect adding a flat shadow to the text of a button
+*/
+/*
+* Long Shadow Function
+*
+* Loops $length times building a long shadow. Defaults downward right
+*/
+/*
+* LONG SHADOW MIXIN
+*
+*/
+/*
+* Shadow Right
+*
+*/
+.button-longshadow,
+.button-longshadow-right {
+  overflow: hidden; }
+  .button-longshadow.button-primary,
+  .button-longshadow-right.button-primary {
+    text-shadow: 0px 0px #1a69a4, 1px 1px #1a69a4, 2px 2px #1a69a4, 3px 3px #1a69a4, 4px 4px #1a69a4, 5px 5px #1a69a4, 6px 6px #1a69a4, 7px 7px #1a69a4, 8px 8px #1a69a4, 9px 9px #1a69a4, 10px 10px #1a69a4, 11px 11px #1a69a4, 12px 12px #1a69a4, 13px 13px #1a69a4, 14px 14px #1a69a4, 15px 15px #1a69a4, 16px 16px #1a69a4, 17px 17px #1a69a4, 18px 18px #1a69a4, 19px 19px #1a69a4, 20px 20px #1a69a4, 21px 21px #1a69a4, 22px 22px #1a69a4, 23px 23px #1a69a4, 24px 24px #1a69a4, 25px 25px #1a69a4, 26px 26px #1a69a4, 27px 27px #1a69a4, 28px 28px #1a69a4, 29px 29px #1a69a4, 30px 30px #1a69a4, 31px 31px #1a69a4, 32px 32px #1a69a4, 33px 33px #1a69a4, 34px 34px #1a69a4, 35px 35px #1a69a4, 36px 36px #1a69a4, 37px 37px #1a69a4, 38px 38px #1a69a4, 39px 39px #1a69a4, 40px 40px #1a69a4, 41px 41px #1a69a4, 42px 42px #1a69a4, 43px 43px #1a69a4, 44px 44px #1a69a4, 45px 45px #1a69a4, 46px 46px #1a69a4, 47px 47px #1a69a4, 48px 48px #1a69a4, 49px 49px #1a69a4, 50px 50px #1a69a4, 51px 51px #1a69a4, 52px 52px #1a69a4, 53px 53px #1a69a4, 54px 54px #1a69a4, 55px 55px #1a69a4, 56px 56px #1a69a4, 57px 57px #1a69a4, 58px 58px #1a69a4, 59px 59px #1a69a4, 60px 60px #1a69a4, 61px 61px #1a69a4, 62px 62px #1a69a4, 63px 63px #1a69a4, 64px 64px #1a69a4, 65px 65px #1a69a4, 66px 66px #1a69a4, 67px 67px #1a69a4, 68px 68px #1a69a4, 69px 69px #1a69a4, 70px 70px #1a69a4, 71px 71px #1a69a4, 72px 72px #1a69a4, 73px 73px #1a69a4, 74px 74px #1a69a4, 75px 75px #1a69a4, 76px 76px #1a69a4, 77px 77px #1a69a4, 78px 78px #1a69a4, 79px 79px #1a69a4, 80px 80px #1a69a4, 81px 81px #1a69a4, 82px 82px #1a69a4, 83px 83px #1a69a4, 84px 84px #1a69a4, 85px 85px #1a69a4; }
+    .button-longshadow.button-primary:active, .button-longshadow.button-primary.active, .button-longshadow.button-primary.is-active,
+    .button-longshadow-right.button-primary:active,
+    .button-longshadow-right.button-primary.active,
+    .button-longshadow-right.button-primary.is-active {
+      text-shadow: 0 1px 0 rgba(255, 255, 255, 0.4); }
+  .button-longshadow.button-plain,
+  .button-longshadow-right.button-plain {
+    text-shadow: 0px 0px #c6c8c9, 1px 1px #c6c8c9, 2px 2px #c6c8c9, 3px 3px #c6c8c9, 4px 4px #c6c8c9, 5px 5px #c6c8c9, 6px 6px #c6c8c9, 7px 7px #c6c8c9, 8px 8px #c6c8c9, 9px 9px #c6c8c9, 10px 10px #c6c8c9, 11px 11px #c6c8c9, 12px 12px #c6c8c9, 13px 13px #c6c8c9, 14px 14px #c6c8c9, 15px 15px #c6c8c9, 16px 16px #c6c8c9, 17px 17px #c6c8c9, 18px 18px #c6c8c9, 19px 19px #c6c8c9, 20px 20px #c6c8c9, 21px 21px #c6c8c9, 22px 22px #c6c8c9, 23px 23px #c6c8c9, 24px 24px #c6c8c9, 25px 25px #c6c8c9, 26px 26px #c6c8c9, 27px 27px #c6c8c9, 28px 28px #c6c8c9, 29px 29px #c6c8c9, 30px 30px #c6c8c9, 31px 31px #c6c8c9, 32px 32px #c6c8c9, 33px 33px #c6c8c9, 34px 34px #c6c8c9, 35px 35px #c6c8c9, 36px 36px #c6c8c9, 37px 37px #c6c8c9, 38px 38px #c6c8c9, 39px 39px #c6c8c9, 40px 40px #c6c8c9, 41px 41px #c6c8c9, 42px 42px #c6c8c9, 43px 43px #c6c8c9, 44px 44px #c6c8c9, 45px 45px #c6c8c9, 46px 46px #c6c8c9, 47px 47px #c6c8c9, 48px 48px #c6c8c9, 49px 49px #c6c8c9, 50px 50px #c6c8c9, 51px 51px #c6c8c9, 52px 52px #c6c8c9, 53px 53px #c6c8c9, 54px 54px #c6c8c9, 55px 55px #c6c8c9, 56px 56px #c6c8c9, 57px 57px #c6c8c9, 58px 58px #c6c8c9, 59px 59px #c6c8c9, 60px 60px #c6c8c9, 61px 61px #c6c8c9, 62px 62px #c6c8c9, 63px 63px #c6c8c9, 64px 64px #c6c8c9, 65px 65px #c6c8c9, 66px 66px #c6c8c9, 67px 67px #c6c8c9, 68px 68px #c6c8c9, 69px 69px #c6c8c9, 70px 70px #c6c8c9, 71px 71px #c6c8c9, 72px 72px #c6c8c9, 73px 73px #c6c8c9, 74px 74px #c6c8c9, 75px 75px #c6c8c9, 76px 76px #c6c8c9, 77px 77px #c6c8c9, 78px 78px #c6c8c9, 79px 79px #c6c8c9, 80px 80px #c6c8c9, 81px 81px #c6c8c9, 82px 82px #c6c8c9, 83px 83px #c6c8c9, 84px 84px #c6c8c9, 85px 85px #c6c8c9; }
+    .button-longshadow.button-plain:active, .button-longshadow.button-plain.active, .button-longshadow.button-plain.is-active,
+    .button-longshadow-right.button-plain:active,
+    .button-longshadow-right.button-plain.active,
+    .button-longshadow-right.button-plain.is-active {
+      text-shadow: 0 1px 0 rgba(255, 255, 255, 0.4); }
+  .button-longshadow.button-inverse,
+  .button-longshadow-right.button-inverse {
+    text-shadow: 0px 0px #090909, 1px 1px #090909, 2px 2px #090909, 3px 3px #090909, 4px 4px #090909, 5px 5px #090909, 6px 6px #090909, 7px 7px #090909, 8px 8px #090909, 9px 9px #090909, 10px 10px #090909, 11px 11px #090909, 12px 12px #090909, 13px 13px #090909, 14px 14px #090909, 15px 15px #090909, 16px 16px #090909, 17px 17px #090909, 18px 18px #090909, 19px 19px #090909, 20px 20px #090909, 21px 21px #090909, 22px 22px #090909, 23px 23px #090909, 24px 24px #090909, 25px 25px #090909, 26px 26px #090909, 27px 27px #090909, 28px 28px #090909, 29px 29px #090909, 30px 30px #090909, 31px 31px #090909, 32px 32px #090909, 33px 33px #090909, 34px 34px #090909, 35px 35px #090909, 36px 36px #090909, 37px 37px #090909, 38px 38px #090909, 39px 39px #090909, 40px 40px #090909, 41px 41px #090909, 42px 42px #090909, 43px 43px #090909, 44px 44px #090909, 45px 45px #090909, 46px 46px #090909, 47px 47px #090909, 48px 48px #090909, 49px 49px #090909, 50px 50px #090909, 51px 51px #090909, 52px 52px #090909, 53px 53px #090909, 54px 54px #090909, 55px 55px #090909, 56px 56px #090909, 57px 57px #090909, 58px 58px #090909, 59px 59px #090909, 60px 60px #090909, 61px 61px #090909, 62px 62px #090909, 63px 63px #090909, 64px 64px #090909, 65px 65px #090909, 66px 66px #090909, 67px 67px #090909, 68px 68px #090909, 69px 69px #090909, 70px 70px #090909, 71px 71px #090909, 72px 72px #090909, 73px 73px #090909, 74px 74px #090909, 75px 75px #090909, 76px 76px #090909, 77px 77px #090909, 78px 78px #090909, 79px 79px #090909, 80px 80px #090909, 81px 81px #090909, 82px 82px #090909, 83px 83px #090909, 84px 84px #090909, 85px 85px #090909; }
+    .button-longshadow.button-inverse:active, .button-longshadow.button-inverse.active, .button-longshadow.button-inverse.is-active,
+    .button-longshadow-right.button-inverse:active,
+    .button-longshadow-right.button-inverse.active,
+    .button-longshadow-right.button-inverse.is-active {
+      text-shadow: 0 1px 0 rgba(255, 255, 255, 0.4); }
+  .button-longshadow.button-action,
+  .button-longshadow-right.button-action {
+    text-shadow: 0px 0px #3f7472, 1px 1px #3f7472, 2px 2px #3f7472, 3px 3px #3f7472, 4px 4px #3f7472, 5px 5px #3f7472, 6px 6px #3f7472, 7px 7px #3f7472, 8px 8px #3f7472, 9px 9px #3f7472, 10px 10px #3f7472, 11px 11px #3f7472, 12px 12px #3f7472, 13px 13px #3f7472, 14px 14px #3f7472, 15px 15px #3f7472, 16px 16px #3f7472, 17px 17px #3f7472, 18px 18px #3f7472, 19px 19px #3f7472, 20px 20px #3f7472, 21px 21px #3f7472, 22px 22px #3f7472, 23px 23px #3f7472, 24px 24px #3f7472, 25px 25px #3f7472, 26px 26px #3f7472, 27px 27px #3f7472, 28px 28px #3f7472, 29px 29px #3f7472, 30px 30px #3f7472, 31px 31px #3f7472, 32px 32px #3f7472, 33px 33px #3f7472, 34px 34px #3f7472, 35px 35px #3f7472, 36px 36px #3f7472, 37px 37px #3f7472, 38px 38px #3f7472, 39px 39px #3f7472, 40px 40px #3f7472, 41px 41px #3f7472, 42px 42px #3f7472, 43px 43px #3f7472, 44px 44px #3f7472, 45px 45px #3f7472, 46px 46px #3f7472, 47px 47px #3f7472, 48px 48px #3f7472, 49px 49px #3f7472, 50px 50px #3f7472, 51px 51px #3f7472, 52px 52px #3f7472, 53px 53px #3f7472, 54px 54px #3f7472, 55px 55px #3f7472, 56px 56px #3f7472, 57px 57px #3f7472, 58px 58px #3f7472, 59px 59px #3f7472, 60px 60px #3f7472, 61px 61px #3f7472, 62px 62px #3f7472, 63px 63px #3f7472, 64px 64px #3f7472, 65px 65px #3f7472, 66px 66px #3f7472, 67px 67px #3f7472, 68px 68px #3f7472, 69px 69px #3f7472, 70px 70px #3f7472, 71px 71px #3f7472, 72px 72px #3f7472, 73px 73px #3f7472, 74px 74px #3f7472, 75px 75px #3f7472, 76px 76px #3f7472, 77px 77px #3f7472, 78px 78px #3f7472, 79px 79px #3f7472, 80px 80px #3f7472, 81px 81px #3f7472, 82px 82px #3f7472, 83px 83px #3f7472, 84px 84px #3f7472, 85px 85px #3f7472; }
+    .button-longshadow.button-action:active, .button-longshadow.button-action.active, .button-longshadow.button-action.is-active,
+    .button-longshadow-right.button-action:active,
+    .button-longshadow-right.button-action.active,
+    .button-longshadow-right.button-action.is-active {
+      text-shadow: 0 1px 0 rgba(255, 255, 255, 0.4); }
+  .button-longshadow.button-highlight,
+  .button-longshadow-right.button-highlight {
+    text-shadow: 0px 0px #e59501, 1px 1px #e59501, 2px 2px #e59501, 3px 3px #e59501, 4px 4px #e59501, 5px 5px #e59501, 6px 6px #e59501, 7px 7px #e59501, 8px 8px #e59501, 9px 9px #e59501, 10px 10px #e59501, 11px 11px #e59501, 12px 12px #e59501, 13px 13px #e59501, 14px 14px #e59501, 15px 15px #e59501, 16px 16px #e59501, 17px 17px #e59501, 18px 18px #e59501, 19px 19px #e59501, 20px 20px #e59501, 21px 21px #e59501, 22px 22px #e59501, 23px 23px #e59501, 24px 24px #e59501, 25px 25px #e59501, 26px 26px #e59501, 27px 27px #e59501, 28px 28px #e59501, 29px 29px #e59501, 30px 30px #e59501, 31px 31px #e59501, 32px 32px #e59501, 33px 33px #e59501, 34px 34px #e59501, 35px 35px #e59501, 36px 36px #e59501, 37px 37px #e59501, 38px 38px #e59501, 39px 39px #e59501, 40px 40px #e59501, 41px 41px #e59501, 42px 42px #e59501, 43px 43px #e59501, 44px 44px #e59501, 45px 45px #e59501, 46px 46px #e59501, 47px 47px #e59501, 48px 48px #e59501, 49px 49px #e59501, 50px 50px #e59501, 51px 51px #e59501, 52px 52px #e59501, 53px 53px #e59501, 54px 54px #e59501, 55px 55px #e59501, 56px 56px #e59501, 57px 57px #e59501, 58px 58px #e59501, 59px 59px #e59501, 60px 60px #e59501, 61px 61px #e59501, 62px 62px #e59501, 63px 63px #e59501, 64px 64px #e59501, 65px 65px #e59501, 66px 66px #e59501, 67px 67px #e59501, 68px 68px #e59501, 69px 69px #e59501, 70px 70px #e59501, 71px 71px #e59501, 72px 72px #e59501, 73px 73px #e59501, 74px 74px #e59501, 75px 75px #e59501, 76px 76px #e59501, 77px 77px #e59501, 78px 78px #e59501, 79px 79px #e59501, 80px 80px #e59501, 81px 81px #e59501, 82px 82px #e59501, 83px 83px #e59501, 84px 84px #e59501, 85px 85px #e59501; }
+    .button-longshadow.button-highlight:active, .button-longshadow.button-highlight.active, .button-longshadow.button-highlight.is-active,
+    .button-longshadow-right.button-highlight:active,
+    .button-longshadow-right.button-highlight.active,
+    .button-longshadow-right.button-highlight.is-active {
+      text-shadow: 0 1px 0 rgba(255, 255, 255, 0.4); }
+  .button-longshadow.button-caution,
+  .button-longshadow-right.button-caution {
+    text-shadow: 0px 0px #b21e1e, 1px 1px #b21e1e, 2px 2px #b21e1e, 3px 3px #b21e1e, 4px 4px #b21e1e, 5px 5px #b21e1e, 6px 6px #b21e1e, 7px 7px #b21e1e, 8px 8px #b21e1e, 9px 9px #b21e1e, 10px 10px #b21e1e, 11px 11px #b21e1e, 12px 12px #b21e1e, 13px 13px #b21e1e, 14px 14px #b21e1e, 15px 15px #b21e1e, 16px 16px #b21e1e, 17px 17px #b21e1e, 18px 18px #b21e1e, 19px 19px #b21e1e, 20px 20px #b21e1e, 21px 21px #b21e1e, 22px 22px #b21e1e, 23px 23px #b21e1e, 24px 24px #b21e1e, 25px 25px #b21e1e, 26px 26px #b21e1e, 27px 27px #b21e1e, 28px 28px #b21e1e, 29px 29px #b21e1e, 30px 30px #b21e1e, 31px 31px #b21e1e, 32px 32px #b21e1e, 33px 33px #b21e1e, 34px 34px #b21e1e, 35px 35px #b21e1e, 36px 36px #b21e1e, 37px 37px #b21e1e, 38px 38px #b21e1e, 39px 39px #b21e1e, 40px 40px #b21e1e, 41px 41px #b21e1e, 42px 42px #b21e1e, 43px 43px #b21e1e, 44px 44px #b21e1e, 45px 45px #b21e1e, 46px 46px #b21e1e, 47px 47px #b21e1e, 48px 48px #b21e1e, 49px 49px #b21e1e, 50px 50px #b21e1e, 51px 51px #b21e1e, 52px 52px #b21e1e, 53px 53px #b21e1e, 54px 54px #b21e1e, 55px 55px #b21e1e, 56px 56px #b21e1e, 57px 57px #b21e1e, 58px 58px #b21e1e, 59px 59px #b21e1e, 60px 60px #b21e1e, 61px 61px #b21e1e, 62px 62px #b21e1e, 63px 63px #b21e1e, 64px 64px #b21e1e, 65px 65px #b21e1e, 66px 66px #b21e1e, 67px 67px #b21e1e, 68px 68px #b21e1e, 69px 69px #b21e1e, 70px 70px #b21e1e, 71px 71px #b21e1e, 72px 72px #b21e1e, 73px 73px #b21e1e, 74px 74px #b21e1e, 75px 75px #b21e1e, 76px 76px #b21e1e, 77px 77px #b21e1e, 78px 78px #b21e1e, 79px 79px #b21e1e, 80px 80px #b21e1e, 81px 81px #b21e1e, 82px 82px #b21e1e, 83px 83px #b21e1e, 84px 84px #b21e1e, 85px 85px #b21e1e; }
+    .button-longshadow.button-caution:active, .button-longshadow.button-caution.active, .button-longshadow.button-caution.is-active,
+    .button-longshadow-right.button-caution:active,
+    .button-longshadow-right.button-caution.active,
+    .button-longshadow-right.button-caution.is-active {
+      text-shadow: 0 1px 0 rgba(255, 255, 255, 0.4); }
+  .button-longshadow.button-royal,
+  .button-longshadow-right.button-royal {
+    text-shadow: 0px 0px #5246e2, 1px 1px #5246e2, 2px 2px #5246e2, 3px 3px #5246e2, 4px 4px #5246e2, 5px 5px #5246e2, 6px 6px #5246e2, 7px 7px #5246e2, 8px 8px #5246e2, 9px 9px #5246e2, 10px 10px #5246e2, 11px 11px #5246e2, 12px 12px #5246e2, 13px 13px #5246e2, 14px 14px #5246e2, 15px 15px #5246e2, 16px 16px #5246e2, 17px 17px #5246e2, 18px 18px #5246e2, 19px 19px #5246e2, 20px 20px #5246e2, 21px 21px #5246e2, 22px 22px #5246e2, 23px 23px #5246e2, 24px 24px #5246e2, 25px 25px #5246e2, 26px 26px #5246e2, 27px 27px #5246e2, 28px 28px #5246e2, 29px 29px #5246e2, 30px 30px #5246e2, 31px 31px #5246e2, 32px 32px #5246e2, 33px 33px #5246e2, 34px 34px #5246e2, 35px 35px #5246e2, 36px 36px #5246e2, 37px 37px #5246e2, 38px 38px #5246e2, 39px 39px #5246e2, 40px 40px #5246e2, 41px 41px #5246e2, 42px 42px #5246e2, 43px 43px #5246e2, 44px 44px #5246e2, 45px 45px #5246e2, 46px 46px #5246e2, 47px 47px #5246e2, 48px 48px #5246e2, 49px 49px #5246e2, 50px 50px #5246e2, 51px 51px #5246e2, 52px 52px #5246e2, 53px 53px #5246e2, 54px 54px #5246e2, 55px 55px #5246e2, 56px 56px #5246e2, 57px 57px #5246e2, 58px 58px #5246e2, 59px 59px #5246e2, 60px 60px #5246e2, 61px 61px #5246e2, 62px 62px #5246e2, 63px 63px #5246e2, 64px 64px #5246e2, 65px 65px #5246e2, 66px 66px #5246e2, 67px 67px #5246e2, 68px 68px #5246e2, 69px 69px #5246e2, 70px 70px #5246e2, 71px 71px #5246e2, 72px 72px #5246e2, 73px 73px #5246e2, 74px 74px #5246e2, 75px 75px #5246e2, 76px 76px #5246e2, 77px 77px #5246e2, 78px 78px #5246e2, 79px 79px #5246e2, 80px 80px #5246e2, 81px 81px #5246e2, 82px 82px #5246e2, 83px 83px #5246e2, 84px 84px #5246e2, 85px 85px #5246e2; }
+    .button-longshadow.button-royal:active, .button-longshadow.button-royal.active, .button-longshadow.button-royal.is-active,
+    .button-longshadow-right.button-royal:active,
+    .button-longshadow-right.button-royal.active,
+    .button-longshadow-right.button-royal.is-active {
+      text-shadow: 0 1px 0 rgba(255, 255, 255, 0.4); }
+  .button-longshadow.button-black,
+  .button-longshadow-right.button-black {
+    text-shadow: 0px 0px black, 1px 1px black, 2px 2px black, 3px 3px black, 4px 4px black, 5px 5px black, 6px 6px black, 7px 7px black, 8px 8px black, 9px 9px black, 10px 10px black, 11px 11px black, 12px 12px black, 13px 13px black, 14px 14px black, 15px 15px black, 16px 16px black, 17px 17px black, 18px 18px black, 19px 19px black, 20px 20px black, 21px 21px black, 22px 22px black, 23px 23px black, 24px 24px black, 25px 25px black, 26px 26px black, 27px 27px black, 28px 28px black, 29px 29px black, 30px 30px black, 31px 31px black, 32px 32px black, 33px 33px black, 34px 34px black, 35px 35px black, 36px 36px black, 37px 37px black, 38px 38px black, 39px 39px black, 40px 40px black, 41px 41px black, 42px 42px black, 43px 43px black, 44px 44px black, 45px 45px black, 46px 46px black, 47px 47px black, 48px 48px black, 49px 49px black, 50px 50px black, 51px 51px black, 52px 52px black, 53px 53px black, 54px 54px black, 55px 55px black, 56px 56px black, 57px 57px black, 58px 58px black, 59px 59px black, 60px 60px black, 61px 61px black, 62px 62px black, 63px 63px black, 64px 64px black, 65px 65px black, 66px 66px black, 67px 67px black, 68px 68px black, 69px 69px black, 70px 70px black, 71px 71px black, 72px 72px black, 73px 73px black, 74px 74px black, 75px 75px black, 76px 76px black, 77px 77px black, 78px 78px black, 79px 79px black, 80px 80px black, 81px 81px black, 82px 82px black, 83px 83px black, 84px 84px black, 85px 85px black; }
+    .button-longshadow.button-black:active, .button-longshadow.button-black.active, .button-longshadow.button-black.is-active,
+    .button-longshadow-right.button-black:active,
+    .button-longshadow-right.button-black.active,
+    .button-longshadow-right.button-black.is-active {
+      text-shadow: 0 1px 0 rgba(255, 255, 255, 0.4); }
+
+/*
+* Shadow Left
+*
+*/
+.button-longshadow-left {
+  overflow: hidden; }
+  .button-longshadow-left.button-primary {
+    text-shadow: 0px 0px #1a69a4, -1px 1px #1a69a4, -2px 2px #1a69a4, -3px 3px #1a69a4, -4px 4px #1a69a4, -5px 5px #1a69a4, -6px 6px #1a69a4, -7px 7px #1a69a4, -8px 8px #1a69a4, -9px 9px #1a69a4, -10px 10px #1a69a4, -11px 11px #1a69a4, -12px 12px #1a69a4, -13px 13px #1a69a4, -14px 14px #1a69a4, -15px 15px #1a69a4, -16px 16px #1a69a4, -17px 17px #1a69a4, -18px 18px #1a69a4, -19px 19px #1a69a4, -20px 20px #1a69a4, -21px 21px #1a69a4, -22px 22px #1a69a4, -23px 23px #1a69a4, -24px 24px #1a69a4, -25px 25px #1a69a4, -26px 26px #1a69a4, -27px 27px #1a69a4, -28px 28px #1a69a4, -29px 29px #1a69a4, -30px 30px #1a69a4, -31px 31px #1a69a4, -32px 32px #1a69a4, -33px 33px #1a69a4, -34px 34px #1a69a4, -35px 35px #1a69a4, -36px 36px #1a69a4, -37px 37px #1a69a4, -38px 38px #1a69a4, -39px 39px #1a69a4, -40px 40px #1a69a4, -41px 41px #1a69a4, -42px 42px #1a69a4, -43px 43px #1a69a4, -44px 44px #1a69a4, -45px 45px #1a69a4, -46px 46px #1a69a4, -47px 47px #1a69a4, -48px 48px #1a69a4, -49px 49px #1a69a4, -50px 50px #1a69a4, -51px 51px #1a69a4, -52px 52px #1a69a4, -53px 53px #1a69a4, -54px 54px #1a69a4, -55px 55px #1a69a4, -56px 56px #1a69a4, -57px 57px #1a69a4, -58px 58px #1a69a4, -59px 59px #1a69a4, -60px 60px #1a69a4, -61px 61px #1a69a4, -62px 62px #1a69a4, -63px 63px #1a69a4, -64px 64px #1a69a4, -65px 65px #1a69a4, -66px 66px #1a69a4, -67px 67px #1a69a4, -68px 68px #1a69a4, -69px 69px #1a69a4, -70px 70px #1a69a4, -71px 71px #1a69a4, -72px 72px #1a69a4, -73px 73px #1a69a4, -74px 74px #1a69a4, -75px 75px #1a69a4, -76px 76px #1a69a4, -77px 77px #1a69a4, -78px 78px #1a69a4, -79px 79px #1a69a4, -80px 80px #1a69a4, -81px 81px #1a69a4, -82px 82px #1a69a4, -83px 83px #1a69a4, -84px 84px #1a69a4, -85px 85px #1a69a4; }
+    .button-longshadow-left.button-primary:active, .button-longshadow-left.button-primary.active, .button-longshadow-left.button-primary.is-active {
+      text-shadow: 0 1px 0 rgba(255, 255, 255, 0.4); }
+  .button-longshadow-left.button-plain {
+    text-shadow: 0px 0px #c6c8c9, -1px 1px #c6c8c9, -2px 2px #c6c8c9, -3px 3px #c6c8c9, -4px 4px #c6c8c9, -5px 5px #c6c8c9, -6px 6px #c6c8c9, -7px 7px #c6c8c9, -8px 8px #c6c8c9, -9px 9px #c6c8c9, -10px 10px #c6c8c9, -11px 11px #c6c8c9, -12px 12px #c6c8c9, -13px 13px #c6c8c9, -14px 14px #c6c8c9, -15px 15px #c6c8c9, -16px 16px #c6c8c9, -17px 17px #c6c8c9, -18px 18px #c6c8c9, -19px 19px #c6c8c9, -20px 20px #c6c8c9, -21px 21px #c6c8c9, -22px 22px #c6c8c9, -23px 23px #c6c8c9, -24px 24px #c6c8c9, -25px 25px #c6c8c9, -26px 26px #c6c8c9, -27px 27px #c6c8c9, -28px 28px #c6c8c9, -29px 29px #c6c8c9, -30px 30px #c6c8c9, -31px 31px #c6c8c9, -32px 32px #c6c8c9, -33px 33px #c6c8c9, -34px 34px #c6c8c9, -35px 35px #c6c8c9, -36px 36px #c6c8c9, -37px 37px #c6c8c9, -38px 38px #c6c8c9, -39px 39px #c6c8c9, -40px 40px #c6c8c9, -41px 41px #c6c8c9, -42px 42px #c6c8c9, -43px 43px #c6c8c9, -44px 44px #c6c8c9, -45px 45px #c6c8c9, -46px 46px #c6c8c9, -47px 47px #c6c8c9, -48px 48px #c6c8c9, -49px 49px #c6c8c9, -50px 50px #c6c8c9, -51px 51px #c6c8c9, -52px 52px #c6c8c9, -53px 53px #c6c8c9, -54px 54px #c6c8c9, -55px 55px #c6c8c9, -56px 56px #c6c8c9, -57px 57px #c6c8c9, -58px 58px #c6c8c9, -59px 59px #c6c8c9, -60px 60px #c6c8c9, -61px 61px #c6c8c9, -62px 62px #c6c8c9, -63px 63px #c6c8c9, -64px 64px #c6c8c9, -65px 65px #c6c8c9, -66px 66px #c6c8c9, -67px 67px #c6c8c9, -68px 68px #c6c8c9, -69px 69px #c6c8c9, -70px 70px #c6c8c9, -71px 71px #c6c8c9, -72px 72px #c6c8c9, -73px 73px #c6c8c9, -74px 74px #c6c8c9, -75px 75px #c6c8c9, -76px 76px #c6c8c9, -77px 77px #c6c8c9, -78px 78px #c6c8c9, -79px 79px #c6c8c9, -80px 80px #c6c8c9, -81px 81px #c6c8c9, -82px 82px #c6c8c9, -83px 83px #c6c8c9, -84px 84px #c6c8c9, -85px 85px #c6c8c9; }
+    .button-longshadow-left.button-plain:active, .button-longshadow-left.button-plain.active, .button-longshadow-left.button-plain.is-active {
+      text-shadow: 0 1px 0 rgba(255, 255, 255, 0.4); }
+  .button-longshadow-left.button-inverse {
+    text-shadow: 0px 0px #090909, -1px 1px #090909, -2px 2px #090909, -3px 3px #090909, -4px 4px #090909, -5px 5px #090909, -6px 6px #090909, -7px 7px #090909, -8px 8px #090909, -9px 9px #090909, -10px 10px #090909, -11px 11px #090909, -12px 12px #090909, -13px 13px #090909, -14px 14px #090909, -15px 15px #090909, -16px 16px #090909, -17px 17px #090909, -18px 18px #090909, -19px 19px #090909, -20px 20px #090909, -21px 21px #090909, -22px 22px #090909, -23px 23px #090909, -24px 24px #090909, -25px 25px #090909, -26px 26px #090909, -27px 27px #090909, -28px 28px #090909, -29px 29px #090909, -30px 30px #090909, -31px 31px #090909, -32px 32px #090909, -33px 33px #090909, -34px 34px #090909, -35px 35px #090909, -36px 36px #090909, -37px 37px #090909, -38px 38px #090909, -39px 39px #090909, -40px 40px #090909, -41px 41px #090909, -42px 42px #090909, -43px 43px #090909, -44px 44px #090909, -45px 45px #090909, -46px 46px #090909, -47px 47px #090909, -48px 48px #090909, -49px 49px #090909, -50px 50px #090909, -51px 51px #090909, -52px 52px #090909, -53px 53px #090909, -54px 54px #090909, -55px 55px #090909, -56px 56px #090909, -57px 57px #090909, -58px 58px #090909, -59px 59px #090909, -60px 60px #090909, -61px 61px #090909, -62px 62px #090909, -63px 63px #090909, -64px 64px #090909, -65px 65px #090909, -66px 66px #090909, -67px 67px #090909, -68px 68px #090909, -69px 69px #090909, -70px 70px #090909, -71px 71px #090909, -72px 72px #090909, -73px 73px #090909, -74px 74px #090909, -75px 75px #090909, -76px 76px #090909, -77px 77px #090909, -78px 78px #090909, -79px 79px #090909, -80px 80px #090909, -81px 81px #090909, -82px 82px #090909, -83px 83px #090909, -84px 84px #090909, -85px 85px #090909; }
+    .button-longshadow-left.button-inverse:active, .button-longshadow-left.button-inverse.active, .button-longshadow-left.button-inverse.is-active {
+      text-shadow: 0 1px 0 rgba(255, 255, 255, 0.4); }
+  .button-longshadow-left.button-action {
+    text-shadow: 0px 0px #3f7472, -1px 1px #3f7472, -2px 2px #3f7472, -3px 3px #3f7472, -4px 4px #3f7472, -5px 5px #3f7472, -6px 6px #3f7472, -7px 7px #3f7472, -8px 8px #3f7472, -9px 9px #3f7472, -10px 10px #3f7472, -11px 11px #3f7472, -12px 12px #3f7472, -13px 13px #3f7472, -14px 14px #3f7472, -15px 15px #3f7472, -16px 16px #3f7472, -17px 17px #3f7472, -18px 18px #3f7472, -19px 19px #3f7472, -20px 20px #3f7472, -21px 21px #3f7472, -22px 22px #3f7472, -23px 23px #3f7472, -24px 24px #3f7472, -25px 25px #3f7472, -26px 26px #3f7472, -27px 27px #3f7472, -28px 28px #3f7472, -29px 29px #3f7472, -30px 30px #3f7472, -31px 31px #3f7472, -32px 32px #3f7472, -33px 33px #3f7472, -34px 34px #3f7472, -35px 35px #3f7472, -36px 36px #3f7472, -37px 37px #3f7472, -38px 38px #3f7472, -39px 39px #3f7472, -40px 40px #3f7472, -41px 41px #3f7472, -42px 42px #3f7472, -43px 43px #3f7472, -44px 44px #3f7472, -45px 45px #3f7472, -46px 46px #3f7472, -47px 47px #3f7472, -48px 48px #3f7472, -49px 49px #3f7472, -50px 50px #3f7472, -51px 51px #3f7472, -52px 52px #3f7472, -53px 53px #3f7472, -54px 54px #3f7472, -55px 55px #3f7472, -56px 56px #3f7472, -57px 57px #3f7472, -58px 58px #3f7472, -59px 59px #3f7472, -60px 60px #3f7472, -61px 61px #3f7472, -62px 62px #3f7472, -63px 63px #3f7472, -64px 64px #3f7472, -65px 65px #3f7472, -66px 66px #3f7472, -67px 67px #3f7472, -68px 68px #3f7472, -69px 69px #3f7472, -70px 70px #3f7472, -71px 71px #3f7472, -72px 72px #3f7472, -73px 73px #3f7472, -74px 74px #3f7472, -75px 75px #3f7472, -76px 76px #3f7472, -77px 77px #3f7472, -78px 78px #3f7472, -79px 79px #3f7472, -80px 80px #3f7472, -81px 81px #3f7472, -82px 82px #3f7472, -83px 83px #3f7472, -84px 84px #3f7472, -85px 85px #3f7472; }
+    .button-longshadow-left.button-action:active, .button-longshadow-left.button-action.active, .button-longshadow-left.button-action.is-active {
+      text-shadow: 0 1px 0 rgba(255, 255, 255, 0.4); }
+  .button-longshadow-left.button-highlight {
+    text-shadow: 0px 0px #e59501, -1px 1px #e59501, -2px 2px #e59501, -3px 3px #e59501, -4px 4px #e59501, -5px 5px #e59501, -6px 6px #e59501, -7px 7px #e59501, -8px 8px #e59501, -9px 9px #e59501, -10px 10px #e59501, -11px 11px #e59501, -12px 12px #e59501, -13px 13px #e59501, -14px 14px #e59501, -15px 15px #e59501, -16px 16px #e59501, -17px 17px #e59501, -18px 18px #e59501, -19px 19px #e59501, -20px 20px #e59501, -21px 21px #e59501, -22px 22px #e59501, -23px 23px #e59501, -24px 24px #e59501, -25px 25px #e59501, -26px 26px #e59501, -27px 27px #e59501, -28px 28px #e59501, -29px 29px #e59501, -30px 30px #e59501, -31px 31px #e59501, -32px 32px #e59501, -33px 33px #e59501, -34px 34px #e59501, -35px 35px #e59501, -36px 36px #e59501, -37px 37px #e59501, -38px 38px #e59501, -39px 39px #e59501, -40px 40px #e59501, -41px 41px #e59501, -42px 42px #e59501, -43px 43px #e59501, -44px 44px #e59501, -45px 45px #e59501, -46px 46px #e59501, -47px 47px #e59501, -48px 48px #e59501, -49px 49px #e59501, -50px 50px #e59501, -51px 51px #e59501, -52px 52px #e59501, -53px 53px #e59501, -54px 54px #e59501, -55px 55px #e59501, -56px 56px #e59501, -57px 57px #e59501, -58px 58px #e59501, -59px 59px #e59501, -60px 60px #e59501, -61px 61px #e59501, -62px 62px #e59501, -63px 63px #e59501, -64px 64px #e59501, -65px 65px #e59501, -66px 66px #e59501, -67px 67px #e59501, -68px 68px #e59501, -69px 69px #e59501, -70px 70px #e59501, -71px 71px #e59501, -72px 72px #e59501, -73px 73px #e59501, -74px 74px #e59501, -75px 75px #e59501, -76px 76px #e59501, -77px 77px #e59501, -78px 78px #e59501, -79px 79px #e59501, -80px 80px #e59501, -81px 81px #e59501, -82px 82px #e59501, -83px 83px #e59501, -84px 84px #e59501, -85px 85px #e59501; }
+    .button-longshadow-left.button-highlight:active, .button-longshadow-left.button-highlight.active, .button-longshadow-left.button-highlight.is-active {
+      text-shadow: 0 1px 0 rgba(255, 255, 255, 0.4); }
+  .button-longshadow-left.button-caution {
+    text-shadow: 0px 0px #b21e1e, -1px 1px #b21e1e, -2px 2px #b21e1e, -3px 3px #b21e1e, -4px 4px #b21e1e, -5px 5px #b21e1e, -6px 6px #b21e1e, -7px 7px #b21e1e, -8px 8px #b21e1e, -9px 9px #b21e1e, -10px 10px #b21e1e, -11px 11px #b21e1e, -12px 12px #b21e1e, -13px 13px #b21e1e, -14px 14px #b21e1e, -15px 15px #b21e1e, -16px 16px #b21e1e, -17px 17px #b21e1e, -18px 18px #b21e1e, -19px 19px #b21e1e, -20px 20px #b21e1e, -21px 21px #b21e1e, -22px 22px #b21e1e, -23px 23px #b21e1e, -24px 24px #b21e1e, -25px 25px #b21e1e, -26px 26px #b21e1e, -27px 27px #b21e1e, -28px 28px #b21e1e, -29px 29px #b21e1e, -30px 30px #b21e1e, -31px 31px #b21e1e, -32px 32px #b21e1e, -33px 33px #b21e1e, -34px 34px #b21e1e, -35px 35px #b21e1e, -36px 36px #b21e1e, -37px 37px #b21e1e, -38px 38px #b21e1e, -39px 39px #b21e1e, -40px 40px #b21e1e, -41px 41px #b21e1e, -42px 42px #b21e1e, -43px 43px #b21e1e, -44px 44px #b21e1e, -45px 45px #b21e1e, -46px 46px #b21e1e, -47px 47px #b21e1e, -48px 48px #b21e1e, -49px 49px #b21e1e, -50px 50px #b21e1e, -51px 51px #b21e1e, -52px 52px #b21e1e, -53px 53px #b21e1e, -54px 54px #b21e1e, -55px 55px #b21e1e, -56px 56px #b21e1e, -57px 57px #b21e1e, -58px 58px #b21e1e, -59px 59px #b21e1e, -60px 60px #b21e1e, -61px 61px #b21e1e, -62px 62px #b21e1e, -63px 63px #b21e1e, -64px 64px #b21e1e, -65px 65px #b21e1e, -66px 66px #b21e1e, -67px 67px #b21e1e, -68px 68px #b21e1e, -69px 69px #b21e1e, -70px 70px #b21e1e, -71px 71px #b21e1e, -72px 72px #b21e1e, -73px 73px #b21e1e, -74px 74px #b21e1e, -75px 75px #b21e1e, -76px 76px #b21e1e, -77px 77px #b21e1e, -78px 78px #b21e1e, -79px 79px #b21e1e, -80px 80px #b21e1e, -81px 81px #b21e1e, -82px 82px #b21e1e, -83px 83px #b21e1e, -84px 84px #b21e1e, -85px 85px #b21e1e; }
+    .button-longshadow-left.button-caution:active, .button-longshadow-left.button-caution.active, .button-longshadow-left.button-caution.is-active {
+      text-shadow: 0 1px 0 rgba(255, 255, 255, 0.4); }
+  .button-longshadow-left.button-royal {
+    text-shadow: 0px 0px #5246e2, -1px 1px #5246e2, -2px 2px #5246e2, -3px 3px #5246e2, -4px 4px #5246e2, -5px 5px #5246e2, -6px 6px #5246e2, -7px 7px #5246e2, -8px 8px #5246e2, -9px 9px #5246e2, -10px 10px #5246e2, -11px 11px #5246e2, -12px 12px #5246e2, -13px 13px #5246e2, -14px 14px #5246e2, -15px 15px #5246e2, -16px 16px #5246e2, -17px 17px #5246e2, -18px 18px #5246e2, -19px 19px #5246e2, -20px 20px #5246e2, -21px 21px #5246e2, -22px 22px #5246e2, -23px 23px #5246e2, -24px 24px #5246e2, -25px 25px #5246e2, -26px 26px #5246e2, -27px 27px #5246e2, -28px 28px #5246e2, -29px 29px #5246e2, -30px 30px #5246e2, -31px 31px #5246e2, -32px 32px #5246e2, -33px 33px #5246e2, -34px 34px #5246e2, -35px 35px #5246e2, -36px 36px #5246e2, -37px 37px #5246e2, -38px 38px #5246e2, -39px 39px #5246e2, -40px 40px #5246e2, -41px 41px #5246e2, -42px 42px #5246e2, -43px 43px #5246e2, -44px 44px #5246e2, -45px 45px #5246e2, -46px 46px #5246e2, -47px 47px #5246e2, -48px 48px #5246e2, -49px 49px #5246e2, -50px 50px #5246e2, -51px 51px #5246e2, -52px 52px #5246e2, -53px 53px #5246e2, -54px 54px #5246e2, -55px 55px #5246e2, -56px 56px #5246e2, -57px 57px #5246e2, -58px 58px #5246e2, -59px 59px #5246e2, -60px 60px #5246e2, -61px 61px #5246e2, -62px 62px #5246e2, -63px 63px #5246e2, -64px 64px #5246e2, -65px 65px #5246e2, -66px 66px #5246e2, -67px 67px #5246e2, -68px 68px #5246e2, -69px 69px #5246e2, -70px 70px #5246e2, -71px 71px #5246e2, -72px 72px #5246e2, -73px 73px #5246e2, -74px 74px #5246e2, -75px 75px #5246e2, -76px 76px #5246e2, -77px 77px #5246e2, -78px 78px #5246e2, -79px 79px #5246e2, -80px 80px #5246e2, -81px 81px #5246e2, -82px 82px #5246e2, -83px 83px #5246e2, -84px 84px #5246e2, -85px 85px #5246e2; }
+    .button-longshadow-left.button-royal:active, .button-longshadow-left.button-royal.active, .button-longshadow-left.button-royal.is-active {
+      text-shadow: 0 1px 0 rgba(255, 255, 255, 0.4); }
+  .button-longshadow-left.button-black {
+    text-shadow: 0px 0px black, -1px 1px black, -2px 2px black, -3px 3px black, -4px 4px black, -5px 5px black, -6px 6px black, -7px 7px black, -8px 8px black, -9px 9px black, -10px 10px black, -11px 11px black, -12px 12px black, -13px 13px black, -14px 14px black, -15px 15px black, -16px 16px black, -17px 17px black, -18px 18px black, -19px 19px black, -20px 20px black, -21px 21px black, -22px 22px black, -23px 23px black, -24px 24px black, -25px 25px black, -26px 26px black, -27px 27px black, -28px 28px black, -29px 29px black, -30px 30px black, -31px 31px black, -32px 32px black, -33px 33px black, -34px 34px black, -35px 35px black, -36px 36px black, -37px 37px black, -38px 38px black, -39px 39px black, -40px 40px black, -41px 41px black, -42px 42px black, -43px 43px black, -44px 44px black, -45px 45px black, -46px 46px black, -47px 47px black, -48px 48px black, -49px 49px black, -50px 50px black, -51px 51px black, -52px 52px black, -53px 53px black, -54px 54px black, -55px 55px black, -56px 56px black, -57px 57px black, -58px 58px black, -59px 59px black, -60px 60px black, -61px 61px black, -62px 62px black, -63px 63px black, -64px 64px black, -65px 65px black, -66px 66px black, -67px 67px black, -68px 68px black, -69px 69px black, -70px 70px black, -71px 71px black, -72px 72px black, -73px 73px black, -74px 74px black, -75px 75px black, -76px 76px black, -77px 77px black, -78px 78px black, -79px 79px black, -80px 80px black, -81px 81px black, -82px 82px black, -83px 83px black, -84px 84px black, -85px 85px black; }
+    .button-longshadow-left.button-black:active, .button-longshadow-left.button-black.active, .button-longshadow-left.button-black.is-active {
+      text-shadow: 0 1px 0 rgba(255, 255, 255, 0.4); }
+
+/*
+* Button Sizes
+*
+* This file creates the various button sizes
+* (ex. .button-large, .button-small, etc.)
+*/
+.button-giant {
+  font-size: 28px;
+  height: 70px;
+  line-height: 70px;
+  padding: 0 70px; }
+
+.button-jumbo {
+  font-size: 24px;
+  height: 60px;
+  line-height: 60px;
+  padding: 0 60px; }
+
+.button-large {
+  font-size: 20px;
+  height: 50px;
+  line-height: 50px;
+  padding: 0 50px; }
+
+.button-normal {
+  font-size: 16px;
+  height: 40px;
+  line-height: 40px;
+  padding: 0 40px; }
+
+.button-small {
+  font-size: 12px;
+  height: 30px;
+  line-height: 30px;
+  padding: 0 30px; }
+
+.button-tiny {
+  font-size: 9.6px;
+  height: 24px;
+  line-height: 24px;
+  padding: 0 24px; }
+
+/* Budget tutorial styling */
+html {
+  font-family: 'Montserrat', sans-serif;
+  background-color: #e0e0e0; }
+
+h1, h6 {
+  font-weight: bold; }
+
+.bold {
+  font-weight: bold; }
+
+.card-panel .row {
+  margin: 0 !important; }
+
+.noproject-wrapper {
+  margin-top: 250px;
+  padding: 80px 0px;
+  border: 6px dashed #9e9e9e; }
+
+.noproject-wrapper h3 {
+  padding: 10px;
+  margin-bottom: 50px; }
+
+form ul li.category {
+  display: inline-block;
   background-color: white;
-  border-color: #d6e9c6;
-}
+  padding: 5px 10px;
+  margin-right: 5px; }
 
-.alert-error {
-  color: #b94a48;
-  background-color: #f2dede;
-  border-color: #eed3d7;
-}
+.section-stats h1 {
+  font-size: 4vw;
+  margin: 15px 0 px; }
+  @media (1024px) {
+    .section-stats h1 {
+      font-size: calc(16px + 6vw); } }
+
+.section-expenses .expense {
+  font-size: 16px;
+  border-radius: 0;
+  margin: 0; }
+
+.section-expenses .expense .category {
+  font-size: 13px; }
+
+.section-expenses li:nth-child(even) .expense {
+  background-color: #f2f2f2; }
+
+.section-expenses .close-icon:hover {
+  cursor: pointer; }
+
+/* ==========================================================================
+   Helper classes
+   ========================================================================== */
+/*
+ * Hide visually and from screen readers
+ */
+.hidden {
+  display: none !important; }
+
+/*
+* Hide only visually, but have it available for screen readers:
+* https://snook.ca/archives/html_and_css/hiding-content-for-accessibility
+*
+* 1. For long content, line feeds are not interpreted as spaces and small width
+*    causes content to wrap 1 word per line:
+*    https://medium.com/@jessebeach/beware-smushed-off-screen-accessible-text-5952a4c2cbfe
+*/
+.visuallyhidden {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+  white-space: nowrap;
+  /* 1 */ }
+
+/*
+* Extends the .visuallyhidden class to allow the element
+* to be focusable when navigated to via the keyboard:
+* https://www.drupal.org/node/897638
+*/
+.visuallyhidden.focusable:active,
+.visuallyhidden.focusable:focus {
+  clip: auto;
+  height: auto;
+  margin: 0;
+  overflow: visible;
+  position: static;
+  width: auto;
+  white-space: inherit; }
+
+/*
+* Hide visually and from screen readers, but maintain layout
+*/
+.invisible {
+  visibility: hidden; }
+
+/*
+* Clearfix: contain floats
+*
+* For modern browsers
+* 1. The space content is one way to avoid an Opera bug when the
+*    `contenteditable` attribute is included anywhere else in the document.
+*    Otherwise it causes space to appear at the top and bottom of elements
+*    that receive the `clearfix` class.
+* 2. The use of `table` rather than `block` is only necessary if using
+*    `:before` to contain the top-margins of child elements.
+*/
+.clearfix:before,
+.clearfix:after {
+  content: " ";
+  /* 1 */
+  display: table;
+  /* 2 */ }
+
+.clearfix:after {
+  clear: both; }
+
+/* ==========================================================================
+   Print styles.
+   Inlined to avoid the additional HTTP request:
+   https://www.phpied.com/delay-loading-your-print-css/
+   ========================================================================== */
+@media print {
+  *,
+  *:before,
+  *:after {
+    background: transparent !important;
+    color: #000 !important;
+    /* Black prints faster */
+    -webkit-box-shadow: none !important;
+            box-shadow: none !important;
+    text-shadow: none !important; }
+  a,
+  a:visited {
+    text-decoration: underline; }
+  a[href]:after {
+    content: " (" attr(href) ")"; }
+  abbr[title]:after {
+    content: " (" attr(title) ")"; }
+  /*
+     * Don't show links that are fragment identifiers,
+     * or use the `javascript:` pseudo protocol
+     */
+  a[href^="#"]:after,
+  a[href^="javascript:"]:after {
+    content: ""; }
+  pre {
+    white-space: pre-wrap !important; }
+  pre,
+  blockquote {
+    border: 1px solid #999;
+    page-break-inside: avoid; }
+  /*
+     * Printing Tables:
+     * http://css-discuss.incutio.com/wiki/Printing_Tables
+     */
+  thead {
+    display: table-header-group; }
+  tr,
+  img {
+    page-break-inside: avoid; }
+  p,
+  h2,
+  h3 {
+    orphans: 3;
+    widows: 3; }
+  h2,
+  h3 {
+    page-break-after: avoid; } }

@@ -1,0 +1,43 @@
+/*
+* Button Shapes
+*
+* This file creates the various button shapes
+* (ex. Circle, Rounded, Pill)
+*/
+
+@each $btn-shape in $btn-shapes {
+  $btn-shape-name: nth($btn-shape, 1);
+  $btn-shape-radius: nth($btn-shape, 2);
+
+  #{$btn-namespace}-#{$btn-shape-name} {
+    @if($btn-use-compass) {
+      @include border-radius($btn-shape-radius);
+    }
+    @else {
+      border-radius: $btn-shape-radius;
+    }
+  }
+}
+
+
+/*
+* Size Adjustment for equal height & widht buttons
+*
+* Remove padding and set a fixed width.
+*/
+#{$btn-namespace}-circle,
+#{$btn-namespace}-box,
+#{$btn-namespace}-square {
+  padding: 0 !important;
+  width: $btn-height;
+
+  @each $btn-sizes-hash in $btn-sizes {
+    $btn-size: nth($btn-sizes-hash, 1);
+    $btn-multiplier : nth($btn-sizes-hash, 2);
+    $btn-size-namespace: #{$btn-namespace}-#{$btn-size};
+
+    &#{$btn-size-namespace} {
+      width: $btn-height * $btn-multiplier;
+    }
+  }
+}
