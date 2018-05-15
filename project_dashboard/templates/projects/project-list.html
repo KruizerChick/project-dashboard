@@ -1,4 +1,4 @@
-{% extends "project/base.html" %}
+{% extends "projects/base.html" %}
 {% load static i18n %}
 
 {% block content %}
@@ -10,7 +10,7 @@
       <div class="col s12 l3">
         <div class="card-panel center">
           <h5>{{ project.name }}</h5>
-          <a href="{% url 'project:detail' project.slug %}"
+          <a href="{% url 'projects:detail' project.slug %}"
              class="button button-action button-pill">
             {% trans "Visit" %}</a>
         </div>
@@ -23,7 +23,7 @@
   </div>
   <div class="row">
     <div class="container center">
-      <a href="{% url 'project:add' %}" class="button button-large button-pill button-primary">
+      <a href="{% url 'projects:add' %}" class="button button-large button-pill button-primary">
         <i class="material-icons white-text">add_circle</i>&nbsp;
         <span>{% trans "Add Project" %}</span>
       </a>

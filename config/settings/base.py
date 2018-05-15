@@ -90,7 +90,8 @@ THIRD_PARTY_APPS = [
 LOCAL_APPS = [
     'project_dashboard.users.apps.UsersConfig',
     # Your stuff: custom apps go here
-    'project_dashboard.project.apps.ProjectConfig',
+    'project_dashboard.core.apps.CoreConfig',
+    'project_dashboard.projects.apps.ProjectConfig',
 
 ]
 

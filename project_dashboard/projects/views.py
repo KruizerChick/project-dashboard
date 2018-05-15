@@ -12,7 +12,7 @@ from .models import Project, Category, Expense
 def project_list(request):
     project_list = Project.objects.all()
     return render(
-        request, 'project/project-list.html',
+        request, 'projects/project-list.html',
         {'project_list': project_list}
         )
 
@@ -24,7 +24,7 @@ def project_detail(request, project_slug):
     if request.method == 'GET':
         category_list = Category.objects.filter(project=project)
         return render(
-            request, 'project/project-detail.html',
+            request, 'projects/project-detail.html',
             {'project': project,
             'expense_list': project.expenses.all(),
             'category_list': category_list,
@@ -60,7 +60,7 @@ def project_detail(request, project_slug):
 
 class ProjectCreateView(CreateView):
     model = Project
-    template_name = 'project/add-project.html'
+    template_name = 'projects/add-project.html'
     fields = {'name', 'budget'}
 
     def form_valid(self, form):

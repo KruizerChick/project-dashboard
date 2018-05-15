@@ -30,7 +30,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('title', models.CharField(max_length=100)),
                 ('amount', models.DecimalField(decimal_places=2, max_digits=8)),
-                ('category', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='project.Category')),
+                ('category', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='projects.Category')),
             ],
             options={
                 'ordering': ('-amount',),
@@ -48,11 +48,11 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='expense',
             name='project',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='expenses', to='project.Project'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='expenses', to='projects.Project'),
         ),
         migrations.AddField(
             model_name='category',
             name='project',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='categories', to='project.Project'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='categories', to='projects.Project'),
         ),
     ]
