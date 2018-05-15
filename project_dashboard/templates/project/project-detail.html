@@ -1,8 +1,12 @@
-{% extends "budget/base.html" %}
+{% extends "project/base.html" %}
 {% load i18n %}
 
 {% block content %}
-
+<div class="row">
+  <h3 class="left">{% trans "Project:" %}&nbsp;
+    <span class="bold">{{ project.name }}</span></h3>
+</div>
+<hr>
 <section class="section section-stats">
   <div class="row">
 
@@ -48,25 +52,29 @@
   </div>
 
   <ul class="z-depth-1">
-      <li>
-          <div class="card-panel z-depth-0 expense">
-            <div class="row bold">
+    <li>
+      <div class="header blue-grey lighten-4 z-depth-0 expense">
+        <div class="row bold blue-grey-text text-darken-2">
 
-              <div class="col 16">
-                <span class="title">{% trans "Expense Title" %}</span>
-              </div>
-
-              <div class="col 13">
-                <span class="title">{% trans "Amount" %}</span>
-              </div>
-
-              <div class="col 1">
-                <span class="title">{% trans "Category" %}</span>
-              </div>
-
-            </div>
+          <div class="col 16">
+            <h6 class="bold">{% trans "Expense Title" %}</h6>
           </div>
-        </li>
+
+          <div class="col 13">
+            <h6 class="bold">{% trans "Amount" %}</h6>
+          </div>
+
+          <div class="col 1">
+            <h6 class="bold">{% trans "Category" %}</h6>
+          </div>
+
+          <a class="close-icon">
+            <i class="material-icons blue-grey-text text-lighten-4 right">close</i>
+          </a>
+
+        </div>
+      </div>
+    </li>
 
     {% for expense in expense_list  %}
     <li>
@@ -88,6 +96,7 @@
             <a class="close-icon" onclick="deleteExpense(this)" data-id="{{ expense.id }}">
               <i class="material-icons red-text right">close</i>
             </a>
+
           </div>
         </div>
       </li>
@@ -103,13 +112,13 @@
 
     <form method="POST">
       {% csrf_token %}
-      <label for="title">{% trans "Title" %}</label>
-      <input type="text" id="title" name="title">
+      <label class="left" for="title">{% trans "Title" %}</label>
+      <input placeholder="expense title" type="text" id="title" name="title">
 
-      <label for="amount">{% trans "Amount" %}</label>
-      <input type="text" id="amount" name="amount">
+      <label class="left" for="amount">{% trans "Amount" %}</label>
+      <input placeholder="0.00" type="text" id="amount" name="amount">
 
-      <label for="category">{% trans "Category" %}</label>
+      <label class="left" for="category">{% trans "Category" %}</label>
       <select name="category">
         {% for category in category_list  %}
           <option>{{ category.name }}</option>

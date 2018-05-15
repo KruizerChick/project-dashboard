@@ -1,0 +1,33 @@
+{% extends "project/base.html" %}
+{% load static i18n %}
+
+{% block content %}
+
+<div class="container">
+  <h2>{% trans "Add New Project" %}</h2>
+  <form class="left" method="POST">
+    {% csrf_token %}
+
+    <label class="left" for="id_name">{% trans "Project Name" %}</label>
+    <input placeholder="project name" type="text" name="name" id="id_name" required="">
+
+    <label class="left" for="id_budget">{% trans "Budget Amount" %}</label>
+    <input placeholder="budget amount" type="number" name="budget" id="id_budget" required="">
+
+    <label class="left" for="categoryInput">
+      {% trans "Expense Categories (hit enter after every category)" %}
+    </label>
+    <input type="text" name="categoryInput" id="categoryInput">
+    <input type="hidden" name="categoriesString">
+
+    <ul id="categoriesContainer">
+
+    </ul>
+    <button type="submit" class="button button-action button-pill">
+      {% trans "Start Project" %}</button>
+  </form>
+</div>
+
+<script src="{% static 'js/project.js' %}"></script>
+
+{% endblock content %}

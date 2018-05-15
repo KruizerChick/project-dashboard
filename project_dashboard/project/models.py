@@ -8,7 +8,8 @@ class Project(models.Model):
     Project model
     Project(id, name, slug, budget)
     """
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=100,
+        verbose_name='project')
     slug = models.SlugField(max_length=100, unique=True, blank=True)
     budget = models.IntegerField(
         help_text='Amount allocated to this project.'

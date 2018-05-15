@@ -22,7 +22,7 @@ urlpatterns = [
     path('accounts/', include('allauth.urls')),
 
     # Custom apps
-    path('projects/', include('project_dashboard.budget.urls', namespace='budget')),
+    path('projects/', include('project_dashboard.project.urls', namespace='project')),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
