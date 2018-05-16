@@ -16,8 +16,8 @@
     {% block css %}
       <!-- Latest compiled and minified Bootstrap 4 beta CSS -->
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
-
       <!-- Your stuff: Third-party CSS libraries go here -->
+
       {% compress css %}
         <!-- This file stores project-specific CSS -->
         <link href="{% static 'css/project.css' %}" rel="stylesheet">
@@ -32,6 +32,16 @@
     {% include "_nav_menu.html" %}
 
     <div class="container center">
+      {% block breadcrumbs %}
+        <div class="row justify-content-center">
+          <div class="col breadcrumbs">
+            <ul>
+              <li><a href="{% url 'home' %}">{% trans "Home" %}</a></li>
+              {% block extra-crumbs %}{% endblock extra-crumbs %}
+            </ul>
+          </div>
+        </div>
+        {% endblock breadcrumbs %}
 
       {% if messages %}
           {% for message in messages %}

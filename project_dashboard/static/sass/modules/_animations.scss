@@ -106,7 +106,7 @@
   display: inline-block;
   vertical-align: middle;
 
-  @mixin atSmall {
+  @media #{$medium-and-up} {
     transform: scale(1);
     min-height: 18.75rem;
   }

@@ -7,12 +7,13 @@
   <h2>{% trans "Add New Project" %}</h2>
   <form class="left" method="POST">
     {% csrf_token %}
+    {{ form }}
 
-    <label class="left" for="id_name">{% trans "Project Name" %}</label>
+    <!-- <label class="left" for="id_name">{% trans "Project Name" %}</label>
     <input placeholder="project name" type="text" name="name" id="id_name" required="">
 
     <label class="left" for="id_budget">{% trans "Budget Amount" %}</label>
-    <input placeholder="budget amount" type="number" name="budget" id="id_budget" required="">
+    <input placeholder="budget amount" type="number" name="budget" id="id_budget" required=""> -->
 
     <label class="left" for="categoryInput">
       {% trans "Expense Categories (hit enter after every category)" %}

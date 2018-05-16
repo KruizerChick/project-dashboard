@@ -117,6 +117,57 @@ textarea {
 @media print, (-webkit-min-device-pixel-ratio: 1.25), (min-resolution: 1.25dppx), (min-resolution: 120dpi) {
   /* Style adjustments for high resolution devices */ }
 
+/**************************************
+  Media Queries from Materialize
+***************************************/
+@media only screen and (max-width: 600px) {
+  .hide-on-small-only, .hide-on-small-and-down {
+    display: none !important; } }
+
+@media only screen and (max-width: 992px) {
+  .hide-on-med-and-down {
+    display: none !important; } }
+
+@media only screen and (min-width: 601px) {
+  .hide-on-med-and-up {
+    display: none !important; } }
+
+@media only screen and (min-width: 600px) and (max-width: 992px) {
+  .hide-on-med-only {
+    display: none !important; } }
+
+@media only screen and (min-width: 993px) {
+  .hide-on-large-only {
+    display: none !important; } }
+
+@media only screen and (min-width: 1201px) {
+  .hide-on-extra-large-only {
+    display: none !important; } }
+
+@media only screen and (min-width: 1201px) {
+  .show-on-extra-large {
+    display: block !important; } }
+
+@media only screen and (min-width: 993px) {
+  .show-on-large {
+    display: block !important; } }
+
+@media only screen and (min-width: 600px) and (max-width: 992px) {
+  .show-on-medium {
+    display: block !important; } }
+
+@media only screen and (max-width: 600px) {
+  .show-on-small {
+    display: block !important; } }
+
+@media only screen and (min-width: 601px) {
+  .show-on-medium-and-up {
+    display: block !important; } }
+
+@media only screen and (max-width: 992px) {
+  .show-on-medium-and-down {
+    display: block !important; } }
+
 /* ==========================================================================
    Django Alert styles
    ========================================================================== */
@@ -242,6 +293,11 @@ textarea {
 .slide img {
   display: inline-block;
   vertical-align: middle; }
+  @media only screen and (min-width: 601px) {
+    .slide img {
+      -webkit-transform: scale(1);
+              transform: scale(1);
+      min-height: 18.75rem; } }
 
 .slide-content {
   position: absolute;
@@ -600,6 +656,32 @@ textarea {
   100% {
     -webkit-transform: translateX(120%) rotate(-180deg);
             transform: translateX(120%) rotate(-180deg); } }
+
+/* ==========================================================================
+    Breadcrumbs
+   ========================================================================== */
+.breadcrumbs {
+  display: none; }
+  @media only screen and (min-width: 601px) {
+    .breadcrumbs {
+      display: inline;
+      min-width: 70%; }
+      .breadcrumbs ul {
+        min-height: 2rem;
+        margin: 0 1rem;
+        padding: .75rem .5rem .75rem 1.5rem;
+        font-size: .9rem;
+        background: #ebf5fb url("../images/breadcrumb.png") no-repeat scroll left;
+        color: #fff; }
+        .breadcrumbs ul li {
+          display: inline;
+          padding: 1rem 0;
+          color: #315b7d; }
+        .breadcrumbs ul li:after {
+          content: ">";
+          padding: 0 1rem; }
+        .breadcrumbs ul li:last-child:after, .breadcrumbs ul li.last:after {
+          content: ""; } }
 
 /* =========================
     Dropdown Menu Styling
@@ -2270,7 +2352,7 @@ form ul li.category {
 .section-stats h1 {
   font-size: 4vw;
   margin: 15px 0 px; }
-  @media (1024px) {
+  @media only screen and (min-width: 601px) {
     .section-stats h1 {
       font-size: calc(16px + 6vw); } }
 

@@ -80,6 +80,8 @@ THIRD_PARTY_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'rest_framework',
+    'django_tables2',
+    'crudbuilder',
 
     # Social providers for 'allauth'
     # 'allauth.socialaccount.providers.github',
@@ -91,8 +93,8 @@ LOCAL_APPS = [
     'project_dashboard.users.apps.UsersConfig',
     # Your stuff: custom apps go here
     'project_dashboard.core.apps.CoreConfig',
-    'project_dashboard.projects.apps.ProjectConfig',
-
+    # 'project_dashboard.projects.apps.ProjectConfig',
+    'project_dashboard.projects',
 ]
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
@@ -293,5 +295,9 @@ MESSAGE_TAGS = {
 }
 
 
-# Your stuff...
+# CRUDBUILDER CONFIG
 # ------------------------------------------------------------------------------
+# See https://github.com/asifpy/django-crudbuilder
+
+LOGIN_REQUIRED_FOR_CRUD = True
+PROJECT_NAME = 'project_dashboard'

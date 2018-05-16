@@ -1,0 +1,31 @@
+{% extends "crudbuilder/base.html" %}
+{% load i18n crudbuilder %}
+
+{% block main_content %}
+<div class="container">
+	<h3>{{view.title}}</h3>
+	<hr/>
+	<!-- <table class="table table-bordered table-condensed">
+		<thead>
+			<tr>
+				<th>Crud</th>
+				<th>Model</th>
+				<th>App</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for key, crud in view.cruds %}
+				<tr>
+					{% with detail=key|crud_detail %}
+						<td><a href="{% url detail.postfix_url %}">{{crud|class_name}}</a></td>
+						<td>{{detail.model|title}}</td>
+						<td>{{detail.app|title}}</td>
+					{% endwith %}
+				</tr>
+			{% endfor %}
+		</tbody>
+
+	</table> -->
+</div>
+
+{% endblock main_content %}

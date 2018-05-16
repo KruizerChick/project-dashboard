@@ -2,7 +2,7 @@
 
 from django.conf import settings
 from django.contrib.auth import get_user_model
-from django.contrib.postgres.fields import ArrayField
+from django.contrib.postgres.fields import ArrayField, JSONField
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.db.models import Q
@@ -138,6 +138,12 @@ class Project(ProjectDefaults, models.Model):
     total_milestones = models.IntegerField(
         null=True, blank=True,
         verbose_name=_("total of milestones"))
+
+    creation_template = models.ForeignKey(
+        "projects.ProjectTemplate", on_delete=models.SET_NULL,
+        null=True, blank=True, default=None,
+        related_name="projects",
+        verbose_name=_("creation template"))
 
     is_contact_activated = models.BooleanField(
         default=True, null=False, blank=True,
@@ -596,3 +602,333 @@ class Expense(models.Model):
 
     class Meta:
         ordering = ('-amount', )
+
+
+class ProjectTemplate(models.Model):
+    name = models.CharField(max_length=250, null=False, blank=False,
+                            verbose_name=_("name"))
+    slug = models.SlugField(max_length=250, null=False, blank=True,
+                            verbose_name=_("slug"), unique=True)
+    description = models.TextField(null=False, blank=False,
+                                   verbose_name=_("description"))
+    order = models.BigIntegerField(default=timestamp_ms, null=False, blank=False,
+                                   verbose_name=_("user order"))
+    created_date = models.DateTimeField(null=False, blank=False,
+                                        verbose_name=_("created date"),
+                                        default=timezone.now)
+    modified_date = models.DateTimeField(null=False, blank=False,
+                                         verbose_name=_("modified date"))
+    default_owner_role = models.CharField(max_length=50, null=False,
+                                          blank=False,
+                                          verbose_name=_("default owner's role"))
+    is_contact_activated = models.BooleanField(default=True, null=False, blank=True,
+                                               verbose_name=_("active contact"))
+    is_backlog_activated = models.BooleanField(default=True, null=False, blank=True,
+                                               verbose_name=_("active backlog panel"))
+    is_kanban_activated = models.BooleanField(default=False, null=False, blank=True,
+                                              verbose_name=_("active kanban panel"))
+    is_wiki_activated = models.BooleanField(default=True, null=False, blank=True,
+                                            verbose_name=_("active wiki panel"))
+    is_issues_activated = models.BooleanField(default=True, null=False, blank=True,
+                                              verbose_name=_("active issues panel"))
+
+    default_options = JSONField(null=True, blank=True, verbose_name=_("default options"))
+    epic_statuses = JSONField(null=True, blank=True, verbose_name=_("epic statuses"))
+    us_statuses = JSONField(null=True, blank=True, verbose_name=_("us statuses"))
+    points = JSONField(null=True, blank=True, verbose_name=_("points"))
+    task_statuses = JSONField(null=True, blank=True, verbose_name=_("task statuses"))
+    issue_statuses = JSONField(null=True, blank=True, verbose_name=_("issue statuses"))
+    issue_types = JSONField(null=True, blank=True, verbose_name=_("issue types"))
+    priorities = JSONField(null=True, blank=True, verbose_name=_("priorities"))
+    severities = JSONField(null=True, blank=True, verbose_name=_("severities"))
+    roles = JSONField(null=True, blank=True, verbose_name=_("roles"))
+    epic_custom_attributes = JSONField(null=True, blank=True, verbose_name=_("epic custom attributes"))
+    us_custom_attributes = JSONField(null=True, blank=True, verbose_name=_("us custom attributes"))
+    task_custom_attributes = JSONField(null=True, blank=True, verbose_name=_("task custom attributes"))
+    issue_custom_attributes = JSONField(null=True, blank=True, verbose_name=_("issue custom attributes"))
+
+    _importing = None
+
+    class Meta:
+        verbose_name = "project template"
+        verbose_name_plural = "project templates"
+        ordering = ["order", "name"]
+
+    def __str__(self):
+        return self.name
+
+    def __repr__(self):
+        return "<Project Template {0}>".format(self.slug)
+
+    def save(self, *args, **kwargs):
+        if not self._importing or not self.modified_date:
+            self.modified_date = timezone.now()
+        if not self.slug:
+            self.slug = slugify_uniquely(self.name, self.__class__)
+        super().save(*args, **kwargs)
+
+    def load_data_from_project(self, project):
+        self.is_contact_activated = project.is_contact_activated
+        self.is_epics_activated = project.is_epics_activated
+        self.is_backlog_activated = project.is_backlog_activated
+        self.is_kanban_activated = project.is_kanban_activated
+        self.is_wiki_activated = project.is_wiki_activated
+        self.is_issues_activated = project.is_issues_activated
+        self.videoconferences = project.videoconferences
+        self.videoconferences_extra_data = project.videoconferences_extra_data
+
+        self.default_options = {
+            "points": getattr(project.default_points, "name", None),
+            "epic_status": getattr(project.default_epic_status, "name", None),
+            "us_status": getattr(project.default_us_status, "name", None),
+            "task_status": getattr(project.default_task_status, "name", None),
+            "issue_status": getattr(project.default_issue_status, "name", None),
+            "issue_type": getattr(project.default_issue_type, "name", None),
+            "priority": getattr(project.default_priority, "name", None),
+            "severity": getattr(project.default_severity, "name", None)
+        }
+
+        self.epic_statuses = []
+        for epic_status in project.epic_statuses.all():
+            self.epic_statuses.append({
+                "name": epic_status.name,
+                "slug": epic_status.slug,
+                "is_closed": epic_status.is_closed,
+                "color": epic_status.color,
+                "order": epic_status.order,
+            })
+
+        self.us_statuses = []
+        for us_status in project.us_statuses.all():
+            self.us_statuses.append({
+                "name": us_status.name,
+                "slug": us_status.slug,
+                "is_closed": us_status.is_closed,
+                "is_archived": us_status.is_archived,
+                "color": us_status.color,
+                "wip_limit": us_status.wip_limit,
+                "order": us_status.order,
+            })
+
+        self.points = []
+        for us_point in project.points.all():
+            self.points.append({
+                "name": us_point.name,
+                "value": us_point.value,
+                "order": us_point.order,
+            })
+
+        self.task_statuses = []
+        for task_status in project.task_statuses.all():
+            self.task_statuses.append({
+                "name": task_status.name,
+                "slug": task_status.slug,
+                "is_closed": task_status.is_closed,
+                "color": task_status.color,
+                "order": task_status.order,
+            })
+
+        self.issue_statuses = []
+        for issue_status in project.issue_statuses.all():
+            self.issue_statuses.append({
+                "name": issue_status.name,
+                "slug": issue_status.slug,
+                "is_closed": issue_status.is_closed,
+                "color": issue_status.color,
+                "order": issue_status.order,
+            })
+
+        self.issue_types = []
+        for issue_type in project.issue_types.all():
+            self.issue_types.append({
+                "name": issue_type.name,
+                "color": issue_type.color,
+                "order": issue_type.order,
+            })
+
+        self.priorities = []
+        for priority in project.priorities.all():
+            self.priorities.append({
+                "name": priority.name,
+                "color": priority.color,
+                "order": priority.order,
+            })
+
+        self.severities = []
+        for severity in project.severities.all():
+            self.severities.append({
+                "name": severity.name,
+                "color": severity.color,
+                "order": severity.order,
+            })
+
+        self.roles = []
+        for role in project.roles.all():
+            self.roles.append({
+                "name": role.name,
+                "slug": role.slug,
+                "permissions": role.permissions,
+                "order": role.order,
+                "computable": role.computable
+            })
+
+        self.epic_custom_attributes = []
+        for ca in project.epiccustomattributes.all():
+            self.epic_custom_attributes.append({
+                "name": ca.name,
+                "description": ca.description,
+                "type": ca.type,
+                "order": ca.order
+            })
+
+        self.us_custom_attributes = []
+        for ca in project.userstorycustomattributes.all():
+            self.us_custom_attributes.append({
+                "name": ca.name,
+                "description": ca.description,
+                "type": ca.type,
+                "order": ca.order
+            })
+
+        self.task_custom_attributes = []
+        for ca in project.taskcustomattributes.all():
+            self.task_custom_attributes.append({
+                "name": ca.name,
+                "description": ca.description,
+                "type": ca.type,
+                "order": ca.order
+            })
+
+        self.issue_custom_attributes = []
+        for ca in project.issuecustomattributes.all():
+            self.issue_custom_attributes.append({
+                "name": ca.name,
+                "description": ca.description,
+                "type": ca.type,
+                "order": ca.order
+            })
+
+        try:
+            owner_membership = Membership.objects.get(project=project, user=project.owner)
+            self.default_owner_role = owner_membership.role.slug
+        except Membership.DoesNotExist:
+            self.default_owner_role = self.roles[0].get("slug", None)
+
+        self.tags = project.tags
+        self.tags_colors = project.tags_colors
+        self.is_looking_for_people = project.is_looking_for_people
+        self.looking_for_people_note = project.looking_for_people_note
+
+    def apply_to_project(self, project):
+        Role = apps.get_model("users", "Role")
+
+        if project.id is None:
+            raise Exception("Project need an id (must be a saved project)")
+
+        project.creation_template = self
+        project.is_contact_activated = self.is_contact_activated
+        project.is_epics_activated = self.is_epics_activated
+        project.is_backlog_activated = self.is_backlog_activated
+        project.is_kanban_activated = self.is_kanban_activated
+        project.is_wiki_activated = self.is_wiki_activated
+        project.is_issues_activated = self.is_issues_activated
+        project.videoconferences = self.videoconferences
+        project.videoconferences_extra_data = self.videoconferences_extra_data
+
+        for task_status in self.task_statuses:
+            TaskStatus.objects.create(
+                name=task_status["name"],
+                slug=task_status["slug"],
+                is_closed=task_status["is_closed"],
+                color=task_status["color"],
+                order=task_status["order"],
+                project=project
+            )
+
+        for issue_status in self.issue_statuses:
+            IssueStatus.objects.create(
+                name=issue_status["name"],
+                slug=issue_status["slug"],
+                is_closed=issue_status["is_closed"],
+                color=issue_status["color"],
+                order=issue_status["order"],
+                project=project
+            )
+
+        for issue_type in self.issue_types:
+            IssueType.objects.create(
+                name=issue_type["name"],
+                color=issue_type["color"],
+                order=issue_type["order"],
+                project=project
+            )
+
+        for priority in self.priorities:
+            Priority.objects.create(
+                name=priority["name"],
+                color=priority["color"],
+                order=priority["order"],
+                project=project
+            )
+
+        for severity in self.severities:
+            Severity.objects.create(
+                name=severity["name"],
+                color=severity["color"],
+                order=severity["order"],
+                project=project
+            )
+
+        for role in self.roles:
+            Role.objects.create(
+                name=role["name"],
+                slug=role["slug"],
+                order=role["order"],
+                computable=role["computable"],
+                project=project,
+                permissions=role['permissions']
+            )
+
+        if self.task_statuses:
+            project.default_task_status = TaskStatus.objects.get(name=self.default_options["task_status"],
+                                                                 project=project)
+        if self.issue_statuses:
+            project.default_issue_status = IssueStatus.objects.get(name=self.default_options["issue_status"],
+                                                                   project=project)
+
+        if self.issue_types:
+            project.default_issue_type = IssueType.objects.get(name=self.default_options["issue_type"],
+                                                               project=project)
+
+        if self.priorities:
+            project.default_priority = Priority.objects.get(name=self.default_options["priority"],
+                                                            project=project)
+
+        if self.severities:
+            project.default_severity = Severity.objects.get(name=self.default_options["severity"],
+                                                            project=project)
+
+        # for ca in self.task_custom_attributes:
+        #     TaskCustomAttribute.objects.create(
+        #         name=ca["name"],
+        #         description=ca["description"],
+        #         type=ca["type"],
+        #         order=ca["order"],
+        #         project=project
+        #     )
+
+        # for ca in self.issue_custom_attributes:
+        #     IssueCustomAttribute.objects.create(
+        #         name=ca["name"],
+        #         description=ca["description"],
+        #         type=ca["type"],
+        #         order=ca["order"],
+        #         project=project
+        #     )
+
+        project.tags = self.tags
+        project.tags_colors = self.tags_colors
+        project.is_looking_for_people = self.is_looking_for_people
+        project.looking_for_people_note = self.looking_for_people_note
+
+        return project

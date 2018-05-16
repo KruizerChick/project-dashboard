@@ -1,6 +1,22 @@
 {% extends "projects/base.html" %}
 {% load static i18n %}
 
+{% comment %}
+{% block extra-css %}
+  <!-- Import Google Icon Font -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!--Import materialize.css-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
+  <!-- Compiled and minified JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
+{% endblock extra-css %}
+{% endcomment %}
+
+{% block more-crumbs %}
+  <li><a href="{% url 'projects:list' %}">{% trans "Projects" %}</a></li>
+{% endblock more-crumbs %}
+
+
 {% block content %}
 
   <h1>{% trans "My Projects" %}</h1>

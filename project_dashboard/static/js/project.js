@@ -18,4 +18,54 @@ Issues with the above approach:
 3. Really Unforgiving: No way to override this behavior
 4. Undocumented: No mention in the documentation, or it's too hard for me to find
 */
-$('.form-group').removeClass('row');
+// $('.form-group').removeClass('row');
+
+(function() {
+  document.querySelector('#categoryInput').addEventListener('keydown', function(e){
+    // 13 is the keycode for the 'enter' key
+    if (e.keyCode != 13){
+      return;
+    }
+
+    e.preventDefault()
+
+    var categoryName = this.value
+    this.value = ''
+    addNewCategory(categoryName)
+    updateCategoriesString()
+  })
+
+  function addNewCategory(name){
+    if (name == '') return;
+
+    document.querySelector('#categoriesContainer').insertAdjacentHTML('beforeend',
+      `<li class="category">
+        <span class="name">${name}</span>
+        <span onclick="removeCategory(this)" class="btnRemove bold">X</span>
+      </li>`)
+  }
+
+})()
+
+function fetchCategoryArray(){
+  var categories = []
+
+  document.querySelectorAll('.category').forEach(function(e){
+    name = e.querySelector('.name').innerHTML
+    if (name == '') return;
+
+    categories.push(name)
+  })
+
+  return categories
+}
+
+function updateCategoriesString(){
+  categories = fetchCategoryArray()
+  document.querySelector('input[name="categoriesString"]').value = categories.join(',')
+}
+
+function removeCategory(e){
+  e.parentElement.remove()
+  updateCategoriesString()
+}

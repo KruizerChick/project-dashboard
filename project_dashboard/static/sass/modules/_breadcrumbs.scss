@@ -1,0 +1,37 @@
+/* ==========================================================================
+    Breadcrumbs
+   ========================================================================== */
+
+.breadcrumbs {
+  display: none;
+
+  @media #{$medium-and-up} {
+    display: inline;
+    min-width: 70%;
+
+    ul {
+    min-height: 2rem;
+    margin: 0 1rem;
+    padding: .75rem .5rem .75rem 1.5rem;
+    font-size: .9rem;
+    background: $primary-color-04 url("../images/breadcrumb.png") no-repeat scroll left;
+    color: #fff;
+
+      li {
+        display: inline;
+        padding: 1rem 0;
+        color: $primary-color-0;
+      }
+      li:after {
+        content: ">";
+        padding: 0 1rem;
+      }
+      li:last-child:after, li.last:after {
+        content: "";
+      }
+      // li.last:after {
+      //   content: "";
+      // }
+    }
+  }
+}

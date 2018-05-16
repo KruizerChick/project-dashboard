@@ -3,6 +3,7 @@ from django.apps import AppConfig
 
 class UsersConfig(AppConfig):
     name = 'project_dashboard.users'
+    label = 'users'
     verbose_name = "Users"
 
     def ready(self):

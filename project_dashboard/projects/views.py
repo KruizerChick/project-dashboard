@@ -2,6 +2,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, get_object_or_404
 from django.utils.text import slugify
 from django.views.generic import CreateView
+
 import json
 
 from .forms import ExpenseForm
@@ -26,9 +27,8 @@ def project_detail(request, project_slug):
         return render(
             request, 'projects/project-detail.html',
             {'project': project,
-            'expense_list': project.expenses.all(),
-            'category_list': category_list,
-            })
+             'expense_list': project.expenses.all(),
+             'category_list': category_list, })
 
     elif request.method == 'POST':
         # Process the form
@@ -38,8 +38,8 @@ def project_detail(request, project_slug):
             amount = form.cleaned_data['amount']
             category_name = form.cleaned_data['category']
 
-            category = get_object_or_404(Category,
-                project=project, name=category_name)
+            category = get_object_or_404(
+                Category, project=project, name=category_name)
 
             Expense.objects.create(
                 project=project,
@@ -61,7 +61,7 @@ def project_detail(request, project_slug):
 class ProjectCreateView(CreateView):
     model = Project
     template_name = 'projects/add-project.html'
-    fields = {'name', 'budget'}
+    fields = '__all__'
 
     def form_valid(self, form):
         self.object = form.save(commit=False)

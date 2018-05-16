@@ -10,6 +10,7 @@ from django.utils.encoding import force_bytes
 
 from .iterators import split_by_n
 
+
 def get_file_path(instance, filename, base_path):
     basename = path.basename(filename).lower()
     base, ext = path.splitext(basename)

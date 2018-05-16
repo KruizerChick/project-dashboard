@@ -45,7 +45,7 @@ form ul li.category {
   font-size: 4vw;
   margin: 15px 0 px;
 
-  @include respond-to('atMedium') {
+  @media #{$medium-and-up} {
     font-size: calc(16px + 6vw);
   }
 }
