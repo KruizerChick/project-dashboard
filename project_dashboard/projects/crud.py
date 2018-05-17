@@ -7,8 +7,8 @@ from .models import Project
 class ProjectCrud(BaseCrudBuilder):
     """ CRUD class for Project model """
     model = Project
-    search_fields = ["id", "name", "slug", ]
-    tables2_fields = ("name", "slug", "description")
+    search_fields = ["id", "name", "description", ]
+    tables2_fields = ("name", "description")
     tables2_css_class = "table table-bordered table-condensed"
 
     login_required = True

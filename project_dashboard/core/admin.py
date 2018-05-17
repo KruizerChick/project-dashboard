@@ -24,5 +24,6 @@ class FlatPageAdmin(BaseFlatPageAdmin):
         }),
     )
 
+
 admin.site.unregister(FlatPage)
 admin.site.register(FlatPage, FlatPageAdmin)

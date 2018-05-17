@@ -9,7 +9,6 @@ from django.db.models import Q
 from django.apps import apps
 from django.utils import timezone
 from django.utils.functional import cached_property
-# from django.utils.text import slugify
 from django.utils.translation import ugettext_lazy as _
 
 # from django_pglocks import advisory_lock
@@ -17,7 +16,7 @@ from django.utils.translation import ugettext_lazy as _
 from ..core.permissions.choices import ANON_PERMISSIONS, MEMBERS_PERMISSIONS
 from ..core.utils.slug import slugify_uniquely, slugify_uniquely_for_queryset
 from ..core.utils.time import timestamp_ms
-from ..projects.notifications.choices import NotifyLevel
+from .notifications.choices import NotifyLevel
 
 
 # Create your models here.

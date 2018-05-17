@@ -33,12 +33,14 @@
 
     <div class="container center">
       {% block breadcrumbs %}
-        <div class="row justify-content-center">
-          <div class="col breadcrumbs">
-            <ul>
-              <li><a href="{% url 'home' %}">{% trans "Home" %}</a></li>
-              {% block extra-crumbs %}{% endblock extra-crumbs %}
-            </ul>
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col breadcrumbs">
+              <ul>
+                <li><a href="{% url 'home' %}">{% trans "Home" %}</a></li>
+                {% block extra-crumbs %}{% endblock extra-crumbs %}
+              </ul>
+            </div>
           </div>
         </div>
         {% endblock breadcrumbs %}

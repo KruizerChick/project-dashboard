@@ -4,7 +4,7 @@
 <body>
 
   <div class="m-b-1">
-    <nav class="navbar navbar-expand-md navbar-dark bg-info">
+    <nav class="navbar navbar-expand-md navbar-light alert-info">
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -22,9 +22,6 @@
           {% if request.user.is_authenticated %}
           <li class="nav-item">
             <a href="{% url 'projects:list' %}" class="nav-link">{% trans "Projects" %}</a>
-          </li>
-          <li class="nav-item">
-            <a href='/crud/' class="nav-link">{% trans "Crud List" %}</a>
           </li>
           <li class="nav-item"><a href="#" class="nav-link"> | </a></li>
           <li class="nav-item">

@@ -10,21 +10,22 @@
 
 {% block main_content %}
 
-{% block actions %}
-	<a class="btn btn-primary pull-right" href="{% url app_label|add:'-'|add:custom_postfix_url|add:'-create' %}"><i class="glyphicon glyphicon-plus-sign"></i> Add {{actual_model_name|title}}</a>
-{% endblock actions %}
-
 <div class='container'>
-
-	<h3>{{pluralized_model_name|title}}</h3>
-
-	<form class="form-inline pull-right" role="form" action="." method="GET">
-    <div class="form-group">
-      <input type="text" class="form-control" name="search" placeholder="Search">
-      <button type="submit" class="btn btn-primary">{% trans "Search" %}</button>
-    </div>
-  	</form>
-	<br/>
+  <div class="row justify-content-center">
+    <h1>{{pluralized_model_name|title}}</h1>
+  </div>
+  <hr>
+  <div class="form-row justify-content-around">
+    {% block actions %}
+      <a class="button button-pill button-action" href="{% url app_label|add:'-'|add:custom_postfix_url|add:'-create' %}"><i class="glyphicon glyphicon-plus-sign"></i> Add {{actual_model_name|title}}</a>
+    {% endblock actions %}
+	  <form class="form-inline pull-right" role="form" action="." method="GET">
+      <div class="form-group">
+        <input type="text" class="form-control" name="search" placeholder="Search">
+        <button type="submit" class="button">{% trans "Search" %}</button>
+      </div>
+    </form>
+  </div>
 	<br/>
 
 	{% render_table table_objects "crudbuilder/widgets/tables/tables.html" %}

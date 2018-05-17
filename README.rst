@@ -1,22 +1,29 @@
 Project Dashboard
 =================
 
-A webapp that tracks various projects.
+A webapp that tracks various projects using the PMBOK_ Guide from the
+Project Management Institute_.
+
+.. _PMBOK: https://www.pmi.org/pmbok-guide-standards/foundational/pmbok/sixth-edition
+
+.. _Institute: https://www.pmi.org/
 
 .. image:: https://img.shields.io/badge/built%20with-Cookiecutter%20Django-ff69b4.svg
      :target: https://github.com/pydanny/cookiecutter-django/
      :alt: Built with Cookiecutter Django
 
-
 :License: MIT
 
 
-Settings
---------
+Packages Used
+-------------
 
-Moved to settings_.
+See the third party packages for making changes to their settings.
+
+* Cookiecutter Django settings_
 
 .. _settings: http://cookiecutter-django.readthedocs.io/en/latest/settings.html
+
 
 Basic Commands
 --------------
@@ -47,13 +54,6 @@ Running tests with py.test
 ::
 
   $ py.test
-
-Live reloading and Sass CSS compilation
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Moved to `Live reloading and SASS compilation`_.
-
-.. _`Live reloading and SASS compilation`: http://cookiecutter-django.readthedocs.io/en/latest/live-reloading-and-sass-compilation.html
 
 
 
