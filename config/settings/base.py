@@ -82,6 +82,7 @@ THIRD_PARTY_APPS = [
     'rest_framework',
     'django_tables2',
     'crudbuilder',
+    'mptt',
 
     # Social providers for 'allauth'
     # 'allauth.socialaccount.providers.github',
@@ -95,6 +96,7 @@ LOCAL_APPS = [
     'project_dashboard.core.apps.CoreConfig',
     # 'project_dashboard.projects.apps.ProjectConfig',
     'project_dashboard.projects',
+    'project_dashboard.projmgmt',
 ]
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps

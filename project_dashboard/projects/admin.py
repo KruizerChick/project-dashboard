@@ -246,6 +246,7 @@ admin.site.register(models.Membership, MembershipAdmin)
 admin.site.register(models.Severity, SeverityAdmin)
 admin.site.register(models.Priority, PriorityAdmin)
 admin.site.register(models.IssueType, IssueTypeAdmin)
+admin.site.register(models.Activity)
 # admin.site.register(models.ProjectTemplate, ProjectTemplateAdmin)
 
 

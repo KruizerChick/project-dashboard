@@ -7,11 +7,13 @@ from django.core.exceptions import ValidationError
 from django.db import models
 from django.db.models import Q
 from django.apps import apps
+from django.urls import reverse
 from django.utils import timezone
 from django.utils.functional import cached_property
 from django.utils.translation import ugettext_lazy as _
 
-# from django_pglocks import advisory_lock
+from mptt.managers import TreeManager
+from mptt.models import MPTTModel, TreeForeignKey
 
 from ..core.permissions.choices import ANON_PERMISSIONS, MEMBERS_PERMISSIONS
 from ..core.utils.slug import slugify_uniquely, slugify_uniquely_for_queryset
@@ -470,6 +472,102 @@ class TaskStatus(models.Model):
 
         self.slug = slugify_uniquely_for_queryset(self.name, qs)
         return super().save(*args, **kwargs)
+
+
+class Activity(MPTTModel):
+    """
+    Defines the activities of the Work Breakdown Structure (WBS). The WBS is
+    the process of subdividing project deliverables and project work into
+    smaller, more manageable components.
+    """
+    name = models.CharField(
+        max_length=255, null=False, blank=False,
+        verbose_name=_("name"))
+    slug = models.SlugField(
+        max_length=255, null=False, blank=True,
+        verbose_name=_("slug"))
+    description = models.TextField(
+        _('description'), blank=True,
+        help_text=_('Description of activity or task.'))
+    parent = TreeForeignKey(
+        'self',
+        related_name='children',
+        null=True, blank=True,
+        on_delete=models.SET_NULL,
+        verbose_name=_('parent activity'))
+
+    project = models.ForeignKey(
+        "Project", on_delete=models.CASCADE,
+        null=False, blank=False,
+        related_name="tasks", verbose_name=_("project"))
+
+    predecessor = TreeForeignKey(
+        'self',
+        related_name='predecessors',
+        null=True, blank=True,
+        on_delete=models.SET_NULL)
+
+    # Related activities
+    successor = TreeForeignKey(
+        'self',
+        related_name='successors',
+        null=True, blank=True,
+        on_delete=models.SET_NULL)
+
+    order = models.IntegerField(
+        default=10, null=False, blank=False,
+        verbose_name=_("order"))
+
+    # Activity status
+    status = models.ForeignKey(
+        TaskStatus, on_delete=models.CASCADE,
+    )
+    is_closed = models.BooleanField(
+        default=False, null=False, blank=True,
+        verbose_name=_("is closed"))
+
+    objects = TreeManager()
+
+    class Meta:
+        """ Category's meta informations. """
+        verbose_name = "activiy"
+        verbose_name_plural = "activities"
+        ordering = ["project", "order", "name"]
+        unique_together = (("project", "name"), ("project", "slug"))
+
+    class MPTTMeta:
+        """ Category MPTT's meta informations. """
+        order_insertion_by = ['name']
+
+    def __str__(self):
+        return self.name
+
+    def save(self, *args, **kwargs):
+        qs = self.project.tasks
+        if self.id:
+            qs = qs.exclude(id=self.id)
+
+        self.slug = slugify_uniquely_for_queryset(self.name, qs)
+        return super().save(*args, **kwargs)
+
+    @property
+    def tree_path(self):
+        """
+        Returns activity's tree path
+        by concatening the slug of its ancestors.
+        """
+        if self.parent_id:
+            return '/'.join(
+                [ancestor.slug for ancestor in self.get_ancestors()] +
+                [self.slug])
+        return self.slug
+
+    def get_absolute_url(self):
+        """
+        Builds and returns the activity's URL
+        based on its tree path.
+        """
+        return reverse('projects:task_detail', args=(self.tree_path,))
 
 
 # Issue common Models

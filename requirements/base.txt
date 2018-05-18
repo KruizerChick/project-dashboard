@@ -32,3 +32,4 @@ django-allauth==0.36.0  # https://github.com/pennersr/django-allauth
 redis==2.10.5
 requests-oauthlib==0.8.0
 requests==2.17.3
+django-mptt==0.9.0  # https://django-mptt.readthedocs.io/en/latest/index.html

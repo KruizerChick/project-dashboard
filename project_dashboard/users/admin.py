@@ -103,8 +103,18 @@ class RoleInline(admin.TabularInline):
 
 # Admin panels
 class RoleAdmin(admin.ModelAdmin):
-    list_display = ["name"]
-    filter_horizontal = ("permissions",)
+    fieldsets = (
+        (None, {
+            "fields": (
+                ("name", "slug"), 'description',
+                ('role_type', 'order', 'computable'),
+                'permissions')
+            }),
+    )
+    list_display = ["name", 'role_type']
+    list_filter = ('role_type', )
+    prepopulated_fields = {'slug': ('name', )}
+    # filter_horizontal = ("permissions",)
 
     def formfield_for_manytomany(self, db_field, request=None, **kwargs):
         if db_field.name == "permissions":
@@ -142,3 +152,4 @@ class MyUserAdmin(AuthUserAdmin):
 
 
 admin.site.register(User, MyUserAdmin)
+admin.site.register(Role, RoleAdmin)

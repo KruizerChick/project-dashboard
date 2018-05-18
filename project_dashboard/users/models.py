@@ -186,15 +186,31 @@ class User(AbstractUser):
 
 
 class Role(models.Model):
+
+    INTERNAL = 'I'
+    EXTERNAL = 'E'
+    TYPE_CHOICES = (
+        (INTERNAL, 'Internal'),
+        (EXTERNAL, 'External'),
+    )
     name = models.CharField(
         max_length=200, null=False, blank=False,
         verbose_name=_("name"))
     slug = models.SlugField(
         max_length=250, null=False, blank=True,
         verbose_name=_("slug"))
+    description = models.TextField(
+        verbose_name=_('description'),
+        null=True, blank=True,
+    )
     permissions = ArrayField(
         models.TextField(null=False, blank=False, choices=MEMBERS_PERMISSIONS),
         null=True, blank=True, default=[], verbose_name=_("permissions"))
+    role_type = models.CharField(
+        max_length=1, choices=TYPE_CHOICES,
+        default=INTERNAL,
+        help_text=_('Relative to the project team.')
+    )
     order = models.IntegerField(
         default=10, null=False, blank=False,
         verbose_name=_("order"))
