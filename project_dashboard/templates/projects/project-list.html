@@ -18,10 +18,11 @@
 
 
 {% block content %}
-
-  <h1>{% trans "My Projects" %}</h1>
+  <div class="row justify-content-center">
+    <h1>{% trans "My Projects" %}</h1>
+  </div>
   <hr>
-  <div class="row">
+  <div class="row justify-content-around">
     {% for project in project_list %}
       <div class="col s12 l3">
         <div class="card-panel center">
@@ -37,13 +38,12 @@
       </div>
     {% endfor %}
   </div>
-  <div class="row">
-    <div class="container center">
+  <div class="row justify-content-center">
       <a href="{% url 'projects:add' %}" class="button button-large button-pill button-primary">
-        <i class="material-icons white-text">add_circle</i>&nbsp;
+        <i class="fas fa-plus"></i>&nbsp;
         <span>{% trans "Add Project" %}</span>
       </a>
-    </div>
   </div>
+  <br>
 
 {% endblock content %}

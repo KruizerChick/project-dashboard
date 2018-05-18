@@ -22,3 +22,4 @@ class ProcessAdmin(admin.ModelAdmin):
 admin.site.register(ProcessGroup, ProcessGroupAdmin)
 admin.site.register(KnowledgeArea, KnowledgeAreaAdmin)
 admin.site.register(Process, ProcessAdmin)
+

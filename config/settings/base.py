@@ -45,8 +45,11 @@ USE_TZ = True
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases
 
+# DATABASES = {
+#     'default': env.db('DATABASE_URL', default='postgres://kruizer:Wiring00@localhost/projectdb'),
+# }
 DATABASES = {
-    'default': env.db('DATABASE_URL', default='postgres://kruizer:Wiring00@localhost/projectdb'),
+    'default': env.db('DATABASE_URL', default='postgres://kruizer:Wiring00@localhost/projdashdb'),
 }
 DATABASES['default']['ATOMIC_REQUESTS'] = True
 
@@ -83,6 +86,7 @@ THIRD_PARTY_APPS = [
     'django_tables2',
     'crudbuilder',
     'mptt',
+    'phonenumber_field',
 
     # Social providers for 'allauth'
     # 'allauth.socialaccount.providers.github',
@@ -303,3 +307,9 @@ MESSAGE_TAGS = {
 
 LOGIN_REQUIRED_FOR_CRUD = True
 PROJECT_NAME = 'project_dashboard'
+
+
+# DJANGO-PHONENUMBER CONFIG
+# ------------------------------------------------------------------------------
+# See https://github.com/stefanfoulis/django-phonenumber-field
+PHONENUMBER_DB_FORMAT = 'E164'

@@ -1,5 +1,4 @@
 from django.db import models
-
 from django.utils.translation import ugettext_lazy as _
 
 
@@ -53,4 +52,3 @@ class Process(models.Model):
         ordering = ['order']
         verbose_name = 'Process'
         verbose_name_plural = 'Processes'
-

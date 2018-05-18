@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% load static i18n %}
+
+{% block extra-crumbs %}
+  <li><a href="{% url 'users:list' %}">{% trans "Users" %}</a></li>
+  {% block more-crumbs %}{% endblock more-crumbs %}
+{% endblock extra-crumbs %}
+
+
+{% block content %}{% endblock content %}
+
+

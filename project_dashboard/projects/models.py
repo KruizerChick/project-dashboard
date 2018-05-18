@@ -1,5 +1,4 @@
 # from dateutil.relativedelta import relativedelta
-
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.postgres.fields import ArrayField, JSONField
@@ -11,17 +10,133 @@ from django.urls import reverse
 from django.utils import timezone
 from django.utils.functional import cached_property
 from django.utils.translation import ugettext_lazy as _
+from django.utils.text import slugify
+
+from phonenumber_field.modelfields import PhoneNumberField
 
 from mptt.managers import TreeManager
 from mptt.models import MPTTModel, TreeForeignKey
 
+from ..core.choices import RANK_OPTIONS
 from ..core.permissions.choices import ANON_PERMISSIONS, MEMBERS_PERMISSIONS
 from ..core.utils.slug import slugify_uniquely, slugify_uniquely_for_queryset
 from ..core.utils.time import timestamp_ms
+from ..users.models import Role
 from .notifications.choices import NotifyLevel
 
 
-# Create your models here.
+USER = get_user_model()
+
+
+# Common Models
+class Priority(models.Model):
+    name = models.CharField(max_length=255, null=False, blank=False,
+                            verbose_name=_("name"))
+    order = models.IntegerField(default=10, null=False, blank=False,
+                                verbose_name=_("order"))
+    color = models.CharField(max_length=20, null=False, blank=False, default="#999999",
+                             verbose_name=_("color"))
+    project = models.ForeignKey(
+        "Project", on_delete=models.CASCADE,
+        null=False, blank=False,
+        related_name="priorities", verbose_name=_("project"))
+
+    class Meta:
+        verbose_name = "priority"
+        verbose_name_plural = "priorities"
+        ordering = ["project", "order", "name"]
+        unique_together = ("project", "name")
+
+    def __str__(self):
+        return self.name
+
+
+class Severity(models.Model):
+    name = models.CharField(
+        max_length=255, null=False, blank=False,
+        verbose_name=_("name"))
+    order = models.IntegerField(
+        default=10, null=False, blank=False,
+        verbose_name=_("order"))
+    color = models.CharField(
+        max_length=20, null=False, blank=False, default="#999999",
+        verbose_name=_("color"))
+    project = models.ForeignKey(
+        "Project", on_delete=models.CASCADE,
+        null=False, blank=False,
+        related_name="severities", verbose_name=_("project"))
+
+    class Meta:
+        verbose_name = "severity"
+        verbose_name_plural = "severities"
+        ordering = ["project", "order", "name"]
+        unique_together = ("project", "name")
+
+    def __str__(self):
+        return self.name
+
+
+class Status(models.Model):
+    name = models.CharField(
+        max_length=255, null=False, blank=False,
+        verbose_name=_("name"))
+    slug = models.SlugField(
+        max_length=255, null=False, blank=True,
+        verbose_name=_("slug"))
+    order = models.IntegerField(
+        default=10, null=False, blank=False,
+        verbose_name=_("order"))
+    is_closed = models.BooleanField(
+        default=False, null=False, blank=True,
+        verbose_name=_("is closed"))
+    color = models.CharField(
+        max_length=20, null=False, blank=False, default="#999999",
+        verbose_name=_("color"))
+    project = models.ForeignKey(
+        "Project", on_delete=models.CASCADE,
+        null=False, blank=False,
+        related_name="statuses", verbose_name=_("project"))
+
+    class Meta:
+        verbose_name = "status"
+        verbose_name_plural = "statuses"
+        ordering = ["project", "order", "name"]
+        unique_together = (("project", "name"), ("project", "slug"))
+
+    def __str__(self):
+        return self.name
+
+    def save(self, *args, **kwargs):
+        qs = self.project.statuses
+        if self.id:
+            qs = qs.exclude(id=self.id)
+
+        self.slug = slugify_uniquely_for_queryset(self.name, qs)
+        return super().save(*args, **kwargs)
+
+
+class IssueType(models.Model):
+    name = models.CharField(max_length=255, null=False, blank=False,
+                            verbose_name=_("name"))
+    order = models.IntegerField(default=10, null=False, blank=False,
+                                verbose_name=_("order"))
+    color = models.CharField(max_length=20, null=False, blank=False, default="#999999",
+                             verbose_name=_("color"))
+    project = models.ForeignKey(
+        "Project", on_delete=models.CASCADE,
+        null=False, blank=False,
+        related_name="issue_types", verbose_name=_("project"))
+
+    class Meta:
+        verbose_name = "issue type"
+        verbose_name_plural = "issue types"
+        ordering = ["project", "order", "name"]
+        unique_together = ("project", "name")
+
+    def __str__(self):
+        return self.name
+
+
 class Membership(models.Model):
     """
     This model stores all project memberships. Also
@@ -86,10 +201,6 @@ class Membership(models.Model):
 
 
 class ProjectDefaults(models.Model):
-    default_task_status = models.OneToOneField(
-        "projects.TaskStatus", on_delete=models.SET_NULL,
-        related_name="+", null=True, blank=True,
-        verbose_name=_("default task status"))
     default_priority = models.OneToOneField(
         "projects.Priority", on_delete=models.SET_NULL,
         related_name="+", null=True, blank=True,
@@ -98,9 +209,10 @@ class ProjectDefaults(models.Model):
         "projects.Severity", on_delete=models.SET_NULL,
         related_name="+", null=True, blank=True,
         verbose_name=_("default severity"))
-    default_issue_status = models.OneToOneField(
-        "projects.IssueStatus", on_delete=models.SET_NULL, related_name="+",
-        null=True, blank=True, verbose_name=_("default issue status"))
+    default_status = models.OneToOneField(
+        "projects.Status", on_delete=models.SET_NULL,
+        related_name="+", null=True, blank=True,
+        verbose_name=_("default status"))
     default_issue_type = models.OneToOneField(
         "projects.IssueType", on_delete=models.SET_NULL, related_name="+",
         null=True, blank=True, verbose_name=_("default issue type"))
@@ -433,47 +545,6 @@ class Project(ProjectDefaults, models.Model):
         return len(expense_list)
 
 
-# Tasks common models
-class TaskStatus(models.Model):
-    name = models.CharField(
-        max_length=255, null=False, blank=False,
-        verbose_name=_("name"))
-    slug = models.SlugField(
-        max_length=255, null=False, blank=True,
-        verbose_name=_("slug"))
-    order = models.IntegerField(
-        default=10, null=False, blank=False,
-        verbose_name=_("order"))
-    is_closed = models.BooleanField(
-        default=False, null=False, blank=True,
-        verbose_name=_("is closed"))
-    color = models.CharField(
-        max_length=20, null=False,
-        blank=False, default="#999999",
-        verbose_name=_("color"))
-    project = models.ForeignKey(
-        "Project", on_delete=models.CASCADE,
-        null=False, blank=False,
-        related_name="task_statuses", verbose_name=_("project"))
-
-    class Meta:
-        verbose_name = "task status"
-        verbose_name_plural = "task statuses"
-        ordering = ["project", "order", "name"]
-        unique_together = (("project", "name"), ("project", "slug"))
-
-    def __str__(self):
-        return self.name
-
-    def save(self, *args, **kwargs):
-        qs = self.project.task_statuses
-        if self.id:
-            qs = qs.exclude(id=self.id)
-
-        self.slug = slugify_uniquely_for_queryset(self.name, qs)
-        return super().save(*args, **kwargs)
-
-
 class Activity(MPTTModel):
     """
     Defines the activities of the Work Breakdown Structure (WBS). The WBS is
@@ -520,7 +591,7 @@ class Activity(MPTTModel):
 
     # Activity status
     status = models.ForeignKey(
-        TaskStatus, on_delete=models.CASCADE,
+        Status, on_delete=models.CASCADE,
     )
     is_closed = models.BooleanField(
         default=False, null=False, blank=True,
@@ -570,107 +641,7 @@ class Activity(MPTTModel):
         return reverse('projects:task_detail', args=(self.tree_path,))
 
 
-# Issue common Models
-class Priority(models.Model):
-    name = models.CharField(max_length=255, null=False, blank=False,
-                            verbose_name=_("name"))
-    order = models.IntegerField(default=10, null=False, blank=False,
-                                verbose_name=_("order"))
-    color = models.CharField(max_length=20, null=False, blank=False, default="#999999",
-                             verbose_name=_("color"))
-    project = models.ForeignKey(
-        "Project", on_delete=models.CASCADE,
-        null=False, blank=False,
-        related_name="priorities", verbose_name=_("project"))
-
-    class Meta:
-        verbose_name = "priority"
-        verbose_name_plural = "priorities"
-        ordering = ["project", "order", "name"]
-        unique_together = ("project", "name")
-
-    def __str__(self):
-        return self.name
-
-
-class Severity(models.Model):
-    name = models.CharField(max_length=255, null=False, blank=False,
-                            verbose_name=_("name"))
-    order = models.IntegerField(default=10, null=False, blank=False,
-                                verbose_name=_("order"))
-    color = models.CharField(max_length=20, null=False, blank=False, default="#999999",
-                             verbose_name=_("color"))
-    project = models.ForeignKey(
-        "Project", on_delete=models.CASCADE,
-        null=False, blank=False,
-        related_name="severities", verbose_name=_("project"))
-
-    class Meta:
-        verbose_name = "severity"
-        verbose_name_plural = "severities"
-        ordering = ["project", "order", "name"]
-        unique_together = ("project", "name")
-
-    def __str__(self):
-        return self.name
-
-
-class IssueStatus(models.Model):
-    name = models.CharField(max_length=255, null=False, blank=False,
-                            verbose_name=_("name"))
-    slug = models.SlugField(max_length=255, null=False, blank=True,
-                            verbose_name=_("slug"))
-    order = models.IntegerField(default=10, null=False, blank=False,
-                                verbose_name=_("order"))
-    is_closed = models.BooleanField(default=False, null=False, blank=True,
-                                    verbose_name=_("is closed"))
-    color = models.CharField(max_length=20, null=False, blank=False, default="#999999",
-                             verbose_name=_("color"))
-    project = models.ForeignKey(
-        "Project", on_delete=models.CASCADE,
-        null=False, blank=False,
-        related_name="issue_statuses", verbose_name=_("project"))
-
-    class Meta:
-        verbose_name = "issue status"
-        verbose_name_plural = "issue statuses"
-        ordering = ["project", "order", "name"]
-        unique_together = (("project", "name"), ("project", "slug"))
-
-    def __str__(self):
-        return self.name
-
-    def save(self, *args, **kwargs):
-        qs = self.project.issue_statuses
-        if self.id:
-            qs = qs.exclude(id=self.id)
-
-        self.slug = slugify_uniquely_for_queryset(self.name, qs)
-        return super().save(*args, **kwargs)
-
-
-class IssueType(models.Model):
-    name = models.CharField(max_length=255, null=False, blank=False,
-                            verbose_name=_("name"))
-    order = models.IntegerField(default=10, null=False, blank=False,
-                                verbose_name=_("order"))
-    color = models.CharField(max_length=20, null=False, blank=False, default="#999999",
-                             verbose_name=_("color"))
-    project = models.ForeignKey(
-        "Project", on_delete=models.CASCADE,
-        null=False, blank=False,
-        related_name="issue_types", verbose_name=_("project"))
-
-    class Meta:
-        verbose_name = "issue type"
-        verbose_name_plural = "issue types"
-        ordering = ["project", "order", "name"]
-        unique_together = ("project", "name")
-
-    def __str__(self):
-        return self.name
-
-
+# Other
 class Category(models.Model):
     project = models.ForeignKey(
         Project, on_delete=models.CASCADE,
@@ -702,45 +673,40 @@ class Expense(models.Model):
 
 
 class ProjectTemplate(models.Model):
-    name = models.CharField(max_length=250, null=False, blank=False,
-                            verbose_name=_("name"))
-    slug = models.SlugField(max_length=250, null=False, blank=True,
-                            verbose_name=_("slug"), unique=True)
-    description = models.TextField(null=False, blank=False,
-                                   verbose_name=_("description"))
-    order = models.BigIntegerField(default=timestamp_ms, null=False, blank=False,
-                                   verbose_name=_("user order"))
-    created_date = models.DateTimeField(null=False, blank=False,
-                                        verbose_name=_("created date"),
-                                        default=timezone.now)
-    modified_date = models.DateTimeField(null=False, blank=False,
-                                         verbose_name=_("modified date"))
-    default_owner_role = models.CharField(max_length=50, null=False,
-                                          blank=False,
-                                          verbose_name=_("default owner's role"))
-    is_contact_activated = models.BooleanField(default=True, null=False, blank=True,
-                                               verbose_name=_("active contact"))
-    is_backlog_activated = models.BooleanField(default=True, null=False, blank=True,
-                                               verbose_name=_("active backlog panel"))
-    is_kanban_activated = models.BooleanField(default=False, null=False, blank=True,
-                                              verbose_name=_("active kanban panel"))
-    is_wiki_activated = models.BooleanField(default=True, null=False, blank=True,
-                                            verbose_name=_("active wiki panel"))
-    is_issues_activated = models.BooleanField(default=True, null=False, blank=True,
-                                              verbose_name=_("active issues panel"))
+    name = models.CharField(
+        max_length=250, null=False, blank=False,
+        verbose_name=_("name"))
+    slug = models.SlugField(
+        max_length=250, null=False, blank=True,
+        verbose_name=_("slug"), unique=True)
+    description = models.TextField(
+        null=False, blank=False,
+        verbose_name=_("description"))
+    order = models.BigIntegerField(
+        default=timestamp_ms, null=False, blank=False,
+        verbose_name=_("user order"))
+    date_created = models.DateTimeField(
+        null=False, blank=False,
+        verbose_name=_("created date"),
+        default=timezone.now)
+    date_modified = models.DateTimeField(
+        null=False, blank=False,
+        verbose_name=_("modified date"))
+    default_owner_role = models.CharField(
+        max_length=50, null=False,
+        blank=False,
+        verbose_name=_("default owner's role"))
+    is_issues_activated = models.BooleanField(
+        default=True, null=False, blank=True,
+        verbose_name=_("active issues panel"))
 
     default_options = JSONField(null=True, blank=True, verbose_name=_("default options"))
-    epic_statuses = JSONField(null=True, blank=True, verbose_name=_("epic statuses"))
     us_statuses = JSONField(null=True, blank=True, verbose_name=_("us statuses"))
-    points = JSONField(null=True, blank=True, verbose_name=_("points"))
-    task_statuses = JSONField(null=True, blank=True, verbose_name=_("task statuses"))
-    issue_statuses = JSONField(null=True, blank=True, verbose_name=_("issue statuses"))
+    statuses = JSONField(null=True, blank=True, verbose_name=_("issue statuses"))
     issue_types = JSONField(null=True, blank=True, verbose_name=_("issue types"))
     priorities = JSONField(null=True, blank=True, verbose_name=_("priorities"))
     severities = JSONField(null=True, blank=True, verbose_name=_("severities"))
     roles = JSONField(null=True, blank=True, verbose_name=_("roles"))
-    epic_custom_attributes = JSONField(null=True, blank=True, verbose_name=_("epic custom attributes"))
-    us_custom_attributes = JSONField(null=True, blank=True, verbose_name=_("us custom attributes"))
     task_custom_attributes = JSONField(null=True, blank=True, verbose_name=_("task custom attributes"))
     issue_custom_attributes = JSONField(null=True, blank=True, verbose_name=_("issue custom attributes"))
 
@@ -766,73 +732,25 @@ class ProjectTemplate(models.Model):
 
     def load_data_from_project(self, project):
         self.is_contact_activated = project.is_contact_activated
-        self.is_epics_activated = project.is_epics_activated
-        self.is_backlog_activated = project.is_backlog_activated
         self.is_kanban_activated = project.is_kanban_activated
         self.is_wiki_activated = project.is_wiki_activated
         self.is_issues_activated = project.is_issues_activated
-        self.videoconferences = project.videoconferences
-        self.videoconferences_extra_data = project.videoconferences_extra_data
 
         self.default_options = {
-            "points": getattr(project.default_points, "name", None),
-            "epic_status": getattr(project.default_epic_status, "name", None),
-            "us_status": getattr(project.default_us_status, "name", None),
-            "task_status": getattr(project.default_task_status, "name", None),
-            "issue_status": getattr(project.default_issue_status, "name", None),
+            "status": getattr(project.default_status, "name", None),
             "issue_type": getattr(project.default_issue_type, "name", None),
             "priority": getattr(project.default_priority, "name", None),
             "severity": getattr(project.default_severity, "name", None)
         }
 
-        self.epic_statuses = []
-        for epic_status in project.epic_statuses.all():
-            self.epic_statuses.append({
-                "name": epic_status.name,
-                "slug": epic_status.slug,
-                "is_closed": epic_status.is_closed,
-                "color": epic_status.color,
-                "order": epic_status.order,
-            })
-
-        self.us_statuses = []
-        for us_status in project.us_statuses.all():
-            self.us_statuses.append({
-                "name": us_status.name,
-                "slug": us_status.slug,
-                "is_closed": us_status.is_closed,
-                "is_archived": us_status.is_archived,
-                "color": us_status.color,
-                "wip_limit": us_status.wip_limit,
-                "order": us_status.order,
-            })
-
-        self.points = []
-        for us_point in project.points.all():
-            self.points.append({
-                "name": us_point.name,
-                "value": us_point.value,
-                "order": us_point.order,
-            })
-
-        self.task_statuses = []
-        for task_status in project.task_statuses.all():
-            self.task_statuses.append({
-                "name": task_status.name,
-                "slug": task_status.slug,
-                "is_closed": task_status.is_closed,
-                "color": task_status.color,
-                "order": task_status.order,
-            })
-
-        self.issue_statuses = []
-        for issue_status in project.issue_statuses.all():
-            self.issue_statuses.append({
-                "name": issue_status.name,
-                "slug": issue_status.slug,
-                "is_closed": issue_status.is_closed,
-                "color": issue_status.color,
-                "order": issue_status.order,
+        self.statuses = []
+        for status in project.statuses.all():
+            self.statuses.append({
+                "name": status.name,
+                "slug": status.slug,
+                "is_closed": status.is_closed,
+                "color": status.color,
+                "order": status.order,
             })
 
         self.issue_types = []
@@ -869,24 +787,6 @@ class ProjectTemplate(models.Model):
                 "computable": role.computable
             })
 
-        self.epic_custom_attributes = []
-        for ca in project.epiccustomattributes.all():
-            self.epic_custom_attributes.append({
-                "name": ca.name,
-                "description": ca.description,
-                "type": ca.type,
-                "order": ca.order
-            })
-
-        self.us_custom_attributes = []
-        for ca in project.userstorycustomattributes.all():
-            self.us_custom_attributes.append({
-                "name": ca.name,
-                "description": ca.description,
-                "type": ca.type,
-                "order": ca.order
-            })
-
         self.task_custom_attributes = []
         for ca in project.taskcustomattributes.all():
             self.task_custom_attributes.append({
@@ -913,8 +813,6 @@ class ProjectTemplate(models.Model):
 
         self.tags = project.tags
         self.tags_colors = project.tags_colors
-        self.is_looking_for_people = project.is_looking_for_people
-        self.looking_for_people_note = project.looking_for_people_note
 
     def apply_to_project(self, project):
         Role = apps.get_model("users", "Role")
@@ -924,31 +822,17 @@ class ProjectTemplate(models.Model):
 
         project.creation_template = self
         project.is_contact_activated = self.is_contact_activated
-        project.is_epics_activated = self.is_epics_activated
-        project.is_backlog_activated = self.is_backlog_activated
         project.is_kanban_activated = self.is_kanban_activated
         project.is_wiki_activated = self.is_wiki_activated
         project.is_issues_activated = self.is_issues_activated
-        project.videoconferences = self.videoconferences
-        project.videoconferences_extra_data = self.videoconferences_extra_data
 
-        for task_status in self.task_statuses:
-            TaskStatus.objects.create(
-                name=task_status["name"],
-                slug=task_status["slug"],
-                is_closed=task_status["is_closed"],
-                color=task_status["color"],
-                order=task_status["order"],
-                project=project
-            )
-
-        for issue_status in self.issue_statuses:
-            IssueStatus.objects.create(
-                name=issue_status["name"],
-                slug=issue_status["slug"],
-                is_closed=issue_status["is_closed"],
-                color=issue_status["color"],
-                order=issue_status["order"],
+        for status in self.statuses:
+            Status.objects.create(
+                name=status["name"],
+                slug=status["slug"],
+                is_closed=status["is_closed"],
+                color=status["color"],
+                order=status["order"],
                 project=project
             )
 
@@ -986,12 +870,10 @@ class ProjectTemplate(models.Model):
                 permissions=role['permissions']
             )
 
-        if self.task_statuses:
-            project.default_task_status = TaskStatus.objects.get(name=self.default_options["task_status"],
-                                                                 project=project)
-        if self.issue_statuses:
-            project.default_issue_status = IssueStatus.objects.get(name=self.default_options["issue_status"],
-                                                                   project=project)
+        if self.statuses:
+            project.default_status = Status.objects.get(
+                name=self.default_options["status"],
+                project=project)
 
         if self.issue_types:
             project.default_issue_type = IssueType.objects.get(name=self.default_options["issue_type"],
@@ -1025,7 +907,93 @@ class ProjectTemplate(models.Model):
 
         project.tags = self.tags
         project.tags_colors = self.tags_colors
-        project.is_looking_for_people = self.is_looking_for_people
-        project.looking_for_people_note = self.looking_for_people_note
 
         return project
+
+
+class Stakeholder(models.Model):
+    """
+    Stores Stakeholder information; can link to :model:`User`, but not required
+    """
+    user = models.OneToOneField(
+        USER, on_delete=models.CASCADE,
+        null=True, blank=True,
+        help_text=_('(Optional) Link to User if available')
+    )
+    project = models.ForeignKey(
+        Project, on_delete=models.CASCADE,
+        related_name='stakeholders',
+        help_text=_('Belongs to this project.')
+    )
+
+    # If not system User
+    first_name = models.CharField(
+        max_length=50, blank=True,
+    )
+    last_name = models.CharField(
+        max_length=50, blank=True,
+    )
+    full_name = models.CharField(
+        max_length=100, blank=True,
+    )
+
+    email_address = models.EmailField(
+        max_length=100, null=True, blank=True,
+    )
+
+    title = models.CharField(
+        max_length=100, blank=True,
+    )
+    organization = models.CharField(
+        max_length=100, blank=True,
+        help_text=_('(Optional) Company, business unit or department.'),
+    )
+    phone_number = PhoneNumberField(blank=True)
+    role = models.ForeignKey(
+        Role, on_delete=models.CASCADE,
+    )
+    impact = models.IntegerField(
+        choices=RANK_OPTIONS, default=1
+    )
+    influence = models.IntegerField(
+        choices=RANK_OPTIONS, default=1
+    )
+    risk_tolerance = models.IntegerField(
+        choices=RANK_OPTIONS, default=1
+    )
+    needs = models.TextField(
+        blank=True, null=True,
+        help_text=_('Items that are NOT OPTIONAL for this Stakeholder.')
+    )
+    wants = models.TextField(
+        blank=True, null=True,
+        help_text=_('Items that are OPTIONAL for this Stakeholder.')
+    )
+    expectations = models.TextField(
+        blank=True, null=True,
+        help_text=_('Unusual or emphatic expectations that need to be noted.')
+    )
+    strategy = models.TextField(
+        blank=True, null=True,
+        help_text=_('Strategies and tactics to maximize positive influence and minimize negative influence.')
+    )
+
+    class Meta:
+        ordering = ['-influence', '-impact']
+
+    def __str__(self):
+        """ Return the full name of the stakeholder """
+        return self.full_name
+
+    def get_full_name(self):
+        """ Calculate stakeholder's full name """
+        if self.first_name:
+            name = '%s %s' % (self.first_name, self.last_name)
+        else:
+            name = self.user.full_name
+        return name
+
+    def save(self, *args, **kwargs):
+        base_slug = "{}-{}".format(self.project.id, self.full_name)
+        self.slug = slugify(base_slug)
+        super(Stakeholder, self).save(*args, **kwargs)

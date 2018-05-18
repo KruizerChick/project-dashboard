@@ -21,17 +21,26 @@
           </li>
           {% if request.user.is_authenticated %}
           <li class="nav-item">
-            <a href="{% url 'projects:list' %}" class="nav-link">{% trans "Projects" %}</a>
+            <div class="nav-link dropdown">
+            <a class="dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Projects
+              </a>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                <a href="{% url 'projects:list' %}" class="dropdown-item">{% trans "Projects Home" %}</a>
+                <a href="/crud/projects/projects" class="dropdown-item">{% trans "Project List" %}</a>
+                <a href="/crud/projects/stakeholders" class="dropdown-item" >{% trans "Stakeholders" %}</a>
+              </div>
+            </div>
           </li>
           <li class="nav-item"><a href="#" class="nav-link"> | </a></li>
           <li class="nav-item">
-              {# URL provided by django-allauth/account/urls.py #}
-              <a class="nav-link" href="{% url 'users:detail' request.user.username  %}">{% trans "My Profile" %}</a>
-            </li>
-            <li class="nav-item">
-              {# URL provided by django-allauth/account/urls.py #}
-              <a class="nav-link" href="{% url 'account_logout' %}">{% trans "Sign Out" %}</a>
-            </li>
+            {# URL provided by django-allauth/account/urls.py #}
+            <a class="nav-link" href="{% url 'users:detail' request.user.username  %}">{% trans "My Profile" %}</a>
+          </li>
+          <li class="nav-item">
+            {# URL provided by django-allauth/account/urls.py #}
+            <a class="nav-link" href="{% url 'account_logout' %}">{% trans "Sign Out" %}</a>
+          </li>
 
           {% else %}
             <li class="nav-item">

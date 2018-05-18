@@ -1,33 +1,36 @@
-{% extends "base.html" %}
-{% load static %}
+{% extends "users/base.html" %}
+{% load static i18n account %}
 
 {% block title %}User: {{ object.username }}{% endblock %}
 
-{% block extra-crumbs %}{% endblock extra-crumbs %}
+{% block more-crumbs %}
+  <li><a href="{% url 'users:detail' request.user.username %}">
+      {% user_display user %}</a></li>
+{% endblock more-crumbs %}
 
 {% block content %}
 
-<div class="container">
-
-  <div class="row">
-    <div class="col-sm-12">
-
+<div class="">
+  <br>
+  <div class="row justify-content-center">
       <h2>{{ object.username }}</h2>
-      {% if object.name %}
-        <p>{{ object.name }}</p>
+      {% if object.full_name %}
+        <p>{{ object.full_name }}</p>
       {% endif %}
-    </div>
   </div>
+  <br>
 
 {% if object == request.user %}
 <!-- Action buttons -->
-<div class="row">
+<div class="row justify-content-around">
 
-  <div class="col-sm-12">
-    <a class="btn btn-primary" href="{% url 'users:update' %}" role="button">My Info</a>
-    <a class="btn btn-primary" href="{% url 'account_email' %}" role="button">E-Mail</a>
+  {% comment %} <div class="col-sm-12"> {% endcomment %}
+    <a class="button button-pill button-primary" href="{% url 'users:update' %}" role="button">
+      <i class="fas fa-info-circle"></i>&nbsp;{% trans " My Info" %}</a>
+    <a class="button button-pill button-primary" href="{% url 'account_email' %}" role="button">
+      <i class="fas fa-envelope"></i>&nbsp;{% trans " E-Mail" %}</a>
     <!-- Your Stuff: Custom user template urls -->
-  </div>
+  {% comment %} </div> {% endcomment %}
 
 </div>
 <!-- End Action buttons -->

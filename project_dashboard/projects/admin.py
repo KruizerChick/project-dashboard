@@ -76,7 +76,7 @@ class ProjectAdmin(admin.ModelAdmin):
         (_("Default project values"), {
             "classes": ("collapse",),
             "fields": ("default_task_status",
-                       ("default_issue_status", "default_priority", "default_severity", "default_issue_type")),
+                       ("default_status", "default_priority", "default_severity", "default_issue_type")),
         }),
         (_("Activity"), {
             "classes": ("collapse",),
@@ -204,15 +204,7 @@ class ProjectAdmin(admin.ModelAdmin):
     delete_selected.short_description = _("Delete selected %(verbose_name_plural)s")
 
 
-# Tasks common admins
-class TaskStatusAdmin(admin.ModelAdmin):
-    list_display = ["project", "order", "name", "is_closed", "color"]
-    list_display_links = ["name"]
-    raw_id_fields = ["project"]
-
-
-# Issues common admins
-
+# Common admins
 class SeverityAdmin(admin.ModelAdmin):
     list_display = ["project", "order", "name", "color"]
     list_display_links = ["name"]
@@ -231,14 +223,14 @@ class IssueTypeAdmin(admin.ModelAdmin):
     raw_id_fields = ["project"]
 
 
-class IssueStatusAdmin(admin.ModelAdmin):
+class StatusAdmin(admin.ModelAdmin):
     list_display = ["project", "order", "name", "is_closed", "color"]
     list_display_links = ["name"]
     raw_id_fields = ["project"]
 
 
-admin.site.register(models.IssueStatus, IssueStatusAdmin)
-admin.site.register(models.TaskStatus, TaskStatusAdmin)
+admin.site.register(models.Status, StatusAdmin)
+# admin.site.register(models.TaskStatus, TaskStatusAdmin)
 # admin.site.register(models.UserStoryStatus, UserStoryStatusAdmin)
 # admin.site.register(models.Points, PointsAdmin)
 admin.site.register(models.Project, ProjectAdmin)
@@ -248,19 +240,6 @@ admin.site.register(models.Priority, PriorityAdmin)
 admin.site.register(models.IssueType, IssueTypeAdmin)
 admin.site.register(models.Activity)
 # admin.site.register(models.ProjectTemplate, ProjectTemplateAdmin)
-
-
-# class ProjectAdmin(admin.ModelAdmin):
-#     fieldsets = (
-#         (None, {
-#             'fields': (('name', 'slug'), 'budget')
-#         }),
-#     )
-#     prepopulated_fields = {'slug': ('name',)}
-#     list_display = ('name', 'slug', 'budget')
-#     list_filter = ('name',)
-
-# admin.site.register(Project, ProjectAdmin)
 
 
 class CategoryAdmin(admin.ModelAdmin):

@@ -48,7 +48,7 @@
 <section class="section section-expenses">
   <div class="row">
     <button class="button button-pill button-action valign-wrapper modal-trigger" href="#expenseModal">
-      <i class="material-icons white-text">add_circle</i>&nbsp;
+        <i class="fas fa-plus"></i>>&nbsp;
       {% trans "Add Expense" %}
     </button>
   </div>
@@ -70,9 +70,7 @@
             <h6 class="bold">{% trans "Category" %}</h6>
           </div>
 
-          <a class="close-icon">
-            <i class="material-icons blue-grey-text text-lighten-4 right">close</i>
-          </a>
+          <a class="close-icon"><i class="fas fa-times"></i></a>
 
         </div>
       </div>
@@ -96,7 +94,7 @@
             </div>
 
             <a class="close-icon" onclick="deleteExpense(this)" data-id="{{ expense.id }}">
-              <i class="material-icons red-text right">close</i>
+                <i class="fas fa-times" style="color:darkred;"></i>
             </a>
 
           </div>
