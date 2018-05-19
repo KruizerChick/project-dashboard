@@ -1,6 +1,11 @@
+from itertools import chain
 from django.contrib import admin
+from django.contrib.staticfiles.storage import staticfiles_storage
 from django.db import transaction
+from django.forms import Media
 from django.shortcuts import reverse
+from django.urls import NoReverseMatch
+from django.utils.encoding import force_text
 from django.utils.html import format_html
 from django.utils.translation import ugettext_lazy as _
 
@@ -8,6 +13,59 @@ from ..core.permissions import permissions
 from ..users.admin import RoleInline
 
 from . import models
+from .forms import TaskAdminForm
+
+
+# Widgets
+class MPTTFilteredSelectMultiple(admin.widgets.FilteredSelectMultiple):
+    """ MPTT version of FilteredSelectMultiple. """
+    option_inherits_attrs = True
+
+    def __init__(self, verbose_name, is_stacked=False, attrs=None, choices=()):
+        """ Initializes the widget directly not stacked. """
+        super(MPTTFilteredSelectMultiple, self).__init__(
+            verbose_name, is_stacked, attrs, choices)
+
+    def optgroups(self, name, value, attrs=None):
+        """ Return a list of optgroups for this widget. """
+        groups = []
+        has_selected = False
+        if attrs is None:
+            attrs = {}
+
+        for index, (option_value, option_label, sort_fields) in enumerate(
+                chain(self.choices)):
+
+            # Set tree attributes
+            attrs['data-tree-id'] = sort_fields[0]
+            attrs['data-left-value'] = sort_fields[1]
+
+            subgroup = []
+            subindex = None
+            choices = [(option_value, option_label)]
+            groups.append((None, subgroup, index))
+
+            for subvalue, sublabel in choices:
+                selected = (
+                    force_text(subvalue) in value and
+                    (has_selected is False or self.allow_multiple_selected)
+                )
+                if selected is True and has_selected is False:
+                    has_selected = True
+                subgroup.append(self.create_option(
+                    name, subvalue, sublabel, selected, index,
+                    subindex=subindex, attrs=attrs,
+                ))
+
+        return groups
+
+    @property
+    def media(self):
+        """ MPTTFilteredSelectMultiple's Media. """
+        js = ['admin/js/core.js',
+              'js/mptt_m2m_selectbox.js',
+              'admin/js/SelectFilter2.js']
+        return Media(js=[staticfiles_storage.url(path) for path in js])
 
 
 # Register your models here.
@@ -58,7 +116,7 @@ class MembershipInline(admin.TabularInline):
 
 class ProjectAdmin(admin.ModelAdmin):
     fieldsets = (
-        (None, {
+        (_("Project Info"), {
             "fields": (("name", "slug", ),
                        "description",
                        ("date_created", "date_modified"),
@@ -69,14 +127,14 @@ class ProjectAdmin(admin.ModelAdmin):
                        ("anon_permissions", "public_permissions"),)
         }),
         (_("Modules activated"), {
-            "fields": (("is_backlog_activated", "total_milestones",),
-                       "is_issues_activated",
-                       "is_wiki_activated", ),
+            "fields": ("total_milestones",
+                       ("is_issues_activated", "is_backlog_activated",
+                        "is_wiki_activated", "is_kanban_activated"),),
         }),
         (_("Default project values"), {
             "classes": ("collapse",),
-            "fields": ("default_task_status",
-                       ("default_status", "default_priority", "default_severity", "default_issue_type")),
+            "fields": (("default_status", "default_issue_type",
+                       "default_priority", "default_severity"),),
         }),
         (_("Activity"), {
             "classes": ("collapse",),
@@ -114,9 +172,8 @@ class ProjectAdmin(admin.ModelAdmin):
         return self.obj
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
-        if (db_field.name in ["default_points", "default_us_status", "default_task_status",
-                              "default_priority", "default_severity",
-                              "default_issue_status", "default_issue_type"]):
+        if (db_field.name in ["default_priority", "default_severity",
+                              "default_status", "default_issue_type"]):
             if getattr(self, 'obj', None):
                 kwargs["queryset"] = db_field.related_model.objects.filter(
                                                           project=self.obj)
@@ -224,6 +281,7 @@ class IssueTypeAdmin(admin.ModelAdmin):
 
 
 class StatusAdmin(admin.ModelAdmin):
+    fields = (('name', 'slug'), 'project', ('order', 'color'), 'is_closed')
     list_display = ["project", "order", "name", "is_closed", "color"]
     list_display_links = ["name"]
     raw_id_fields = ["project"]
@@ -238,8 +296,44 @@ admin.site.register(models.Membership, MembershipAdmin)
 admin.site.register(models.Severity, SeverityAdmin)
 admin.site.register(models.Priority, PriorityAdmin)
 admin.site.register(models.IssueType, IssueTypeAdmin)
-admin.site.register(models.Activity)
+
 # admin.site.register(models.ProjectTemplate, ProjectTemplateAdmin)
+
+
+# Other models
+class TaskAdmin(admin.ModelAdmin):
+    """ Admin for Task model. """
+    form = TaskAdminForm
+    fieldsets = (
+        ('Task Info', {
+            'fields': (('name', 'slug'), 'project',
+                       'description', 'status'),
+        }),
+        ('WBS', {
+            'fields': ('parent', ('predecessor', 'successor')),
+        }),
+    )
+    list_display = ('name', 'slug', 'get_tree_path', 'description')
+    prepopulated_fields = {'slug': ('name', )}
+    search_fields = ('name', 'description')
+    list_filter = ('project', 'parent', 'predecessor', 'successor')
+
+    def __init__(self, model, admin_site):
+        self.form.admin_site = admin_site
+        super(TaskAdmin, self).__init__(model, admin_site)
+
+    def get_tree_path(self, category):
+        """ Return the category's tree path in HTML. """
+        try:
+            return format_html(
+                '<a href="{}" target="blank">/{}/</a>',
+                category.get_absolute_url(), category.tree_path)
+        except NoReverseMatch:
+            return '/%s/' % category.tree_path
+    get_tree_path.short_description = _('tree path')
+
+
+admin.site.register(models.Task, TaskAdmin)
 
 
 class CategoryAdmin(admin.ModelAdmin):

@@ -1,3 +1,4 @@
+""" Models related to a Project """
 # from dateutil.relativedelta import relativedelta
 from django.conf import settings
 from django.contrib.auth import get_user_model
@@ -29,13 +30,19 @@ USER = get_user_model()
 
 
 # Common Models
+# TODO: Reorganize and set up Importance and Urgency ratings
+# then calculate Priority from combining those two.
+# (Ranking 1-5 works... no need to have models )
 class Priority(models.Model):
-    name = models.CharField(max_length=255, null=False, blank=False,
-                            verbose_name=_("name"))
-    order = models.IntegerField(default=10, null=False, blank=False,
-                                verbose_name=_("order"))
-    color = models.CharField(max_length=20, null=False, blank=False, default="#999999",
-                             verbose_name=_("color"))
+    name = models.CharField(
+        max_length=255, null=False, blank=False,
+        verbose_name=_("name"))
+    order = models.IntegerField(
+        default=10, null=False, blank=False,
+        verbose_name=_("order"))
+    color = models.CharField(
+        max_length=20, null=False, blank=False, default="#999999",
+        verbose_name=_("color"))
     project = models.ForeignKey(
         "Project", on_delete=models.CASCADE,
         null=False, blank=False,
@@ -116,12 +123,15 @@ class Status(models.Model):
 
 
 class IssueType(models.Model):
-    name = models.CharField(max_length=255, null=False, blank=False,
-                            verbose_name=_("name"))
-    order = models.IntegerField(default=10, null=False, blank=False,
-                                verbose_name=_("order"))
-    color = models.CharField(max_length=20, null=False, blank=False, default="#999999",
-                             verbose_name=_("color"))
+    name = models.CharField(
+        max_length=255, null=False, blank=False,
+        verbose_name=_("name"))
+    order = models.IntegerField(
+        default=10, null=False, blank=False,
+        verbose_name=_("order"))
+    color = models.CharField(
+        max_length=20, null=False, blank=False, default="#999999",
+        verbose_name=_("color"))
     project = models.ForeignKey(
         "Project", on_delete=models.CASCADE,
         null=False, blank=False,
@@ -137,6 +147,7 @@ class IssueType(models.Model):
         return self.name
 
 
+# Project Models
 class Membership(models.Model):
     """
     This model stores all project memberships. Also
@@ -202,19 +213,19 @@ class Membership(models.Model):
 
 class ProjectDefaults(models.Model):
     default_priority = models.OneToOneField(
-        "projects.Priority", on_delete=models.SET_NULL,
+        Priority, on_delete=models.SET_NULL,
         related_name="+", null=True, blank=True,
         verbose_name=_("default priority"))
     default_severity = models.OneToOneField(
-        "projects.Severity", on_delete=models.SET_NULL,
+        Severity, on_delete=models.SET_NULL,
         related_name="+", null=True, blank=True,
         verbose_name=_("default severity"))
     default_status = models.OneToOneField(
-        "projects.Status", on_delete=models.SET_NULL,
+        Status, on_delete=models.SET_NULL,
         related_name="+", null=True, blank=True,
         verbose_name=_("default status"))
     default_issue_type = models.OneToOneField(
-        "projects.IssueType", on_delete=models.SET_NULL, related_name="+",
+        IssueType, on_delete=models.SET_NULL, related_name="+",
         null=True, blank=True, verbose_name=_("default issue type"))
 
     class Meta:
@@ -368,26 +379,26 @@ class Project(ProjectDefaults, models.Model):
     #     now = timezone.now()
     #     self.totals_updated_datetime = now
 
-    #     Like = apps.get_model("likes", "Like")
-    #     content_type = apps.get_model("contenttypes", "ContentType").objects.get_for_model(Project)
-    #     qs = Like.objects.filter(content_type=content_type, object_id=self.id)
+    #    Like = apps.get_model("likes", "Like")
+    #    content_type = apps.get_model("contenttypes", "ContentType").objects.get_for_model(Project)
+    #    qs = Like.objects.filter(content_type=content_type, object_id=self.id)
 
-    #     self.total_fans = qs.count()
+    #    self.total_fans = qs.count()
 
-    #     qs_week = qs.filter(created_date__gte=now - relativedelta(weeks=1))
-    #     self.total_fans_last_week = qs_week.count()
+    #    qs_week = qs.filter(created_date__gte=now - relativedelta(weeks=1))
+    #    self.total_fans_last_week = qs_week.count()
 
-    #     qs_month = qs.filter(created_date__gte=now - relativedelta(months=1))
-    #     self.total_fans_last_month = qs_month.count()
+    #    qs_month = qs.filter(created_date__gte=now - relativedelta(months=1))
+    #    self.total_fans_last_month = qs_month.count()
 
-    #     qs_year = qs.filter(created_date__gte=now - relativedelta(years=1))
-    #     self.total_fans_last_year = qs_year.count()
+    #    qs_year = qs.filter(created_date__gte=now - relativedelta(years=1))
+    #    self.total_fans_last_year = qs_year.count()
 
-    #     # tl_model = apps.get_model("timeline", "Timeline")
-    #     # namespace = build_project_namespace(self)
+    #    tl_model = apps.get_model("timeline", "Timeline")
+    #    namespace = build_project_namespace(self)
 
-    #     qs = tl_model.objects.filter(namespace=namespace)
-    #     self.total_activity = qs.count()
+    #    qs = tl_model.objects.filter(namespace=namespace)
+    #    self.total_activity = qs.count()
 
     #     qs_week = qs.filter(created__gte=now - relativedelta(weeks=1))
     #     self.total_activity_last_week = qs_week.count()
@@ -398,18 +409,18 @@ class Project(ProjectDefaults, models.Model):
     #     qs_year = qs.filter(created__gte=now - relativedelta(years=1))
     #     self.total_activity_last_year = qs_year.count()
 
-    #     if save:
-    #         self.save(update_fields=[
-    #             'totals_updated_datetime',
-    #             'total_fans',
-    #             'total_fans_last_week',
-    #             'total_fans_last_month',
-    #             'total_fans_last_year',
-    #             'total_activity',
-    #             'total_activity_last_week',
-    #             'total_activity_last_month',
-    #             'total_activity_last_year',
-    #         ])
+    #    if save:
+    #        self.save(update_fields=[
+    #            'totals_updated_datetime',
+    #            'total_fans',
+    #            'total_fans_last_week',
+    #            'total_fans_last_month',
+    #            'total_fans_last_year',
+    #            'total_activity',
+    #            'total_activity_last_week',
+    #            'total_activity_last_month',
+    #            'total_activity_last_year',
+    #        ])
 
     @cached_property
     def cached_user_stories(self):
@@ -545,133 +556,6 @@ class Project(ProjectDefaults, models.Model):
         return len(expense_list)
 
 
-class Activity(MPTTModel):
-    """
-    Defines the activities of the Work Breakdown Structure (WBS). The WBS is
-    the process of subdividing project deliverables and project work into
-    smaller, more manageable components.
-    """
-    name = models.CharField(
-        max_length=255, null=False, blank=False,
-        verbose_name=_("name"))
-    slug = models.SlugField(
-        max_length=255, null=False, blank=True,
-        verbose_name=_("slug"))
-    description = models.TextField(
-        _('description'), blank=True,
-        help_text=_('Description of activity or task.'))
-    parent = TreeForeignKey(
-        'self',
-        related_name='children',
-        null=True, blank=True,
-        on_delete=models.SET_NULL,
-        verbose_name=_('parent activity'))
-
-    project = models.ForeignKey(
-        "Project", on_delete=models.CASCADE,
-        null=False, blank=False,
-        related_name="tasks", verbose_name=_("project"))
-
-    predecessor = TreeForeignKey(
-        'self',
-        related_name='predecessors',
-        null=True, blank=True,
-        on_delete=models.SET_NULL)
-
-    # Related activities
-    successor = TreeForeignKey(
-        'self',
-        related_name='successors',
-        null=True, blank=True,
-        on_delete=models.SET_NULL)
-
-    order = models.IntegerField(
-        default=10, null=False, blank=False,
-        verbose_name=_("order"))
-
-    # Activity status
-    status = models.ForeignKey(
-        Status, on_delete=models.CASCADE,
-    )
-    is_closed = models.BooleanField(
-        default=False, null=False, blank=True,
-        verbose_name=_("is closed"))
-
-    objects = TreeManager()
-
-    class Meta:
-        """ Category's meta informations. """
-        verbose_name = "activiy"
-        verbose_name_plural = "activities"
-        ordering = ["project", "order", "name"]
-        unique_together = (("project", "name"), ("project", "slug"))
-
-    class MPTTMeta:
-        """ Category MPTT's meta informations. """
-        order_insertion_by = ['name']
-
-    def __str__(self):
-        return self.name
-
-    def save(self, *args, **kwargs):
-        qs = self.project.tasks
-        if self.id:
-            qs = qs.exclude(id=self.id)
-
-        self.slug = slugify_uniquely_for_queryset(self.name, qs)
-        return super().save(*args, **kwargs)
-
-    @property
-    def tree_path(self):
-        """
-        Returns activity's tree path
-        by concatening the slug of its ancestors.
-        """
-        if self.parent_id:
-            return '/'.join(
-                [ancestor.slug for ancestor in self.get_ancestors()] +
-                [self.slug])
-        return self.slug
-
-    def get_absolute_url(self):
-        """
-        Builds and returns the activity's URL
-        based on its tree path.
-        """
-        return reverse('projects:task_detail', args=(self.tree_path,))
-
-
-# Other
-class Category(models.Model):
-    project = models.ForeignKey(
-        Project, on_delete=models.CASCADE,
-        related_name='categories')
-    name = models.CharField(max_length=50)
-
-    def __str__(self):
-        return self.name
-
-    class Meta:
-        managed = True
-        verbose_name = 'Category'
-        verbose_name_plural = 'Categories'
-
-
-class Expense(models.Model):
-    project = models.ForeignKey(
-        Project, on_delete=models.CASCADE,
-        related_name='expenses')
-    title = models.CharField(max_length=100)
-    amount = models.DecimalField(max_digits=8, decimal_places=2)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return self.title
-
-    class Meta:
-        ordering = ('-amount', )
-
-
 class ProjectTemplate(models.Model):
     name = models.CharField(
         max_length=250, null=False, blank=False,
@@ -701,7 +585,6 @@ class ProjectTemplate(models.Model):
         verbose_name=_("active issues panel"))
 
     default_options = JSONField(null=True, blank=True, verbose_name=_("default options"))
-    us_statuses = JSONField(null=True, blank=True, verbose_name=_("us statuses"))
     statuses = JSONField(null=True, blank=True, verbose_name=_("issue statuses"))
     issue_types = JSONField(null=True, blank=True, verbose_name=_("issue types"))
     priorities = JSONField(null=True, blank=True, verbose_name=_("priorities"))
@@ -911,9 +794,11 @@ class ProjectTemplate(models.Model):
         return project
 
 
+# Other
 class Stakeholder(models.Model):
     """
-    Stores Stakeholder information; can link to :model:`User`, but not required
+    Stores Stakeholder information; can link to :model:`User`,
+    but not required.
     """
     user = models.OneToOneField(
         USER, on_delete=models.CASCADE,
@@ -997,3 +882,128 @@ class Stakeholder(models.Model):
         base_slug = "{}-{}".format(self.project.id, self.full_name)
         self.slug = slugify(base_slug)
         super(Stakeholder, self).save(*args, **kwargs)
+
+
+class Task(MPTTModel):
+    """
+    Defines the activities of the Work Breakdown Structure (WBS). The WBS is
+    the process of subdividing project deliverables and project work into
+    smaller, more manageable components.
+    """
+    name = models.CharField(
+        max_length=255, null=False, blank=False,
+        verbose_name=_("name"))
+    slug = models.SlugField(
+        max_length=255, null=False, blank=True,
+        verbose_name=_("slug"))
+    description = models.TextField(
+        _('description'), blank=True,
+        help_text=_('Description of activity or task.'))
+    parent = TreeForeignKey(
+        'self',
+        related_name='children',
+        null=True, blank=True,
+        on_delete=models.SET_NULL,
+        verbose_name=_('parent activity'))
+
+    project = models.ForeignKey(
+        "Project", on_delete=models.CASCADE,
+        null=False, blank=False,
+        related_name="tasks", verbose_name=_("project"))
+
+    predecessor = TreeForeignKey(
+        'self',
+        related_name='predecessors',
+        null=True, blank=True,
+        on_delete=models.SET_NULL)
+
+    # Related activities
+    successor = TreeForeignKey(
+        'self',
+        related_name='successors',
+        null=True, blank=True,
+        on_delete=models.SET_NULL)
+
+    order = models.IntegerField(
+        default=10, null=False, blank=False,
+        verbose_name=_("order"))
+
+    # Task status
+    status = models.ForeignKey(
+        Status, on_delete=models.CASCADE,
+    )
+    is_closed = models.BooleanField(
+        default=False, null=False, blank=True,
+        verbose_name=_("is closed"))
+
+    objects = TreeManager()
+
+    class Meta:
+        """ Category's meta informations. """
+        verbose_name = "task"
+        ordering = ["project", "order", "name"]
+        unique_together = (("project", "name"), ("project", "slug"))
+
+    class MPTTMeta:
+        """ Category MPTT's meta informations. """
+        order_insertion_by = ['name']
+
+    def __str__(self):
+        return self.name
+
+    def save(self, *args, **kwargs):
+        qs = self.project.tasks
+        if self.id:
+            qs = qs.exclude(id=self.id)
+
+        self.slug = slugify_uniquely_for_queryset(self.name, qs)
+        return super().save(*args, **kwargs)
+
+    @property
+    def tree_path(self):
+        """
+        Returns activity's tree path
+        by concatening the slug of its ancestors.
+        """
+        if self.parent_id:
+            return '/'.join(
+                [ancestor.slug for ancestor in self.get_ancestors()] +
+                [self.slug])
+        return self.slug
+
+    def get_absolute_url(self):
+        """
+        Builds and returns the activity's URL
+        based on its tree path.
+        """
+        return reverse('projects:task_detail', args=(self.tree_path,))
+
+
+class Category(models.Model):
+    project = models.ForeignKey(
+        Project, on_delete=models.CASCADE,
+        related_name='categories')
+    name = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        managed = True
+        verbose_name = 'Category'
+        verbose_name_plural = 'Categories'
+
+
+class Expense(models.Model):
+    project = models.ForeignKey(
+        Project, on_delete=models.CASCADE,
+        related_name='expenses')
+    title = models.CharField(max_length=100)
+    amount = models.DecimalField(max_digits=8, decimal_places=2)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        ordering = ('-amount', )
