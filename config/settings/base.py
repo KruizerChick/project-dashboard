@@ -100,7 +100,7 @@ LOCAL_APPS = [
     'project_dashboard.core.apps.CoreConfig',
     # 'project_dashboard.projects.apps.ProjectConfig',
     'project_dashboard.projects',
-    'project_dashboard.projmgmt',
+    'project_dashboard.pmi',
 ]
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
