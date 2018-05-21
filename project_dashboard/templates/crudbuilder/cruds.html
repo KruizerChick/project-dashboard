@@ -1,30 +1,38 @@
 {% extends "crudbuilder/base.html" %}
-{% load i18n crudbuilder %}
+{% load i18n projects %}
+
+{% block extra-crumbs %}
+  <li class="">{% trans "Admin" %}</li>
+  <li class="active">{% trans "Registered Cruds" %}</li>
+{% endblock extra-crumbs %}
 
 {% block main_content %}
+
 <div class="container">
 	<h3>{{view.title}}</h3>
-	<hr/>
+  <hr/>
+
 	<table class="table table-bordered table-condensed">
-		<thead>
+		<thead class="alert-info">
 			<tr>
-				<th>Crud</th>
-				<th>Model</th>
-				<th>App</th>
+        <th>{% trans "Crud" %}</th>
+        <th>{% trans "App" %}</th>
+        <th>{% trans "Model" %}</th>
 			</tr>
 		</thead>
 		<tbody>
-			{% for key, crud in view.cruds %}
+      {% for key, crud in view.cruds %}
 				<tr>
-					{% with detail=key|crud_detail %}
-						<td><a href="{% url detail.postfix_url %}">{{crud|class_name}}</a></td>
-						<td>{{detail.model|title}}</td>
-						<td>{{detail.app|title}}</td>
-					{% endwith %}
+          {% with detail=key|crud_detail %}
+            <td><a href="/crud/{{ detail.app|title|lower }}/{{detail.model|title|lower}}s/">{{crud|class_name}}</a></td>
+            <td>{{ detail.app|title }}</td>
+            <td>{{ detail.model|title }}</td>
+          {% endwith %}
 				</tr>
-			{% endfor %}
+      {% endfor %}
 		</tbody>
 	</table>
 </div>
+
 
 {% endblock main_content %}
