@@ -46,9 +46,9 @@ class Process(models.Model):
         related_name='processes')
 
     def __str__(self):
-        return self.name
+        return "{0} | {1}".format(self.process_group, self.name)
 
     class Meta:
-        ordering = ['order']
+        ordering = ['process_group', 'order']
         verbose_name = 'Process'
         verbose_name_plural = 'Processes'

@@ -15,7 +15,6 @@ def slugify_uniquely(value, model, slugfield="slug"):
     """
     Returns a slug on a name which is unique within a model's table
     """
-
     suffix = 0
     potential = base = django_slugify(unidecode(value))
     if len(potential) == 0:
@@ -32,7 +31,6 @@ def slugify_uniquely_for_queryset(value, queryset, slugfield="slug"):
     """
     Returns a slug on a name which doesn't exist in a queryset
     """
-
     suffix = 0
     potential = base = django_slugify(unidecode(value))
     if len(potential) == 0:

@@ -4,10 +4,7 @@ from django.utils.encoding import smart_text
 
 
 class MPTTModelChoiceIterator(forms.models.ModelChoiceIterator):
-    """
-    MPTT version of ModelChoiceIterator.
-    """
-
+    """ MPTT version of ModelChoiceIterator. """
     def choice(self, obj):
         """
         Overloads the choice method to add the position
@@ -20,10 +17,7 @@ class MPTTModelChoiceIterator(forms.models.ModelChoiceIterator):
 
 
 class MPTTModelMultipleChoiceField(forms.ModelMultipleChoiceField):
-    """
-    MPTT version of ModelMultipleChoiceField.
-    """
-
+    """ MPTT version of ModelMultipleChoiceField. """
     def __init__(self, level_indicator='|--', *args, **kwargs):
         self.level_indicator = level_indicator
         super(MPTTModelMultipleChoiceField, self).__init__(*args, **kwargs)

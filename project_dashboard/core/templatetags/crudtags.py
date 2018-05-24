@@ -1,11 +1,15 @@
-""" Templatetags for Project App """
+""" Crudbuilder Templatetags for Project Dashboard """
+# Original crudbuilder templatetags weren't working right with the
+# modular configuration of this project.
+# (app.model is the standard for crudbuilder, not project.app.model)
+
 from django import template
 from collections import namedtuple
 from itertools import chain
 
 register = template.Library()
 Field = namedtuple('Field', 'name verbose_name')
-CrudDetail = namedtuple('CrudDetail', ['app', 'model', 'list_url'])
+CrudDetail = namedtuple('CrudDetail', ['module', 'app', 'model', 'list_url'])
 
 
 # Crudbuilder templatetags
@@ -18,13 +22,9 @@ def class_name(obj):
 def crud_detail(crud_key):
     """ Creates detail arguments for crudbuilder """
     # working, but no URL
-    # project, app, model = crud_key.split('-', 4)
-    # list_url = '{}-{}-{}-list'.format(project, app, model)
-    # return CrudDetail(project, app, model)
-
-    project, app, model = crud_key.split('-', 4)
-    list_url = '{}-{}-{}-list'.format(project, app, model)
-    return CrudDetail(project, app, model)
+    module, app, model = crud_key.split('-', 4)
+    list_url = '{}-{}-{}-list'.format(module, app, model)
+    return CrudDetail(module, app, model, list_url)
 
 
 @register.filter

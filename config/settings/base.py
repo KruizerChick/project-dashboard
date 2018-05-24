@@ -45,12 +45,12 @@ USE_TZ = True
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases
 
-# DATABASES = {
-#     'default': env.db('DATABASE_URL', default='postgres://kruizer:Wiring00@localhost/projectdb'),
-# }
 DATABASES = {
-    'default': env.db('DATABASE_URL', default='postgres://kruizer:Wiring00@localhost/projdashdb'),
+    'default': env.db('DATABASE_URL', default='postgres://kruizer:Wiring00@localhost/pmdashdb'),
 }
+# DATABASES = {
+#     'default': env.db('DATABASE_URL', default='postgres://kruizer:Wiring00@localhost/projdashdb'),
+# }
 DATABASES['default']['ATOMIC_REQUESTS'] = True
 
 # URLS
@@ -98,7 +98,6 @@ LOCAL_APPS = [
     'project_dashboard.users.apps.UsersConfig',
     # Your stuff: custom apps go here
     'project_dashboard.core.apps.CoreConfig',
-    # 'project_dashboard.projects.apps.ProjectConfig',
     'project_dashboard.projects',
     'project_dashboard.pmi',
 ]

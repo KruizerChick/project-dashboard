@@ -27,7 +27,7 @@
                 {% trans "Projects" %}
               </a>
               <div class="dropdown-menu" aria-labelledby="projectDropMenu">
-                <a href="{% url 'projects:list' %}" class="dropdown-item">{% trans "Projects Home" %}</a>
+                <!-- {% comment %} <a href="{% url 'projects:list' %}" class="dropdown-item">{% trans "Projects Home" %}</a> {% endcomment %} -->
                 <a href="/crud/projects/projects" class="dropdown-item">{% trans "Project List" %}</a>
                 <a href="/crud/projects/stakeholders" class="dropdown-item" >{% trans "Stakeholders" %}</a>
               </div>

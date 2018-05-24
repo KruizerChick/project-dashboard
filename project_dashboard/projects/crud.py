@@ -1,7 +1,8 @@
 """ CRUD class for Projects app """
 from crudbuilder.abstract import BaseCrudBuilder
 
-from .models import Project, Stakeholder
+from .models.project import Project
+from .models.stakeholder import Stakeholder
 
 
 class ProjectCrud(BaseCrudBuilder):
@@ -13,7 +14,7 @@ class ProjectCrud(BaseCrudBuilder):
     login_required = True
     permission_required = True
     # tables2_pagination = 20  # default is 10
-    # modelform_excludes = ['date_created']
+    modelform_excludes = ['created']
 
     # permissions = {}
     # custom_templates = {}
@@ -28,8 +29,5 @@ class StakeholderCrud(BaseCrudBuilder):
 
     login_required = True
     permission_required = True
-#     # tables2_pagination = 20  # default is 10
-#     # modelform_excludes = ['date_created']
+    modelform_excludes = ['created']
 
-#     # permissions = {}
-#     # custom_templates = {}

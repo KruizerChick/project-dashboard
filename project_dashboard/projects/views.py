@@ -6,7 +6,8 @@ from django.views.generic import CreateView
 import json
 
 from .forms import ExpenseForm
-from .models import Project, Category, Expense
+from .models import Project,
+# from .models import Category, Expense
 
 
 # Create your views here.

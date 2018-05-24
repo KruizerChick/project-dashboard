@@ -23,7 +23,7 @@ urlpatterns = [
     path('crud/', include('crudbuilder.urls')),
 
     # Custom apps
-    path('projects/', include('project_dashboard.projects.urls', namespace='project')),
+    # path('projects/', include('project_dashboard.projects.urls', namespace='project')),
     path('users/', include('project_dashboard.users.urls', namespace='users')),
 
 
