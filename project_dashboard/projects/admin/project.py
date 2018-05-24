@@ -90,7 +90,7 @@ class ProjectAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('name', )}
     list_display_links = ["id", "name", "slug"]
     list_filter = ("is_closed", )
-#     # list_editable = ["is_featured", "blocked_code"]
+    # list_editable = ["is_featured", "blocked_code"]
     search_fields = [
         "id", "name", "slug",
         # "owner__username", "owner__email", "owner__full_name"
@@ -104,7 +104,6 @@ class ProjectAdmin(admin.ModelAdmin):
     save_on_top = True
     actions_on_top = True
     actions_on_bottom = True
-
 #     def owner_url(self, obj):
 #         if obj.owner:
 #             url = reverse(

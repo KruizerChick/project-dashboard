@@ -6,13 +6,12 @@ from django.views.generic import CreateView
 import json
 
 from .forms import ExpenseForm
-from .models import Project,
-# from .models import Category, Expense
+from . import models as proj_models
 
 
 # Create your views here.
 def project_list(request):
-    project_list = Project.objects.all()
+    project_list = proj_models.Project.objects.all()
     return render(
         request, 'projects/project-list.html',
         {'project_list': project_list}
@@ -21,10 +20,10 @@ def project_list(request):
 
 def project_detail(request, project_slug):
     # fetch the correct project
-    project = get_object_or_404(Project, slug=project_slug)
+    project = get_object_or_404(proj_models.Project, slug=project_slug)
 
     if request.method == 'GET':
-        category_list = Category.objects.filter(project=project)
+        category_list = proj_models.Category.objects.filter(project=project)
         return render(
             request, 'projects/project-detail.html',
             {'project': project,
@@ -40,9 +39,9 @@ def project_detail(request, project_slug):
             category_name = form.cleaned_data['category']
 
             category = get_object_or_404(
-                Category, project=project, name=category_name)
+                proj_models.Category, project=project, name=category_name)
 
-            Expense.objects.create(
+            proj_models.Expense.objects.create(
                 project=project,
                 title=title,
                 amount=amount,
@@ -52,7 +51,7 @@ def project_detail(request, project_slug):
     elif request.method == 'DELETE':
         # Delete categories
         id = json.loads(request.body)['id']
-        expense = get_object_or_404(Expense, id=id)
+        expense = get_object_or_404(proj_models.Expense, id=id)
         expense.delete()
         return HttpResponse('')
 
@@ -60,7 +59,7 @@ def project_detail(request, project_slug):
 
 
 class ProjectCreateView(CreateView):
-    model = Project
+    model = proj_models.Project
     template_name = 'projects/add-project.html'
     fields = '__all__'
 
@@ -70,8 +69,8 @@ class ProjectCreateView(CreateView):
 
         categories = self.request.POST['categoriesString'].split(',')
         for category in categories:
-            Category.objects.create(
-                project=Project.objects.get(id=self.object.id),
+            proj_models.Category.objects.create(
+                project=proj_models.Project.objects.get(id=self.object.id),
                 name=category
             ).save()
 

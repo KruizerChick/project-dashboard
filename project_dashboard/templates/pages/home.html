@@ -1,5 +1,6 @@
 {% extends "base.html" %}
-{% load i18n %}
+{% load static i18n %}
+{% load projects %}
 
 {% block content %}
 <br>
@@ -8,14 +9,16 @@
 </div>
 <hr>
 <div class="row justify-content-around">
+  <!-- Projects panel -->
   <div class="card w-50">
     <div class="card-header alert-info">
       <h4>{% trans "Projects" %}</h4>
     </div>
     <div class="card-body">
-
+      {% get_projects %}
     </div>
   </div>
+  <!-- Due Dates panel -->
   <div class="card w-25">
     <div class="card-header alert-info">
       <h4>{% trans "Upcoming Due Dates" %}</h4>
@@ -27,6 +30,7 @@
 </div>
 <br>
 <div class="row justify-content-around">
+  <!-- Issues panel -->
   <div class="card w-25">
     <div class="card-header alert-info">
       <h4>{% trans "Issues" %}</h4>

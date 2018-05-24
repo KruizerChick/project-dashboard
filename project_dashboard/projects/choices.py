@@ -16,7 +16,7 @@ RANK_OPTIONS = [
     (LOWEST, 'Very Low'),
 ]
 
-# Impact rankings based on category
+# Impact rankings based on project knowledge area
 SCOPE_IMPACT = [
     (HIGHEST, 'Very High - The product does not meet the objectives and is effectively useless.'),
     (HIGH, 'High - The product is deficient in multiple essential requirements.'),

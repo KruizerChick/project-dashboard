@@ -10,6 +10,7 @@ from ...core.permissions.choices import ANON_PERMISSIONS, MEMBERS_PERMISSIONS
 from ...core.utils.time import timestamp_ms
 
 from .stakeholder import Role, Stakeholder
+from .category import Category
 
 
 USER = get_user_model()
@@ -173,6 +174,17 @@ class StakeholderProject(models.Model):
         abstract = True
 
 
+class CategoriesProject(models.Model):
+    """ Abstract model class to categorize the entries. """
+    categories = models.ManyToManyField(
+        Category, blank=True,
+        related_name='projects',
+        verbose_name=_('categories'))
+
+    class Meta:
+        abstract = True
+
+
 class LoginRequiredProject(models.Model):
     """
     Abstract model class to restrict the display
@@ -203,6 +215,7 @@ class AbstractProject(
         CoreProject,
         RelatedProject,
         StakeholderProject,
+        CategoriesProject,
         LoginRequiredProject,
         PasswordRequiredProject):
     """

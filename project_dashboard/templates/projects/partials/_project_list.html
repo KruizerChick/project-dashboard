@@ -1,0 +1,11 @@
+{% load static i18n %}
+
+
+{{ project_list }}
+
+<ul>
+  {% for project in project_list  %}
+    <li>{{ project.name }}</li>
+  {% endfor %}
+
+</ul>
