@@ -3,7 +3,6 @@ import uuid
 from django.contrib.auth.models import UserManager, AbstractUser
 from django.db import models
 from django.utils import timezone
-from django.utils.html import format_html
 from django.utils.translation import ugettext_lazy as _
 
 from ..core.utils.files import get_file_path
@@ -51,9 +50,6 @@ def get_default_uuid():
 
 class User(AbstractUser):
     """ Extends User model, related to :model: 'auth.User' """
-    full_name = models.CharField(
-        _("full name"), max_length=256, blank=True,
-        help_text=_('If different from First Name + Last Name'))
     bio = models.TextField(
         null=False, blank=True, default="", verbose_name=_("biography"))
     photo = models.FileField(
@@ -80,24 +76,13 @@ class User(AbstractUser):
         ordering = ["username"]
 
     def __str__(self):
-        return self.username
-
-    # def get_full_name(self):
-    #     return self.full_name or self.username or self.email
+        # return self.username
+        return '%s %s' % (self.first_name, self.last_name)
 
     @property
-    def get_full_name(self):
-        """ Calculate stakeholder's full name """
-        if self.first_name and self.last_name:
-            return format_html(
-                '<span>{} {}</span>',
-                self.first_name,
-                self.last_name,
-            )
-        else:
-            return format_html(
-                '<span>{}</span>', self.user.full_name,
-            )
+    def full_name(self):
+        """ Returns the person's full name. """
+        return '%s %s' % (self.first_name, self.last_name)
 
     def save(self, *args, **kwargs):
         get_token_for_user(self, "cancel_account")

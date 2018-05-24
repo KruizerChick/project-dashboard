@@ -5,8 +5,6 @@ from django.contrib.contenttypes.models import ContentType
 from django.contrib.postgres.fields import ArrayField
 from django.db import models
 from django.dispatch import receiver
-# from django.utils.text import slugify
-from django.utils.html import format_html
 from django.utils.translation import ugettext_lazy as _
 
 from phonenumber_field.modelfields import PhoneNumberField
@@ -94,7 +92,8 @@ class Stakeholder(TimeStampedModel, models.Model):
     )
     slug = models.SlugField(
         max_length=250, null=False, blank=True,
-        verbose_name=_('slug'))
+        verbose_name=_('slug'),
+        help_text=_('Used for Stakeholder URL.'))
 
     # If not system User
     first_name = models.CharField(
@@ -102,9 +101,6 @@ class Stakeholder(TimeStampedModel, models.Model):
     )
     last_name = models.CharField(
         max_length=50, blank=True,
-    )
-    full_name = models.CharField(
-        max_length=100, blank=True,
     )
 
     email_address = models.EmailField(
@@ -153,15 +149,24 @@ class Stakeholder(TimeStampedModel, models.Model):
     class Meta:
         ordering = ['-influence', '-impact']
         verbose_name = _('stakeholder')
-        # unique_together = (('full_name', 'projects'),)
+        # unique_together = (('id', 'projects'),)
 
     def __str__(self):
         """ Return the full name of the stakeholder """
-        return self.get_full_name()
+        return '%s %s' % (self.first_name, self.last_name)
+
+    @property
+    def full_name(self):
+        """ Returns the person's full name. """
+        try:
+            return self.user.full_name
+        except AttributeError:
+            return '%s %s' % (self.first_name, self.last_name)
 
     def _fill_cached_memberships(self):
         self._cached_memberships = {}
-        qs = self.memberships.select_related("stakeholder", "project", "role")
+        qs = self.memberships.select_related(
+            "stakeholder", "project", "role")
         for membership in qs.all():
             self._cached_memberships[membership.project.id] = membership
 
@@ -197,19 +202,6 @@ class Stakeholder(TimeStampedModel, models.Model):
         obj_id = "{}-{}".format(obj_type.id, obj.id)
         return obj_id in self._cached_watched_ids
 
-    def get_full_name(self):
-        """ Calculate stakeholder's full name """
-        if self.first_name and self.last_name:
-            return format_html(
-                '<span>{} {}</span>',
-                self.first_name,
-                self.last_name,
-            )
-        else:
-            return format_html(
-                '<span>{}</span>', self.user.full_name,
-            )
-
     # def contacts_visible_by_user(self, user):
     #     qs = User.objects.filter(is_active=True)
     #     project_ids = services.get_visible_project_ids(self, user)
@@ -217,6 +209,12 @@ class Stakeholder(TimeStampedModel, models.Model):
     #     qs = qs.exclude(id=self.id)
     #     return qs
 
+    # TODO: Figure out how to save User first_name and last_name into
+    #       Stakeholder.first_name and Stakeholder.last_name fields
     # def save(self, *args, **kwargs):
-    #     get_token_for_user(self, "cancel_account")
-    #     super().save(*args, **kwargs)
+    #     if not self.user:
+    #         return
+    #     else:
+    #         self.first_name = User.first_name
+    #         self.last_name = User.last_name
+    #         super().save(*args, **kwargs)  # Call the "real" save() method.

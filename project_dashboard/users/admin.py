@@ -28,7 +28,7 @@ class MyUserCreationForm(UserCreationForm):
 
     def clean_username(self):
         """ Clean username """
-        username = self.cleaned_data["username"]
+        username = self.cleaned_data['username']
         try:
             User.objects.get(username=username)
         except User.DoesNotExist:
@@ -41,23 +41,22 @@ class MyUserCreationForm(UserCreationForm):
 class MyUserAdmin(AuthUserAdmin):
     """ Custom User Admin form """
     fieldsets = (
-        (None, {"fields": (("username", "password"),)}),
-        (_("Personal info"), {
-            "fields": (
+        (None, {'fields': (('username', 'password'),)}),
+        (_('Personal info'), {
+            'fields': (
                 ('first_name', 'last_name'),
-                "full_name", "email", "bio", "photo")}),
-        (_("Extra info"), {"fields": (("lang", "timezone"), )}),
-        (_("Permissions"), {"fields": (("is_active", "is_superuser"), )}),
-        (_("Important dates"), {"fields": (("date_joined", "last_login"), )}),
+                'email', 'bio', 'photo')}),
+        (_('Extra info'), {'fields': (('lang', 'timezone'), )}),
+        (_('Permissions'), {'fields': (('is_active', 'is_superuser'), )}),
+        (_('Important dates'), {'fields': (('date_joined', 'last_login'), )}),
     )
     form = UserChangeForm
     add_form = UserCreationForm
-    list_display = ("username", "email", "full_name")
-    list_filter = ("is_superuser", "is_active")
-    search_fields = ("username", "full_name", "email")
-    ordering = ("username",)
+    list_display = ('username', 'email', 'full_name')
+    list_filter = ('is_superuser', 'is_active')
+    search_fields = ('username', 'email', 'full_name')
+    ordering = ('username',)
     filter_horizontal = ()
-    prepopulated_fields = {'full_name': ('first_name', 'last_name')}
     save_on_top = True
     actions_on_top = True
     actions_on_bottom = True

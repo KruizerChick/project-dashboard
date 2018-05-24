@@ -38,19 +38,25 @@ class RoleAdmin(admin.ModelAdmin):
 class StakeholderAdmin(admin.ModelAdmin):
     """ Admin class for Stakeholder model """
     fieldsets = (
-        (_('User Info (optional)'), {
-            'fields': (('user', 'slug'), )
+        (_('Stakeholder'), {
+            'fields': (('full_name', 'slug'), )
+        }),
+        (_('User (preferred)'), {
+            'fields': ('user', )
         }),
         (_('Stakeholder Info (if no User)'), {
-            'fields': (
-                ('first_name', 'last_name'), 'full_name', )
+            'fields': (('first_name', 'last_name'), 'email_address',),
+            'classes': ('collapse', 'collapse-closed')
         }),
         (_('Contact Info'), {
-            'fields': ('title', 'organization', 'email_address',
-                       'phone_number',)
+            'fields': (('organization', 'title'), 'phone_number', )
+        }),
+        (_('Project Info'), {
+            'fields': ('cached_memberships', )
         }),
     )
-    list_display = ['id', 'get_full_name']
-    list_filter = ['full_name', 'title', 'organization', ]
-    search_fields = ['full_name', 'title', 'organization', ]
-    # prepopulated_fields = {'slug': ('get_full_name', )}
+    readonly_fields = ('full_name', 'cached_memberships')
+    list_display = ['id', 'slug', 'full_name', 'organization']
+    list_filter = ['title', 'organization', ]
+    search_fields = ['title', 'organization', 'cached_memberships']
+    prepopulated_fields = {'slug': ('user', 'first_name', 'last_name')}
