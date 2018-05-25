@@ -155,13 +155,13 @@ class Stakeholder(TimeStampedModel, models.Model):
         """ Return the full name of the stakeholder """
         return '%s %s' % (self.first_name, self.last_name)
 
-    @property
-    def full_name(self):
-        """ Returns the person's full name. """
-        try:
-            return self.user.full_name
-        except AttributeError:
-            return '%s %s' % (self.first_name, self.last_name)
+    # @property
+    # def full_name(self):
+    #     """ Returns the person's full name. """
+    #     try:
+    #         return self.user.full_name
+    #     except AttributeError:
+    #         return '%s %s' % (self.first_name, self.last_name)
 
     def _fill_cached_memberships(self):
         self._cached_memberships = {}

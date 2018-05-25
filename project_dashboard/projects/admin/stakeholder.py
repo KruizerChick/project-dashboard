@@ -2,6 +2,8 @@ from django.contrib import admin
 from django.utils.translation import gettext_lazy as _
 
 # from ..models.stakeholder import Role
+from ..models import Project
+from .project import MembershipsInline, OwnedProjectsInline
 
 
 # Register your models here.
@@ -39,7 +41,7 @@ class StakeholderAdmin(admin.ModelAdmin):
     """ Admin class for Stakeholder model """
     fieldsets = (
         (_('Stakeholder'), {
-            'fields': (('full_name', 'slug'), )
+            'fields': (('slug'), )
         }),
         (_('User (preferred)'), {
             'fields': ('user', )
@@ -55,8 +57,12 @@ class StakeholderAdmin(admin.ModelAdmin):
             'fields': ('cached_memberships', )
         }),
     )
-    readonly_fields = ('full_name', 'cached_memberships')
-    list_display = ['id', 'slug', 'full_name', 'organization']
+    readonly_fields = ['cached_memberships']
+    list_display = ['id', 'slug', 'organization']
     list_filter = ['title', 'organization', ]
     search_fields = ['title', 'organization', 'cached_memberships']
     prepopulated_fields = {'slug': ('user', 'first_name', 'last_name')}
+    inlines = [
+        OwnedProjectsInline,
+        MembershipsInline
+    ]

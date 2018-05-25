@@ -63,7 +63,7 @@ class Membership(TimeStampedModel, models.Model):
         verbose_name = "membership"
         verbose_name_plural = "memberships"
         unique_together = ("stakeholder", "project",)
-        ordering = ["project", "stakeholder__full_name", "stakeholder__user", "stakeholder__email_address"]
+        ordering = ["project", "stakeholder__slug", "stakeholder__user", "stakeholder__email_address"]
 
     def get_related_people(self):
         related_people = get_user_model().objects.filter(id=self.user.id)
@@ -90,7 +90,7 @@ class CoreProject(TimeStampedModel, models.Model):
         null=False, blank=False,
         verbose_name=_('description'))
     owner = models.ForeignKey(
-        settings.AUTH_USER_MODEL, on_delete=models.SET_NULL,
+        Stakeholder, on_delete=models.SET_NULL,
         null=True, blank=True,
         related_name="owned_projects", verbose_name=_("owner"))
     is_closed = models.BooleanField(
