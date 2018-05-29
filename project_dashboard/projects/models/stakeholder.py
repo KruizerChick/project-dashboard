@@ -14,8 +14,10 @@ from ...core.models import TimeStampedModel
 from ...core.permissions.choices import MEMBERS_PERMISSIONS
 from ...core.utils.slug import slugify_uniquely
 from ..notifications.choices import NotifyLevel
+# from .. import services
 
 # from .project import Project
+from .category import Category
 
 User = get_user_model()
 
@@ -38,6 +40,10 @@ class Role(models.Model):
         verbose_name=_('description'),
         null=True, blank=True,
     )
+    project = models.ForeignKey(
+        "projects.Project", on_delete=models.SET_NULL,
+        null=True, blank=False,
+        related_name="roles", verbose_name=_("project"))
     permissions = ArrayField(
         models.TextField(
             null=False, blank=False, choices=MEMBERS_PERMISSIONS),
@@ -46,6 +52,10 @@ class Role(models.Model):
         max_length=1, choices=ROLE_TYPE_CHOICES,
         default=INTERNAL,
         help_text=_('Relative to the project team.')
+    )
+    category = models.ForeignKey(
+        Category, on_delete=models.CASCADE,
+        # default=1.5,
     )
     order = models.IntegerField(
         default=10, null=False, blank=False,
@@ -63,7 +73,7 @@ class Role(models.Model):
         verbose_name = 'role'
         verbose_name_plural = 'roles'
         ordering = ['order', 'slug']
-        # unique_together = (('slug', 'project'),)
+        unique_together = (('slug', 'project'),)
 
     def __str__(self):
         return self.name
@@ -85,30 +95,36 @@ class Stakeholder(TimeStampedModel, models.Model):
     Stores Stakeholder information; related to :model:`Project`;
     can link to :model:`User`, but not required.
     """
-    user = models.OneToOneField(
-        User, on_delete=models.SET_NULL,
-        null=True, blank=True,
-        help_text=_('(Optional) Link to User if available')
+    full_name = models.CharField(
+        max_length=50,
+        help_text=_("Stakeholder's full name")
     )
     slug = models.SlugField(
         max_length=250, null=False, blank=True,
         verbose_name=_('slug'),
         help_text=_('Used for Stakeholder URL.'))
 
-    # If not system User
+    # Optional link to User
+    user = models.OneToOneField(
+        User, on_delete=models.SET_NULL,
+        null=True, blank=True,
+        help_text=_('(Optional) Link to User if available')
+    )
+
+    # Information if not system User
     first_name = models.CharField(
         max_length=50, blank=True,
     )
     last_name = models.CharField(
         max_length=50, blank=True,
     )
-
     email_address = models.EmailField(
         max_length=100, null=True, blank=True,
     )
 
     title = models.CharField(
         max_length=100, blank=True,
+        verbose_name=_('job title'),
     )
     organization = models.CharField(
         max_length=100, blank=True,
@@ -155,14 +171,6 @@ class Stakeholder(TimeStampedModel, models.Model):
         """ Return the full name of the stakeholder """
         return '%s %s' % (self.first_name, self.last_name)
 
-    # @property
-    # def full_name(self):
-    #     """ Returns the person's full name. """
-    #     try:
-    #         return self.user.full_name
-    #     except AttributeError:
-    #         return '%s %s' % (self.first_name, self.last_name)
-
     def _fill_cached_memberships(self):
         self._cached_memberships = {}
         qs = self.memberships.select_related(
@@ -203,7 +211,7 @@ class Stakeholder(TimeStampedModel, models.Model):
         return obj_id in self._cached_watched_ids
 
     # def contacts_visible_by_user(self, user):
-    #     qs = User.objects.filter(is_active=True)
+    #     qs = Stakeholder.objects.filter(is_active=True)
     #     project_ids = services.get_visible_project_ids(self, user)
     #     qs = qs.filter(memberships__project_id__in=project_ids)
     #     qs = qs.exclude(id=self.id)

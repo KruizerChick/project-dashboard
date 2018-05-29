@@ -17,7 +17,9 @@
   <hr>
   <div class="form-row justify-content-around">
     {% block actions %}
-      <a class="button button-pill button-action" href="{% url app_label|add:'-'|add:custom_postfix_url|add:'-create' %}"><i class="glyphicon glyphicon-plus-sign"></i> Add {{actual_model_name|title}}</a>
+      <a class="button button-pill button-action"
+          href="{% url app_label|add:'-'|add:custom_postfix_url|add:'-create' %}">
+          <i class="fas fa-plus"></i>&nbsp;&nbsp;{% trans "Add" %} {{actual_model_name|title}}</a>
     {% endblock actions %}
 	  <form class="form-inline pull-right" role="form" action="." method="GET">
       <div class="input-group">
@@ -37,13 +39,13 @@
 </div>
 
 
-{% comment %}
+<!-- {% comment %}
 	<b>APP :</b> {{app_label}}<br/>
 	<b>MODEL : </b>{{actual_model_name}}<br/>
 	<b>PLURIZED MODEL :</b> {{pluralized_model_name}}<br/>
 
 	<h4>Using normal queryset</h4>
 	{{object_list}}
-{% endcomment %}
+{% endcomment %} -->
 
 {% endblock main_content %}

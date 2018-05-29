@@ -11,33 +11,30 @@
 <div class="row justify-content-around">
   <!-- Projects panel -->
   <div class="card w-50">
-    <div class="card-header alert-info">
-      <h4>{% trans "Projects" %}</h4>
-    </div>
-    <div class="card-body">
-      {% get_projects %}
-    </div>
+    <h4 class="card-header alert-info">
+      {% trans "Open Projects" %} ({{ projects|length }})</h4>
+    {% get_open_projects %}
   </div>
+
   <!-- Due Dates panel -->
   <div class="card w-25">
-    <div class="card-header alert-info">
-      <h4>{% trans "Upcoming Due Dates" %}</h4>
-    </div>
-    <div class="card-body">
+    <h4 class="card-header alert-info">
+      {% trans "Upcoming Due Dates" %}</h4>
 
-    </div>
   </div>
 </div>
 <br>
 <div class="row justify-content-around">
+  <!-- Tasks panel -->
+  <div class="card w-25">
+    <h4 class="card-header alert-info">
+      {% trans "Tasks" %}</h4>
+
+  </div>
   <!-- Issues panel -->
   <div class="card w-25">
-    <div class="card-header alert-info">
-      <h4>{% trans "Issues" %}</h4>
-    </div>
-    <div class="card-body">
-
-    </div>
+    <h4 class="card-header alert-info">
+      {% trans "Issues" %}</h4>
   </div>
 </div>
 

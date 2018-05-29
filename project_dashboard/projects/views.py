@@ -2,6 +2,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, get_object_or_404
 from django.utils.text import slugify
 from django.views.generic import CreateView
+# from django.views.generic.list import ListView
 
 import json
 
@@ -14,6 +15,15 @@ def project_list(request):
     project_list = proj_models.Project.objects.all()
     return render(
         request, 'projects/project-list.html',
+        {'project_list': project_list}
+        )
+
+
+def open_projects(request):
+    project_list = proj_models.Project.open_projects.all()
+    return render(
+        request, 'projects/project-list.html',
+        # request, 'pages/home.html',
         {'project_list': project_list}
         )
 
@@ -78,3 +88,12 @@ class ProjectCreateView(CreateView):
 
     def get_success_url(self):
         return slugify(self.request.POST['name'])
+
+
+# class ProjectListView(ListView):
+#     model = proj_models.Project
+
+#     def get_queryset(self):
+#         queryset = super(ProjectListView, self).get_queryset()
+#         queryset = proj_models.Project.open_projects.all()
+#         return queryset

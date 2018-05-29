@@ -138,14 +138,17 @@ class CommentAndOrUpdatePerm(PermissionComponent):
 
         project_id = request.DATA.get('project', None)
         if project_id and obj.project_id != project_id:
-            project = apps.get_model("projects", "Project").objects.get(pk=project_id)
+            project = apps.get_model(
+                "projects", "Project").objects.get(pk=project_id)
         else:
             project = obj.project
 
         data_keys = set(request.DATA.keys()) - {"version"}
         just_a_comment = data_keys == {"comment"}
 
-        if (just_a_comment and services.user_has_perm(request.user, self.comment_perm, project)):
+        if (just_a_comment and services.user_has_perm(
+            request.user, self.comment_perm, project)):
                 return True
 
-        return services.user_has_perm(request.user, self.update_perm, project)
+        return services.user_has_perm(
+            request.user, self.update_perm, project)

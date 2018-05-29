@@ -1,4 +1,4 @@
-from django.conf import settings
+# from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.postgres.fields import ArrayField
 from django.core.exceptions import ValidationError
@@ -9,6 +9,7 @@ from ...core.models import TimeStampedModel
 from ...core.permissions.choices import ANON_PERMISSIONS, MEMBERS_PERMISSIONS
 from ...core.utils.time import timestamp_ms
 
+from ..managers import ProjectOpenManager
 from .stakeholder import Role, Stakeholder
 from .category import Category
 
@@ -107,8 +108,6 @@ class CoreProject(TimeStampedModel, models.Model):
         models.TextField(null=False, blank=False, choices=MEMBERS_PERMISSIONS),
         null=True, blank=True, default=[],
         verbose_name=_("user permissions"))
-
-    objects = models.Manager()
 
     class Meta:
         """ CoreProject meta information. """
@@ -219,12 +218,14 @@ class AbstractProject(
         LoginRequiredProject,
         PasswordRequiredProject):
     """
-    Final abstract entry model class assembling
-    all the abstract entry model classes into a single one.
-
-    In this manner we can override some fields without
-    reimplemting all the AbstractProject.
+    Final abstract entry model class assembling all the
+    abstract entry model classes into a single one, allowing
+    us to override some fields without re-implementing all
+    of the AbstractProject.
     """
+    # Model manager for querying
+    objects = models.Manager()  # all projects
+    open_projects = ProjectOpenManager()  # open projects
 
     class Meta(CoreProject.Meta):
         abstract = True
@@ -234,3 +235,5 @@ class Project(AbstractProject):
     """
     The final Project model based on inheritence.
     """
+    class Meta:
+        ordering = ('id', )

@@ -37,7 +37,8 @@
           <div class="row justify-content-center">
             <div class="col breadcrumbs">
               <ul>
-                <li><a href="{% url 'home' %}">{% trans "Home" %}</a></li>
+                <li><a href="{% url 'home' %}" class="text-secondary">
+                    {% trans "Home" %}</a></li>
                 {% block extra-crumbs %}{% endblock extra-crumbs %}
               </ul>
             </div>

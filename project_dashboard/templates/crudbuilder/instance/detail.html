@@ -12,7 +12,7 @@
 {% endblock extra-crumbs %}
 
 
-{% block main_content %}
+{% block content %}
   {% block actions %}
   <div class="row justify-content-end">
     <a class="btn btn-primary pull-right" href="{% url app_label|add:'-'|add:custom_postfix_url|add:'-update' object.pk %}"><i class="glyphicon glyphicon-pencil"></i> Update</a>
@@ -40,4 +40,4 @@
       </tbody>
     </table>
   </div>
-{% endblock main_content %}
+{% endblock content %}

@@ -8,8 +8,8 @@ from .models.stakeholder import Stakeholder
 class ProjectCrud(BaseCrudBuilder):
     """ CRUD class for Project model """
     model = Project
-    search_fields = ["id", "name", "description", ]
-    tables2_fields = ("name", "description")
+    search_fields = ["id", "name", "description"]
+    tables2_fields = ("name", "description", 'is_closed')
     tables2_css_class = "table table-bordered table-condensed"
     login_required = True
     permission_required = True

@@ -11,7 +11,7 @@ class CategoryAdmin(admin.ModelAdmin):
     """ Admin for Category model. """
     form = CategoryAdminForm
     fields = (('name', 'slug'), 'parent', 'description', )
-    list_display = ('name', 'slug', 'get_tree_path', 'description')
+    list_display = ('name', 'slug', 'parent', 'get_tree_path', 'description')
     prepopulated_fields = {'slug': ('name', )}
     search_fields = ('name', 'description')
     list_filter = ('parent',)

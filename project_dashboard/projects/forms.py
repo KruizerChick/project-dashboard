@@ -76,34 +76,34 @@ class CategoryAdminForm(forms.ModelForm):
         }
 
 
-# class TaskAdminForm(forms.ModelForm):
-#     """ Form for Task's Admin. """
-#     parent = TreeNodeChoiceField(
-#         label=_('Parent task'),
-#         empty_label=_('No parent task'),
-#         level_indicator='|--', required=False,
-#         queryset=Task.objects.all())
+class TaskAdminForm(forms.ModelForm):
+    """ Form for Task's Admin. """
+    parent = TreeNodeChoiceField(
+        label=_('Parent task'),
+        empty_label=_('No parent task'),
+        level_indicator='|--', required=False,
+        queryset=proj_models.Task.objects.all())
 
-#     def __init__(self, *args, **kwargs):
-#         super(TaskAdminForm, self).__init__(*args, **kwargs)
-#         self.fields['parent'].widget = RelatedFieldWidgetWrapper(
-#             self.fields['parent'].widget,
-#             Task.parent.field.remote_field,
-#             self.admin_site)
+    # def __init__(self, *args, **kwargs):
+    #     super(TaskAdminForm, self).__init__(*args, **kwargs)
+    #     self.fields['parent'].widget = RelatedFieldWidgetWrapper(
+    #         self.fields['parent'].widget,
+    #         proj_models.Task.parent.field.remote_field,
+    #         self.admin_site)
 
-#     def clean_parent(self):
-#         """ Check if task parent is not selfish. """
-#         data = self.cleaned_data['parent']
-#         if data == self.instance:
-#             raise forms.ValidationError(
-#                 _('A task cannot be parent of itself.'),
-#                 code='self_parenting')
-#         return data
+    def clean_parent(self):
+        """ Check if task parent is not selfish. """
+        data = self.cleaned_data['parent']
+        if data == self.instance:
+            raise forms.ValidationError(
+                _('A task cannot be parent of itself.'),
+                code='self_parenting')
+        return data
 
-#     class Meta:
-#         """ TaskAdminForm's Meta. """
-#         model = Task
-#         fields = forms.ALL_FIELDS
-#         widgets = {
-#             'description': MiniAdminTextarea,
-#         }
+    class Meta:
+        """ TaskAdminForm's Meta. """
+        model = proj_models.Task
+        fields = forms.ALL_FIELDS
+        widgets = {
+            'description': MiniAdminTextarea,
+        }
