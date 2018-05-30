@@ -298,6 +298,7 @@ old/
 .tmp/
 old-*
 old_*
+*_old*
 
 ## Configuration files
 web.config

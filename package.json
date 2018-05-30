@@ -5,7 +5,10 @@
     "type": "git",
     "url": "https://github.com/KruizerChick/project-dashboard.git"
   },
-  "dependencies": {},
+  "dependencies": {
+    "jquery": "^3.3.1",
+    "semantic-ui": "^2.3.1"
+  },
   "devDependencies": {
     "browser-sync": "^2.24.4",
     "del": "^3.0.0",
