@@ -6,7 +6,7 @@
     "url": "https://github.com/KruizerChick/project-dashboard.git"
   },
   "dependencies": {
-    "jquery": "^3.3.1",
+    "jquery": "^3.5.0",
     "semantic-ui": "^2.3.1"
   },
   "devDependencies": {
